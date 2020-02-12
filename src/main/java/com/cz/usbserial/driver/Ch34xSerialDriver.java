@@ -4,7 +4,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
-import android.support.v4.view.MotionEventCompat;
+//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -171,7 +171,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
             } else {
                 int i = 0;
                 while (i < expected.length) {
-                    if (expected[i] == -1 || expected[i] == (current = buffer[i] & MotionEventCompat.ACTION_MASK)) {
+                    if (expected[i] == -1 || expected[i] == (current = buffer[i] & 255)) {
                         i++;
                     } else {
                         throw new IOException("Expected 0x" + Integer.toHexString(expected[i]) + " bytes, but get 0x" + Integer.toHexString(current) + " [" + msg + "]");
@@ -206,7 +206,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
             if (controlOut(154, 9496, 80) < 0) {
                 throw new IOException("init failed! #5");
             }
-            checkState("init #6", 149, 1798, new int[]{MotionEventCompat.ACTION_MASK, 238});
+            checkState("init #6", 149, 1798, new int[]{255, 238});
             if (controlOut(161, 20511, 55562) < 0) {
                 throw new IOException("init failed! #7");
             }

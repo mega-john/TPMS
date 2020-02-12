@@ -4,7 +4,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
-import android.support.v4.view.MotionEventCompat;
+//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -176,7 +176,11 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
         }
 
         private void setBaudRate(int baudRate) throws IOException {
-            if (this.mConnection.controlTransfer(65, SILABSER_SET_BAUDRATE, 0, 0, new byte[]{(byte) (baudRate & MotionEventCompat.ACTION_MASK), (byte) ((baudRate >> 8) & MotionEventCompat.ACTION_MASK), (byte) ((baudRate >> 16) & MotionEventCompat.ACTION_MASK), (byte) ((baudRate >> 24) & MotionEventCompat.ACTION_MASK)}, 4, 5000) < 0) {
+            if (this.mConnection.controlTransfer(65, SILABSER_SET_BAUDRATE, 0, 0,
+                    new byte[]{(byte) (baudRate & 255),
+                            (byte) ((baudRate >> 8) & 255),
+                            (byte) ((baudRate >> 16) & 255),
+                            (byte) ((baudRate >> 24) & 255)}, 4, 5000) < 0) {
                 throw new IOException("Error setting baud rate.");
             }
         }

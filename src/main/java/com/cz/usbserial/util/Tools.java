@@ -5,7 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Process;
-import android.support.v4.view.MotionEventCompat;
+//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -155,7 +155,7 @@ public class Tools {
             return null;
         }
         for (byte b : src) {
-            String hv = Integer.toHexString(b & MotionEventCompat.ACTION_MASK);
+            String hv = Integer.toHexString(b & 255);
             if (hv.length() < 2) {
                 stringBuilder.append(0);
             }

@@ -4,7 +4,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
-import android.support.v4.view.MotionEventCompat;
+//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -327,10 +327,10 @@ public class ProlificSerialDriver implements UsbSerialDriver {
         public void setParameters(int baudRate, int dataBits, int stopBits, int parity) throws IOException {
             if (this.mBaudRate != baudRate || this.mDataBits != dataBits || this.mStopBits != stopBits || this.mParity != parity) {
                 byte[] lineRequestData = new byte[7];
-                lineRequestData[0] = (byte) (baudRate & MotionEventCompat.ACTION_MASK);
-                lineRequestData[1] = (byte) ((baudRate >> 8) & MotionEventCompat.ACTION_MASK);
-                lineRequestData[2] = (byte) ((baudRate >> 16) & MotionEventCompat.ACTION_MASK);
-                lineRequestData[3] = (byte) ((baudRate >> 24) & MotionEventCompat.ACTION_MASK);
+                lineRequestData[0] = (byte) (baudRate & 255);
+                lineRequestData[1] = (byte) ((baudRate >> 8) & 255);
+                lineRequestData[2] = (byte) ((baudRate >> 16) & 255);
+                lineRequestData[3] = (byte) ((baudRate >> 24) & 255);
                 switch (stopBits) {
                     case 1:
                         lineRequestData[4] = 0;

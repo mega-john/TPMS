@@ -6,9 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -39,7 +37,6 @@ public class HeartbeatServer extends Service {
         }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     private boolean isRunningForeground(Context context) {
         String currentPackageName = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningTasks(1).get(0).topActivity.getPackageName();
         if (TextUtils.isEmpty(currentPackageName) || !currentPackageName.equals(getPackageName())) {

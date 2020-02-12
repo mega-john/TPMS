@@ -9,8 +9,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -150,7 +148,7 @@ public class Emitter_Matching extends Activity {
                 }
             } else if (msg.what == 10000) {
                 if (Emitter_Matching.this.wait_time != null) {
-                    Emitter_Matching.this.wait_time.setText(String.valueOf(Emitter_Matching.this.Time_count) + " S");
+                    Emitter_Matching.this.wait_time.setText(Emitter_Matching.this.Time_count + " S");
                 }
                 if (Emitter_Matching.this.Time_count < 1) {
                     Emitter_Matching.this.closeProgress(Emitter_Matching.this.mContext.getString(R.string.matching_fail));
@@ -161,13 +159,13 @@ public class Emitter_Matching extends Activity {
             } else if (Emitter_Matching.this.position != 255 && msg.arg1 > 6 && Emitter_Matching.this.flag) {
                 byte[] buff3 = (byte[]) msg.getData().get("data");
                 byte[] bus = {85, -86, 6, 24, Emitter_Matching.this.position};
-                boolean b = true;
+                boolean matchingSuccess = true;
                 for (int i = 0; i < 5; i++) {
                     if (buff3[i] != bus[i]) {
-                        b = false;
+                        matchingSuccess = false;
                     }
                 }
-                if (b) {
+                if (matchingSuccess) {
                     Emitter_Matching.this.stopTimerSearchID();
                     Emitter_Matching.this.startTimerSearchID();
                     Emitter_Matching.this.setTimeNsSearchID(1);
@@ -195,14 +193,14 @@ public class Emitter_Matching extends Activity {
         this.mUSBService.addActivity(this);
         this.mContext = this;
         Inflate = LayoutInflater.from(this.mContext);
-        view = Inflate.inflate(R.layout.matching_dialog, (ViewGroup) null);
+        view = Inflate.inflate(R.layout.matching_dialog, null);
         canceDialogTile = new UnbindDialog(this.mContext, view);
-        this.rl_top_left_id = (TextView) findViewById(R.id.rl_top_left_id);
-        this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
-        this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
-        this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
-        this.ico_car = (ImageView) findViewById(R.id.ico_car);
+        this.rl_top_left_id = findViewById(R.id.rl_top_left_id);
+        this.rl_top_right_id = findViewById(R.id.rl_top_right_id);
+        this.rl_low_left_id = findViewById(R.id.rl_low_left_id);
+        this.rl_low_right_id = findViewById(R.id.rl_low_right_id);
+        this.backup_tire_id = findViewById(R.id.backup_tire_id);
+        this.ico_car = findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car_pharos);
         }
@@ -294,24 +292,24 @@ public class Emitter_Matching extends Activity {
     }
 
     private void sendMatch(byte key) {
-        if (key != -1) {
+        if (-1 != key) {
             this.mHandler.sendMessageDelayed(this.mHandler.obtainMessage(SHOW_ANOTHER_ACTIVITY), 120000);
-            this.match_id = (TextView) view.findViewById(R.id.match_id);
-            if (key == 0) {
-                this.match_id.setText(String.valueOf(getString(R.string.l_f_tire)) + getString(R.string.matchinging));
-            } else if (key == 1) {
-                this.match_id.setText(String.valueOf(getString(R.string.r_f_tire)) + getString(R.string.matchinging));
-            } else if (key == 16) {
-                this.match_id.setText(String.valueOf(getString(R.string.l_r_tire)) + getString(R.string.matchinging));
-            } else if (key == 17) {
-                this.match_id.setText(String.valueOf(getString(R.string.r_r_tire)) + getString(R.string.matchinging));
-            } else if (key == 5) {
-                this.match_id.setText(String.valueOf(getString(R.string.r_spare_tire)) + getString(R.string.matchinging));
+            this.match_id = view.findViewById(R.id.match_id);
+            if (0 == key) {
+                this.match_id.setText(getString(R.string.l_f_tire) + getString(R.string.matchinging));
+            } else if (1 == key) {
+                this.match_id.setText(getString(R.string.r_f_tire) + getString(R.string.matchinging));
+            } else if (16 == key) {
+                this.match_id.setText(getString(R.string.l_r_tire) + getString(R.string.matchinging));
+            } else if (17 == key) {
+                this.match_id.setText(getString(R.string.r_r_tire) + getString(R.string.matchinging));
+            } else if (5 == key) {
+                this.match_id.setText(getString(R.string.r_spare_tire) + getString(R.string.matchinging));
             }
             if (this.wait_time == null) {
-                this.wait_time = (TextView) view.findViewById(R.id.wait_time);
+                this.wait_time = view.findViewById(R.id.wait_time);
             }
-            ((Button) view.findViewById(R.id.cance_domain)).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.cance_domain).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     try {
                         byte[] bArr = new byte[6];
@@ -431,13 +429,11 @@ public class Emitter_Matching extends Activity {
         }
     }
 
-    /* access modifiers changed from: package-private */
     private void setTimeMs(long dalayms) {
         if (this.mTimer != null && this.mTimerTask != null) {
             this.mTimer.schedule(this.mTimerTask, dalayms * 1000, 1000 * dalayms);
         }
     }
-
 
     private void stopTimer() {
         if (this.mTimer != null) {
@@ -449,7 +445,6 @@ public class Emitter_Matching extends Activity {
             this.mTimerTask = null;
         }
     }
-
 
     private void startTimerSearchID() {
         if (this.mTimerSearchID == null) {
@@ -495,7 +490,6 @@ public class Emitter_Matching extends Activity {
             this.mTimerSearchID.schedule(this.mTimerTaskSearchID, dalayms * 1000, 1000 * dalayms);
         }
     }
-
 
     private void stopTimerSearchID() {
         this.ret1 = 0;

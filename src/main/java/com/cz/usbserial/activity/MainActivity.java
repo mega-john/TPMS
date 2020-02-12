@@ -183,7 +183,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     MainActivity.this.topDataStatuButton.setVisibility(View.GONE);
                 }
             } else if (msg.what == MainActivity.MESSAGE_HANDSHAKE_NO) {
-                new UnbindDialog(MainActivity.this.mContext, LayoutInflater.from(MainActivity.this.mContext).inflate(R.layout.tooltip_app_dialog, (ViewGroup) null)).show();
+                new UnbindDialog(MainActivity.this.mContext, LayoutInflater.from(MainActivity.this.mContext).inflate(R.layout.tooltip_app_dialog, null)).show();
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         Intent intent = new Intent();
@@ -326,11 +326,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 MainActivity.this.finish();
             } else if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
                 if (TpmsServer.DEBUG) {
-                    Log.i(MainActivity.this.TAG, " ACTION_USB_DEVICE_DETACHED usb \u62d4\u51fa ");
+                    Log.i(MainActivity.this.TAG, " ACTION_USB_DEVICE_DETACHED usb Unplug ");
                 }
                 MainActivity.this.defView(0);
             } else if (action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED") && TpmsServer.DEBUG) {
-                Log.i(MainActivity.this.TAG, " ACTION_USB_ACCESSORY_ATTACHED usb \u63d2\u5165");
+                Log.i(MainActivity.this.TAG, " ACTION_USB_ACCESSORY_ATTACHED usb insert");
             }
         }
     };
@@ -384,40 +384,40 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        this.ico_car = (ImageView) findViewById(R.id.ico_car);
-        this.topMenuButton = (ImageView) findViewById(R.id.topMenuButton);
-        this.topMuteButton = (ImageView) findViewById(R.id.topMuteButton);
-        this.topDataStatuButton = (ImageView) findViewById(R.id.topDataStatuButton);
+        this.ico_car = findViewById(R.id.ico_car);
+        this.topMenuButton = findViewById(R.id.topMenuButton);
+        this.topMuteButton = findViewById(R.id.topMuteButton);
+        this.topDataStatuButton = findViewById(R.id.topDataStatuButton);
         this.Left1_Back = findViewById(R.id.left1_background);
         this.Left2_Back = findViewById(R.id.left2_background);
         this.Right1_Back = findViewById(R.id.right1_background);
         this.Right2_Back = findViewById(R.id.right2_background);
         this.Backup_Back = findViewById(R.id.backup_tyre);
-        this.Left1_P = (TextView) findViewById(R.id.left1_p);
-        this.Left1_P_UINT = (TextView) findViewById(R.id.left1_p_uint);
-        this.Left1_T = (TextView) findViewById(R.id.left1_t);
-        this.Left1_T_UINT = (TextView) findViewById(R.id.left1_t_uint);
-        this.left1_bat = (ImageView) findViewById(R.id.left1_bat);
-        this.Left2_P = (TextView) findViewById(R.id.left2_p);
-        this.Left2_P_UINT = (TextView) findViewById(R.id.left2_p_uint);
-        this.Left2_T = (TextView) findViewById(R.id.left2_t);
-        this.Left2_T_UINT = (TextView) findViewById(R.id.left2_t_uint);
-        this.left2_bat = (ImageView) findViewById(R.id.left2_bat);
-        this.Right1_P = (TextView) findViewById(R.id.right1_p);
-        this.Right1_P_UINT = (TextView) findViewById(R.id.right1_p_uint);
-        this.Right1_T = (TextView) findViewById(R.id.right1_t);
-        this.Right1_T_UINT = (TextView) findViewById(R.id.right1_t_uint);
-        this.right1_bat = (ImageView) findViewById(R.id.right1_bat);
-        this.Right2_P = (TextView) findViewById(R.id.right2_p);
-        this.Right2_P_UINT = (TextView) findViewById(R.id.right2_p_uint);
-        this.Right2_T = (TextView) findViewById(R.id.right2_t);
-        this.Right2_T_UINT = (TextView) findViewById(R.id.right2_t_uint);
-        this.right2_bat = (ImageView) findViewById(R.id.right2_bat);
-        this.Backup_P = (TextView) findViewById(R.id.backup_p);
-        this.Backup_P_UINT = (TextView) findViewById(R.id.backup_p_uint);
-        this.Backup_T = (TextView) findViewById(R.id.backup_t);
-        this.Backup_T_UINT = (TextView) findViewById(R.id.backup_t_uint);
-        this.backup_bat = (ImageView) findViewById(R.id.backup_bat);
+        this.Left1_P = findViewById(R.id.left1_p);
+        this.Left1_P_UINT = findViewById(R.id.left1_p_uint);
+        this.Left1_T = findViewById(R.id.left1_t);
+        this.Left1_T_UINT = findViewById(R.id.left1_t_uint);
+        this.left1_bat = findViewById(R.id.left1_bat);
+        this.Left2_P = findViewById(R.id.left2_p);
+        this.Left2_P_UINT = findViewById(R.id.left2_p_uint);
+        this.Left2_T = findViewById(R.id.left2_t);
+        this.Left2_T_UINT = findViewById(R.id.left2_t_uint);
+        this.left2_bat = findViewById(R.id.left2_bat);
+        this.Right1_P = findViewById(R.id.right1_p);
+        this.Right1_P_UINT = findViewById(R.id.right1_p_uint);
+        this.Right1_T = findViewById(R.id.right1_t);
+        this.Right1_T_UINT = findViewById(R.id.right1_t_uint);
+        this.right1_bat = findViewById(R.id.right1_bat);
+        this.Right2_P = findViewById(R.id.right2_p);
+        this.Right2_P_UINT = findViewById(R.id.right2_p_uint);
+        this.Right2_T = findViewById(R.id.right2_t);
+        this.Right2_T_UINT = findViewById(R.id.right2_t_uint);
+        this.right2_bat = findViewById(R.id.right2_bat);
+        this.Backup_P = findViewById(R.id.backup_p);
+        this.Backup_P_UINT = findViewById(R.id.backup_p_uint);
+        this.Backup_T = findViewById(R.id.backup_t);
+        this.Backup_T_UINT = findViewById(R.id.backup_t_uint);
+        this.backup_bat = findViewById(R.id.backup_bat);
         this.topMenuButton.setOnClickListener(this);
         this.topMuteButton.setOnClickListener(this);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
@@ -729,10 +729,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private boolean isZh() {
         Locale locale = getResources().getConfiguration().locale;
         String language = locale.getLanguage();
-        if (locale.equals(Locale.SIMPLIFIED_CHINESE)) {
-            return true;
-        }
-        return false;
+        return locale.equals(Locale.SIMPLIFIED_CHINESE);
     }
 
     public Boolean getBackUpTyreStaus() {
