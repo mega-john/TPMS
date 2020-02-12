@@ -320,7 +320,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
                         Beta.checkUpgrade();
                         return;
                     } catch (Exception e) {
-                        Tools.Toast(getApplicationContext(), "\u5df2\u7ecf\u662f\u6700\u65b0\u7248\u672c");
+                        Tools.Toast(getApplicationContext(), "Already the latest version");
                         return;
                     }
                 } else {

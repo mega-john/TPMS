@@ -29,7 +29,7 @@ public class FileUtils {
         if (isSdCardExist()) {
             return Environment.getExternalStorageDirectory().getAbsolutePath();
         }
-        return "\u4e0d\u9002\u7528";
+        return "Not applicable";
     }
 
     public static String getDefaultFilePath() {
@@ -37,7 +37,7 @@ public class FileUtils {
         if (file.exists()) {
             return file.getAbsolutePath();
         }
-        return "\u4e0d\u9002\u7528";
+        return "Not applicable";
     }
 
     public static void FileInputStreamFile() {

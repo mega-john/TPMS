@@ -38,11 +38,11 @@ public class SeriaTest extends Activity {
         this.debug_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (TpmsServer.getDebugTest().booleanValue()) {
-                    SeriaTest.this.debug_btn.setText("\u6253\u5f00\u684c\u9762\u8c03\u8bd5\u663e\u793a");
+                    SeriaTest.this.debug_btn.setText("Turn on desktop debug display");
                     TpmsServer.setDebugTest(false);
                     return;
                 }
-                SeriaTest.this.debug_btn.setText("\u5173\u95ed\u684c\u9762\u8c03\u8bd5\u663e\u793a");
+                SeriaTest.this.debug_btn.setText("Turn off the desktop debug display");
                 TpmsServer.setDebugTest(true);
             }
         });
@@ -55,9 +55,9 @@ public class SeriaTest extends Activity {
         super.onResume();
         this.mTpmsServer.registerHandler(this.mHandlerSeriaTest);
         if (TpmsServer.getDebugTest().booleanValue()) {
-            this.debug_btn.setText("\u5173\u95ed\u684c\u9762\u8c03\u8bd5\u663e\u793a");
+            this.debug_btn.setText("Turn off desktop debug display");
         } else {
-            this.debug_btn.setText("\u6253\u5f00\u684c\u9762\u8c03\u8bd5\u663e\u793a");
+            this.debug_btn.setText("Turn on desktop debug display");
         }
     }
 
