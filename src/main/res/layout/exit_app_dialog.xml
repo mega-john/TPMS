@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#303030"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit_app"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:background="#a1a1a1" />
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_exit_app"
+                android:textColor="#ffffff"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/refuse"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/cance_btn_clk"
+                android:text="@string/comm_cancel"
+                android:textColor="#ffffff"
+                android:textSize="17dp" />
+
+            <Button
+                android:id="@+id/sure"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/sure_btn_clk"
+                android:text="@string/comm_ok"
+                android:textColor="#ffffff"
+                android:textSize="17dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
