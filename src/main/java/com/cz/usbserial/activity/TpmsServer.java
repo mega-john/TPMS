@@ -1563,7 +1563,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                                 TpmsServer.this.mContext.stopService(ii);
                             }
                             Intent intent = new Intent(TpmsServer.this.mContext, MainActivity.class);
-                            intent.addFlags(1610612736);
+                            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_RECEIVER_REPLACE_PENDING);
                             TpmsServer.this.mContext.startActivity(intent);
                             TpmsServer.this.stopSelf();
                         } catch (Exception e) {
@@ -1571,7 +1571,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     }
                     if (!Tools.isUSBHeartbeatServer(TpmsServer.this.mContext)) {
                         Intent intent2 = new Intent(TpmsServer.this.mContext, HeartbeatServer.class);
-                        intent2.addFlags(1610612736);
+                        intent2.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_RECEIVER_REPLACE_PENDING);
                         TpmsServer.this.mContext.startService(intent2);
                     }
                 }

@@ -45,37 +45,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static boolean right2_warn = false;
     public static int trye_warn_show_count = 10;
     private static SharedPreferences sp = null;
-    /* access modifiers changed from: private */
-    public final String TAG = MainActivity.class.getSimpleName();
-    /* access modifiers changed from: private */
-    public View Backup_Back;
-    /* access modifiers changed from: private */
-    public TextView Backup_P;
-    /* access modifiers changed from: private */
-    public TextView Backup_T;
-    /* access modifiers changed from: private */
-    public TextView Left1_P;
-    /* access modifiers changed from: private */
-    public TextView Left1_T;
-    /* access modifiers changed from: private */
-    public TextView Left2_P;
-    /* access modifiers changed from: private */
-    public TextView Left2_T;
-    /* access modifiers changed from: private */
-    public TextView Right1_P;
-    /* access modifiers changed from: private */
-    public TextView Right1_T;
-    /* access modifiers changed from: private */
-    public TextView Right2_P;
-    /* access modifiers changed from: private */
-    public TextView Right2_T;
-    /* access modifiers changed from: private */
-    public ImageView ico_car;
-    /* access modifiers changed from: private */
-    public TpmsServer mTpmsServer = null;
-    /* access modifiers changed from: private */
-    public ImageView topDataStatuButton;
+
+    private final String TAG = MainActivity.class.getSimpleName();
     Context mContext = this;
+    private View Backup_Back;
+    private TextView Backup_P;
+    private TextView Backup_T;
+    private TextView Left1_P;
+    private TextView Left1_T;
+    private TextView Left2_P;
+    private TextView Left2_T;
+    private TextView Right1_P;
+    private TextView Right1_T;
+    private TextView Right2_P;
+    private TextView Right2_T;
+    private ImageView ico_car;
+    private TpmsServer mTpmsServer = null;
+    private ImageView topDataStatuButton;
     private TextView Backup_P_UINT;
     private TextView Backup_T_UINT;
     private View Left1_Back;
@@ -190,11 +176,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             super.handleMessage(msg);
             if (msg.what == MainActivity.MESSAGE_USB_OPEN_FAIL) {
                 if (MainActivity.this.topDataStatuButton != null) {
-                    MainActivity.this.topDataStatuButton.setVisibility(0);
+                    MainActivity.this.topDataStatuButton.setVisibility(View.VISIBLE);
                 }
             } else if (msg.what == MainActivity.MESSAGE_USB_OPEN_OK) {
                 if (MainActivity.this.topDataStatuButton != null) {
-                    MainActivity.this.topDataStatuButton.setVisibility(8);
+                    MainActivity.this.topDataStatuButton.setVisibility(View.GONE);
                 }
             } else if (msg.what == MainActivity.MESSAGE_HANDSHAKE_NO) {
                 new UnbindDialog(MainActivity.this.mContext, LayoutInflater.from(MainActivity.this.mContext).inflate(R.layout.tooltip_app_dialog, (ViewGroup) null)).show();
@@ -303,7 +289,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             MainActivity.this.Right2_T.setTextColor(Color.rgb(68, 121, 189));
                         }
                     }
-                    if ((ret1 == 5 || ret2 == 5) && MainActivity.this.Backup_Back.getVisibility() == 0) {
+                    if ((ret1 == 5 || ret2 == 5) && MainActivity.this.Backup_Back.getVisibility() == View.VISIBLE) {
                         if (TpmsServer.backup_TyrePressure > retPH || TpmsServer.backup_TyrePressure < retPL || TpmsServer.backup_TyreTemperature > retHT || UnitTools.warning_AIR(TpmsServer.backup_Byte).booleanValue() || UnitTools.warning_P(TpmsServer.backup_Byte).booleanValue() || UnitTools.warning_Signal(TpmsServer.backup_Byte).booleanValue()) {
                             MainActivity.backup_warn = true;
                             if (TpmsServer.backup_TyrePressure > retPH) {
@@ -365,8 +351,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    /* access modifiers changed from: protected */
-    public void onCreate(Bundle savedInstanceState) {
+
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         setContentView(R.layout.activity_main);
@@ -379,14 +365,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         sp.registerOnSharedPreferenceChangeListener(this.mTpmsServer);
         if (!Tools.isUSBService(this)) {
             Intent intent = new Intent(this.mContext, TpmsServer.class);
-            intent.addFlags(1610612736);
+            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_RECEIVER_REPLACE_PENDING);
             this.mContext.startService(intent);
         } else {
             Tools.Toast(this.mContext, "Service running");
         }
         if (!Tools.isUSBHeartbeatServer(this.mContext)) {
             Intent intent2 = new Intent(this.mContext, HeartbeatServer.class);
-            intent2.addFlags(1610612736);
+            intent2.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_RECEIVER_REPLACE_PENDING);
             this.mContext.startService(intent2);
         }
         initView();
@@ -439,8 +425,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    /* access modifiers changed from: private */
-    public void defView(int showdata) {
+
+    private void defView(int showdata) {
         if (showdata == 0 || showdata == 1) {
             if (this.Left1_P != null) {
                 this.Left1_P.setText("--");
@@ -650,19 +636,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    /* access modifiers changed from: protected */
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
             if (this.Backup_Back != null) {
-                this.Backup_Back.setVisibility(0);
+                this.Backup_Back.setVisibility(View.VISIBLE);
             }
         } else if (this.Backup_Back != null) {
-            this.Backup_Back.setVisibility(8);
+            this.Backup_Back.setVisibility(View.GONE);
         }
         if (!Tools.isUSBService(this)) {
             Intent intent = new Intent(this.mContext, TpmsServer.class);
-            intent.addFlags(1610612736);
+            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_RECEIVER_REPLACE_PENDING);
             this.mContext.startService(intent);
         }
         if (this.mTpmsServer == null) {
@@ -674,10 +659,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         if (getBackUpTyreStaus().booleanValue()) {
             if (this.Backup_Back != null) {
-                this.Backup_Back.setVisibility(0);
+                this.Backup_Back.setVisibility(View.VISIBLE);
             }
         } else if (this.Backup_Back != null) {
-            this.Backup_Back.setVisibility(8);
+            this.Backup_Back.setVisibility(View.GONE);
         }
         if (getMuteStaus().booleanValue()) {
             if (this.topMuteButton != null) {
@@ -692,16 +677,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         TpmsServer.activityFlag = true;
     }
 
-    /* access modifiers changed from: protected */
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         if (this.mTpmsServer != null) {
             this.mTpmsServer.unregisterHandler();
         }
     }
 
-    /* access modifiers changed from: protected */
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (sp != null) {
             sp = null;

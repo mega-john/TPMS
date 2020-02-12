@@ -13,12 +13,9 @@ import com.cz.usbserial.tpms.R;
 import com.cz.usbserial.util.Tools;
 
 public class SeriaTest extends Activity {
-    /* access modifiers changed from: private */
-    public final String TAG = MainActivity.class.getSimpleName();
-    /* access modifiers changed from: private */
-    public Button debug_btn;
-    /* access modifiers changed from: private */
-    public TextView mDumpTextView;
+    private final String TAG = MainActivity.class.getSimpleName();
+    private Button debug_btn;
+    private TextView mDumpTextView;
     private Handler mHandlerSeriaTest = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -33,12 +30,11 @@ public class SeriaTest extends Activity {
     private TextView mTitleTextView;
     private TpmsServer mTpmsServer;
 
-    /* access modifiers changed from: protected */
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         setContentView(R.layout.serial_console);
-        this.debug_btn = (Button) findViewById(R.id.debug_btn);
+        this.debug_btn = findViewById(R.id.debug_btn);
         this.debug_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (TpmsServer.getDebugTest().booleanValue()) {
@@ -50,13 +46,12 @@ public class SeriaTest extends Activity {
                 TpmsServer.setDebugTest(true);
             }
         });
-        this.mDumpTextView = (TextView) findViewById(R.id.consoleText);
+        this.mDumpTextView = findViewById(R.id.consoleText);
         this.mTpmsServer = TpmsServer.getInstance();
         this.mTpmsServer.addActivity(this);
     }
 
-    /* access modifiers changed from: protected */
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         this.mTpmsServer.registerHandler(this.mHandlerSeriaTest);
         if (TpmsServer.getDebugTest().booleanValue()) {
@@ -66,14 +61,12 @@ public class SeriaTest extends Activity {
         }
     }
 
-    /* access modifiers changed from: protected */
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         this.mTpmsServer.unregisterHandler();
     }
 
-    /* access modifiers changed from: protected */
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
     }
 }

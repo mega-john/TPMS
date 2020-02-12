@@ -22,7 +22,7 @@ public class Tools {
     private static boolean flag = true;
 
     public static boolean isUSBService(Context context) {
-        for (ActivityManager.RunningServiceInfo info : ((ActivityManager) context.getSystemService("activity")).getRunningServices(30)) {
+        for (ActivityManager.RunningServiceInfo info : ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningServices(30)) {
             if (usbService.equals(info.service.getClassName())) {
                 return true;
             }
@@ -31,7 +31,7 @@ public class Tools {
     }
 
     public static boolean isUSBHeartbeatServer(Context context) {
-        for (ActivityManager.RunningServiceInfo info : ((ActivityManager) context.getSystemService("activity")).getRunningServices(30)) {
+        for (ActivityManager.RunningServiceInfo info : ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningServices(30)) {
             if (usbHeartbeatServer.equals(info.service.getClassName())) {
                 return true;
             }
@@ -41,7 +41,7 @@ public class Tools {
 
     public static boolean isServiceWork(Context mContext, String serviceName) {
         boolean isWork = false;
-        List<ActivityManager.RunningServiceInfo> myList = ((ActivityManager) mContext.getSystemService("activity")).getRunningServices(40);
+        List<ActivityManager.RunningServiceInfo> myList = ((ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE)).getRunningServices(40);
         if (myList.size() <= 0) {
             return false;
         }
@@ -63,7 +63,7 @@ public class Tools {
         if (toast != null) {
             toast.cancel();
         }
-        toast = Toast.makeText(context, text, 0);
+        toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -245,7 +245,7 @@ public class Tools {
 
     public static String getCurProcessName(Context context) {
         int pid = Process.myPid();
-        for (ActivityManager.RunningAppProcessInfo appProcess : ((ActivityManager) context.getSystemService("activity")).getRunningAppProcesses()) {
+        for (ActivityManager.RunningAppProcessInfo appProcess : ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningAppProcesses()) {
             if (appProcess.pid == pid) {
                 return appProcess.processName;
             }
@@ -273,7 +273,7 @@ public class Tools {
 
     public static boolean isNetworkAvailable(Context context) {
         NetworkInfo info;
-        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService("connectivity");
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity == null || (info = connectivity.getActiveNetworkInfo()) == null || !info.isConnected() || info.getState() != NetworkInfo.State.CONNECTED) {
             return false;
         }

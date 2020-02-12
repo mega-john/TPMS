@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
@@ -32,17 +31,14 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     static final String EXIT_APP_ACTION = "com.cz.action.exit_app";
     private static SharedPreferences sp = null;
     private static int vers_info_btn_count = 0;
-    /* access modifiers changed from: private */
-    public SeekBar ps_max_seekbar;
-    /* access modifiers changed from: private */
-    public TextView ps_max_value;
-    /* access modifiers changed from: private */
-    public SeekBar ps_min_seekbar;
-    /* access modifiers changed from: private */
-    public TextView ps_min_value;
-    /* access modifiers changed from: private */
-    public TextView tp_max_value;
     Context mContext = this;
+    int ps_max_progress = 0;
+    int ps_min_progress = 0;
+    private SeekBar ps_max_seekbar;
+    private TextView ps_max_value;
+    private SeekBar ps_min_seekbar;
+    private TextView ps_min_value;
+    private TextView tp_max_value;
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -65,8 +61,6 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
             }
         }
     };
-    int ps_max_progress = 0;
-    int ps_min_progress = 0;
     private ToggleButton BackUpButton;
     private ToggleButton BootButton;
     private View Electricity_query;
@@ -150,8 +144,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     private View vers_line;
     private View vers_update_line;
 
-    /* access modifiers changed from: protected */
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         setContentView(R.layout.layout_menu);
@@ -162,18 +155,17 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.mHandler.sendEmptyMessage(0);
     }
 
-    /* access modifiers changed from: protected */
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         vers_info_btn_count = 0;
     }
 
     public void initRadioBtn() {
-        this.rb1 = (RadioButton) findViewById(R.id.rb_kpa);
-        this.rb2 = (RadioButton) findViewById(R.id.rb_psi);
-        this.rb3 = (RadioButton) findViewById(R.id.rb_bar);
-        this.temp1 = (RadioButton) findViewById(R.id.temp0);
-        this.temp2 = (RadioButton) findViewById(R.id.temp1);
+        this.rb1 = findViewById(R.id.rb_kpa);
+        this.rb2 = findViewById(R.id.rb_psi);
+        this.rb3 = findViewById(R.id.rb_bar);
+        this.temp1 = findViewById(R.id.temp0);
+        this.temp2 = findViewById(R.id.temp1);
     }
 
     public void initView() {
@@ -187,27 +179,27 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.Exit_app.setOnClickListener(this);
         this.vers_line = findViewById(R.id.vers_line);
         this.vers_line.setOnClickListener(this);
-        this.VerInfo = (TextView) findViewById(R.id.verinfo);
+        this.VerInfo = findViewById(R.id.verinfo);
         this.vers_update_line = findViewById(R.id.vers_update_line);
         this.vers_update_line.setOnClickListener(this);
         this.resdef_line = findViewById(R.id.resdef_line);
         this.resdef_line.setOnClickListener(this);
-        this.kpa_group = (RadioGroup) findViewById(R.id.kpa_unit);
+        this.kpa_group = findViewById(R.id.kpa_unit);
         this.kpa_group.setOnCheckedChangeListener(this);
-        this.tmp_group = (RadioGroup) findViewById(R.id.temp_group);
+        this.tmp_group = findViewById(R.id.temp_group);
         this.tmp_group.setOnCheckedChangeListener(this);
-        this.BackUpButton = (ToggleButton) findViewById(R.id.backup_btn);
+        this.BackUpButton = findViewById(R.id.backup_btn);
         this.BackUpButton.setOnCheckedChangeListener(this);
-        this.MuteButton = (ToggleButton) findViewById(R.id.voice_btn);
+        this.MuteButton = findViewById(R.id.voice_btn);
         this.MuteButton.setOnCheckedChangeListener(this);
-        this.BootButton = (ToggleButton) findViewById(R.id.boot_btn);
+        this.BootButton = findViewById(R.id.boot_btn);
         this.BootButton.setOnCheckedChangeListener(this);
-        this.ps_max_value = (TextView) findViewById(R.id.presure_max);
-        this.ps_min_value = (TextView) findViewById(R.id.presure_min);
-        this.tp_max_value = (TextView) findViewById(R.id.temp_max);
-        this.ps_max_seekbar = (SeekBar) findViewById(R.id.presure_max_seekbar);
-        this.ps_min_seekbar = (SeekBar) findViewById(R.id.presure_min_seekbar);
-        this.tp_max_seekbar = (SeekBar) findViewById(R.id.temp_max_seekbar);
+        this.ps_max_value = findViewById(R.id.presure_max);
+        this.ps_min_value = findViewById(R.id.presure_min);
+        this.tp_max_value = findViewById(R.id.temp_max);
+        this.ps_max_seekbar = findViewById(R.id.presure_max_seekbar);
+        this.ps_min_seekbar = findViewById(R.id.presure_min_seekbar);
+        this.tp_max_seekbar = findViewById(R.id.temp_max_seekbar);
         this.ps_max_seekbar.setMax(700);
         this.ps_max_seekbar.setOnSeekBarChangeListener(this.PsMaxBarChangeListener);
         this.ps_min_seekbar.setMax(700);
@@ -336,27 +328,27 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
                     return;
                 }
             case R.id.resdef_line /*2131361888*/:
-                View view1 = LayoutInflater.from(this.mContext).inflate(R.layout.setdefault_dialog, (ViewGroup) null);
+                View view1 = LayoutInflater.from(this.mContext).inflate(R.layout.setdefault_dialog, null);
                 final UnbindDialog dialog1 = new UnbindDialog(this.mContext, view1);
                 dialog1.show();
-                ((Button) view1.findViewById(R.id.sure)).setOnClickListener(new View.OnClickListener() {
+                view1.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Menuset.this.defInitView();
                         Menuset.this.defView();
                         dialog1.dismiss();
                     }
                 });
-                ((Button) view1.findViewById(R.id.refuse)).setOnClickListener(new View.OnClickListener() {
+                view1.findViewById(R.id.refuse).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog1.dismiss();
                     }
                 });
                 return;
             case R.id.exit_app /*2131361889*/:
-                View view = LayoutInflater.from(this.mContext).inflate(R.layout.exit_app_dialog, (ViewGroup) null);
+                View view = LayoutInflater.from(this.mContext).inflate(R.layout.exit_app_dialog, null);
                 final UnbindDialog dialog = new UnbindDialog(this.mContext, view);
                 dialog.show();
-                ((Button) view.findViewById(R.id.sure)).setOnClickListener(new View.OnClickListener() {
+                view.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent intent = new Intent();
                         intent.setAction(Menuset.EXIT_APP_ACTION);
@@ -364,7 +356,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
                         Menuset.this.finish();
                     }
                 });
-                ((Button) view.findViewById(R.id.refuse)).setOnClickListener(new View.OnClickListener() {
+                view.findViewById(R.id.refuse).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog.dismiss();
                     }

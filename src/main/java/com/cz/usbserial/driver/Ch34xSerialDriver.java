@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Ch34xSerialDriver implements UsbSerialDriver {
-    /* access modifiers changed from: private */
     private static final String TAG = Ch34xSerialDriver.class.getSimpleName();
     private final UsbDevice mDevice;
     private final UsbSerialPort mPort;// = new Ch340SerialPort(this.mDevice, 0);

@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 
 
 public class FileUtils {
-    private static String fileDirPath = (String.valueOf(Environment.getExternalStorageDirectory().getAbsolutePath()) + "/TPMS");
+    private static String fileDirPath = (Environment.getExternalStorageDirectory().getAbsolutePath() + "/TPMS");
     private static String fileName = "tpms.txt";
     static final String DEFAULT_FILENAME = ("/TPMS/" + fileName);
 
@@ -45,7 +45,7 @@ public class FileUtils {
             FileInputStream is = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "tpms.txt"));
             byte[] b = new byte[is.available()];
             is.read(b);
-            System.out.println("\u8bfb\u53d6\u6210\u529f\uff1a" + new String(b));
+            System.out.println("Reading succeeded:" + new String(b));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class FileUtils {
                 String readline = br.readLine();
                 if (readline == null) {
                     br.close();
-                    System.out.println("\u8bfb\u53d6\u6210\u529f\uff1a" + sb.toString());
+                    System.out.println("Reading succeeded:" + sb.toString());
                     return sb.toString();
                 }
                 System.out.println("readline:" + readline);
@@ -79,30 +79,30 @@ public class FileUtils {
             FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory(), DEFAULT_FILENAME));
             fos.write("I am a chinanese!".getBytes());
             fos.close();
-            System.out.println("\u5199\u5165\u6210\u529f\uff1a");
+            System.out.println("Write success:");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private static void createFile() {
-        String filePath = String.valueOf(fileDirPath) + "/" + fileName;
+        String filePath = fileDirPath + "/" + fileName;
         try {
             File dir = new File(fileDirPath);
             if (!dir.exists()) {
-                System.out.println("\u8981\u5b58\u50a8\u7684\u76ee\u5f55\u4e0d\u5b58\u5728");
+                System.out.println("The directory to be stored does not exist");
                 if (dir.mkdirs()) {
-                    System.out.println("\u5df2\u7ecf\u521b\u5efa\u6587\u4ef6\u5b58\u50a8\u76ee\u5f55");
+                    System.out.println("File storage directory has been created");
                 } else {
-                    System.out.println("\u521b\u5efa\u76ee\u5f55\u5931\u8d25");
+                    System.out.println("Create directory failed");
                 }
             }
             File file = new File(filePath);
             if (!file.exists()) {
-                System.out.println("\u8981\u6253\u5f00\u7684\u6587\u4ef6\u4e0d\u5b58\u5728");
-                System.out.println("\u5f00\u59cb\u8bfb\u5165");
+                System.out.println("The file to be opened does not exist");
+                System.out.println("Start reading");
                 FileOutputStream fos = new FileOutputStream(file);
-                System.out.println("\u5df2\u7ecf\u521b\u5efa\u8be5\u6587\u4ef6");
+                System.out.println("The file has been created");
                 fos.close();
             }
         } catch (Exception e) {
@@ -117,7 +117,7 @@ public class FileUtils {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(new File(Environment.getExternalStorageDirectory(), DEFAULT_FILENAME)));
                 bw.write(info);
                 bw.flush();
-                System.out.println("\u5199\u5165\u6210\u529f");
+                System.out.println("Write success");
             } catch (Exception e) {
                 e.printStackTrace();
             }

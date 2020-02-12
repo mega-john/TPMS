@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,23 +40,23 @@ public class Electricity_Query extends Activity {
                 }
                 if (buff[3] == 0) {
                     if (Electricity_Query.this.rl_top_left_id != null) {
-                        Electricity_Query.this.rl_top_left_id.setText(String.valueOf(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d)) + "V");
+                        Electricity_Query.this.rl_top_left_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d) + "V");
                     }
                 } else if (buff[3] == 1) {
                     if (Electricity_Query.this.rl_top_right_id != null) {
-                        Electricity_Query.this.rl_top_right_id.setText(String.valueOf(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d)) + "V");
+                        Electricity_Query.this.rl_top_right_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d) + "V");
                     }
                 } else if (buff[3] == 16) {
                     if (Electricity_Query.this.rl_low_left_id != null) {
-                        Electricity_Query.this.rl_low_left_id.setText(String.valueOf(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d)) + "V");
+                        Electricity_Query.this.rl_low_left_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d) + "V");
                     }
                 } else if (buff[3] == 17) {
                     if (Electricity_Query.this.rl_low_right_id != null) {
-                        Electricity_Query.this.rl_low_right_id.setText(String.valueOf(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d)) + "V");
+                        Electricity_Query.this.rl_low_right_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d) + "V");
                     }
                 } else if (buff[3] == 5 && TpmsServer.getBackUpTyreStaus().booleanValue() && Electricity_Query.this.backup_tire_id != null) {
                     if (Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue() < 42) {
-                        Electricity_Query.this.backup_tire_id.setText(String.valueOf(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d) + "V");
+                        Electricity_Query.this.backup_tire_id.setText(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 255), 2).intValue()) * 0.1d + "V");
                     } else {
                         Electricity_Query.this.backup_tire_id.setText("--");
                     }
@@ -75,12 +76,12 @@ public class Electricity_Query extends Activity {
         this.mUSBService = TpmsServer.getInstance();
         this.mUSBService.addActivity(this);
         this.mContext = this;
-        this.rl_top_left_id = (TextView) findViewById(R.id.rl_top_left_id);
-        this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
-        this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
-        this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
-        this.ico_car = (ImageView) findViewById(R.id.ico_car);
+        this.rl_top_left_id = findViewById(R.id.rl_top_left_id);
+        this.rl_top_right_id = findViewById(R.id.rl_top_right_id);
+        this.rl_low_left_id = findViewById(R.id.rl_low_left_id);
+        this.rl_low_right_id = findViewById(R.id.rl_low_right_id);
+        this.backup_tire_id = findViewById(R.id.backup_tire_id);
+        this.ico_car = findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car_pharos);
         }
@@ -91,10 +92,10 @@ public class Electricity_Query extends Activity {
         this.mUSBService.registerHandler(this.mHandler);
         if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
             if (findViewById(R.id.backup_tire_bat) != null) {
-                findViewById(R.id.backup_tire_bat).setVisibility(0);
+                findViewById(R.id.backup_tire_bat).setVisibility(View.VISIBLE);
             }
         } else if (findViewById(R.id.backup_tire_bat) != null) {
-            findViewById(R.id.backup_tire_bat).setVisibility(8);
+            findViewById(R.id.backup_tire_bat).setVisibility(View.GONE);
         }
     }
 

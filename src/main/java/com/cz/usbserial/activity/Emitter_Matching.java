@@ -220,10 +220,10 @@ public class Emitter_Matching extends Activity {
         setTimeNsSearchID(1);
         if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
             if (findViewById(R.id.backup_tire_matching) != null) {
-                findViewById(R.id.backup_tire_matching).setVisibility(0);
+                findViewById(R.id.backup_tire_matching).setVisibility(View.VISIBLE);
             }
         } else if (findViewById(R.id.backup_tire_matching) != null) {
-            findViewById(R.id.backup_tire_matching).setVisibility(8);
+            findViewById(R.id.backup_tire_matching).setVisibility(View.GONE);
         }
         if (!"".equals(TpmsServer.getLeft1_ID()) && this.rl_top_left_id != null) {
             this.rl_top_left_id.setText(TpmsServer.getLeft1_ID());

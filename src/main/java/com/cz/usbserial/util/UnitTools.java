@@ -34,15 +34,15 @@ public class UnitTools {
             double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
             switch (unit) {
                 case 0:
-                    t.setText(String.valueOf(((int) Math.round(data * 10.0d)) / 10) + " ");
+                    t.setText(((int) Math.round(data * 10.0d)) / 10 + " ");
                     unit_id.setText("Kpa");
                     return;
                 case 1:
-                    t.setText(String.valueOf(((double) Math.round((data / 6.89d) * 10.0d)) / 10.0d) + " ");
+                    t.setText(((double) Math.round((data / 6.89d) * 10.0d)) / 10.0d + " ");
                     unit_id.setText("Psi");
                     return;
                 case 2:
-                    t.setText(String.valueOf(((double) Math.round(data / 10.0d)) / 10.0d) + " ");
+                    t.setText(((double) Math.round(data / 10.0d)) / 10.0d + " ");
                     unit_id.setText("Bar");
                     return;
                 default:
@@ -58,23 +58,20 @@ public class UnitTools {
         int data = Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue() - 50;
         switch (unit) {
             case 0:
-                t.setText(String.valueOf(data) + " ");
+                t.setText(data + " ");
                 unit_id.setText(" \u2103");
                 break;
             case 1:
-                t.setText(String.valueOf(((double) Math.round(((((double) data) * 1.8d) + 32.0d) * 10.0d)) / 10.0d) + " ");
+                t.setText(((double) Math.round(((((double) data) * 1.8d) + 32.0d) * 10.0d)) / 10.0d + " ");
                 unit_id.setText(" \u2109");
                 break;
         }
-        if (Tools.isHT(data, TpmsServer.getWarnHT())) {
-            return true;
-        }
-        return false;
+        return Tools.isHT(data, TpmsServer.getWarnHT());
     }
 
     public static int returnWarnP_HIGHT(byte b, int id) {
         double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
-        if (id == 0) {
+        if (0 == id) {
             if (data > ((double) TpmsServer.getWarnHT())) {
                 return 1;
             }
@@ -98,7 +95,7 @@ public class UnitTools {
 
     public static int returnWarnP_LOW(byte b, int id) {
         double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
-        if (id == 0) {
+        if (0 == id) {
             if (data < ((double) TpmsServer.getWarnLP())) {
                 return 1;
             }
@@ -125,13 +122,13 @@ public class UnitTools {
             TpmsServer.setWarnHP(progress + 100);
             switch (unit) {
                 case 0:
-                    t.setText(String.valueOf(progress + 100) + "Kpa");
+                    t.setText((progress + 100) + "Kpa");
                     return;
                 case 1:
-                    t.setText(String.valueOf(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d)) + "Psi");
+                    t.setText(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d) + "Psi");
                     return;
                 case 2:
-                    t.setText(String.valueOf(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d)) + "Bar");
+                    t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
                     return;
                 default:
                     return;
@@ -144,13 +141,13 @@ public class UnitTools {
             TpmsServer.setWarnLP(progress + 100);
             switch (unit) {
                 case 0:
-                    t.setText(String.valueOf(progress + 100) + "Kpa");
+                    t.setText((progress + 100) + "Kpa");
                     return;
                 case 1:
-                    t.setText(String.valueOf(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d)) + "Psi");
+                    t.setText(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d) + "Psi");
                     return;
                 case 2:
-                    t.setText(String.valueOf(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d)) + "Bar");
+                    t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
                     return;
                 default:
                     return;
@@ -163,10 +160,10 @@ public class UnitTools {
             TpmsServer.setWarnHT(progress + 10);
             switch (unit) {
                 case 0:
-                    t.setText(String.valueOf(progress + 10) + "\u2103");
+                    t.setText((progress + 10) + "\u2103");
                     return;
                 case 1:
-                    t.setText(String.valueOf(Math.round(((((double) (progress + 50)) * 1.8d) + 32.0d) - 72.0d)) + "\u2109");
+                    t.setText(Math.round(((((double) (progress + 50)) * 1.8d) + 32.0d) - 72.0d) + "\u2109");
                     return;
                 default:
                     return;
@@ -210,30 +207,20 @@ public class UnitTools {
     }
 
     public static boolean returnState(byte b, TextView t, Context context) {
-        if (warning_AIR(b).booleanValue() || warning_P(b).booleanValue() || warning_Signal(b).booleanValue()) {
-            return true;
-        }
-        return false;
+        return warning_AIR(b).booleanValue() || warning_P(b).booleanValue() || warning_Signal(b).booleanValue();
     }
 
     public static boolean returnW(byte b) {
-        if (!warning_AIR(b).booleanValue() && !warning_P(b).booleanValue() && !warning_Signal(b).booleanValue()) {
-            return false;
-        }
-        return true;
+        return warning_AIR(b).booleanValue() || warning_P(b).booleanValue() || warning_Signal(b).booleanValue();
     }
 
     public static boolean returnW2(byte data) {
         boolean z;
-        if (getBit(data, 3) || getBit(data, 4) || getBit(data, 5)) {
-            z = true;
-        } else {
-            z = false;
-        }
+        z = getBit(data, 3) || getBit(data, 4) || getBit(data, 5);
         setTag(new StringBuilder(String.valueOf(z)).toString());
-        setTag(String.valueOf(getBit(data, 3)) + "1");
-        setTag(String.valueOf(getBit(data, 4)) + "2");
-        setTag(String.valueOf(getBit(data, 5)) + "3");
+        setTag(getBit(data, 3) + "1");
+        setTag(getBit(data, 4) + "2");
+        setTag(getBit(data, 5) + "3");
         return getBit(data, 3) || getBit(data, 4) || getBit(data, 5);
     }
 

@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProlificSerialDriver implements UsbSerialDriver {
-    /* access modifiers changed from: private */
-    public final String TAG = ProlificSerialDriver.class.getSimpleName();
+    private final String TAG = ProlificSerialDriver.class.getSimpleName();
     private final UsbDevice mDevice;
     private final UsbSerialPort mPort;
 

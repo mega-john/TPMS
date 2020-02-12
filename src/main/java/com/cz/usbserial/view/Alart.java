@@ -17,8 +17,7 @@ import java.util.Locale;
 
 public class Alart {
     private static Alart mEasyTouch;
-    /* access modifiers changed from: private */
-    public Context context;
+    private Context context;
     private boolean isShowIng = false;
     private ViewHolder mHolder;
     private WindowManager.LayoutParams mLayoutParams;
@@ -38,7 +37,7 @@ public class Alart {
     }
 
     private void creatWM() {
-        this.mWindowManager = (WindowManager) this.context.getSystemService("window");
+        this.mWindowManager = (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
         this.mLayoutParams = new WindowManager.LayoutParams();
         this.mLayoutParams.type = 2003;
         this.mLayoutParams.format = -3;
@@ -48,11 +47,11 @@ public class Alart {
     public void showDialog(String str) {
         if (!this.isShowIng) {
             if (this.mainView == null) {
-                this.mainView = LayoutInflater.from(this.context).inflate(R.layout.warn_app_dialog, (ViewGroup) null);
-                this.mHolder = new ViewHolder(this, (ViewHolder) null);
-                this.mHolder.btn_examine = (Button) this.mainView.findViewById(R.id.btn_examine);
-                this.mHolder.btn_unexamine = (Button) this.mainView.findViewById(R.id.btn_unexamine);
-                this.mHolder.tv_warn_data = (TextView) this.mainView.findViewById(R.id.tv_warn_data);
+                this.mainView = LayoutInflater.from(this.context).inflate(R.layout.warn_app_dialog, null);
+                this.mHolder = new ViewHolder(this, null);
+                this.mHolder.btn_examine = this.mainView.findViewById(R.id.btn_examine);
+                this.mHolder.btn_unexamine = this.mainView.findViewById(R.id.btn_unexamine);
+                this.mHolder.tv_warn_data = this.mainView.findViewById(R.id.tv_warn_data);
                 if (str == null || "".equals(str)) {
                     str = this.context.getString(R.string.alart_tip);
                 }
@@ -63,7 +62,7 @@ public class Alart {
                     this.mHolder.btn_examine.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             Intent intent = new Intent(Alart.this.context, MainActivity.class);
-                            intent.setFlags(268435456);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             Alart.this.context.startActivity(intent);
                             Alart.this.closeDialog();
                         }
@@ -100,25 +99,17 @@ public class Alart {
     }
 
     private boolean isZh() {
-        if (this.context.getResources().getConfiguration().locale.equals(Locale.SIMPLIFIED_CHINESE)) {
-            return true;
-        }
-        return false;
+        return this.context.getResources().getConfiguration().locale.equals(Locale.SIMPLIFIED_CHINESE);
     }
 
     private class ViewHolder {
-        /* access modifiers changed from: private */
-        public Button btn_examine;
-        /* access modifiers changed from: private */
-        public Button btn_unexamine;
-        /* access modifiers changed from: private */
-        public TextView tv_warn_data;
+        private Button btn_examine;
+        private Button btn_unexamine;
+        private TextView tv_warn_data;
 
         private ViewHolder() {
         }
 
-        /* synthetic */ ViewHolder(Alart alart, ViewHolder viewHolder) {
-            this();
-        }
+        public ViewHolder(Alart alart, ViewHolder viewHolder) { this(); }
     }
 }
