@@ -66,28 +66,28 @@ public class UnitTools {
                 unit_id.setText(" \u2109");
                 break;
         }
-        return Tools.isHT(data, TpmsServer.getWarnHT());
+        return Tools.isHT(data, TpmsServer.getWarnHighTemperature());
     }
 
     public static int returnWarnP_HIGHT(byte b, int id) {
         double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
         if (0 == id) {
-            if (data > ((double) TpmsServer.getWarnHT())) {
+            if (data > ((double) TpmsServer.getWarnHighTemperature())) {
                 return 1;
             }
         } else if (16 == id) {
-            if (data > ((double) TpmsServer.getWarnHT())) {
+            if (data > ((double) TpmsServer.getWarnHighTemperature())) {
                 return 2;
             }
         } else if (1 == id) {
-            if (data > ((double) TpmsServer.getWarnHT())) {
+            if (data > ((double) TpmsServer.getWarnHighTemperature())) {
                 return 3;
             }
         } else if (17 == id) {
-            if (data > ((double) TpmsServer.getWarnHT())) {
+            if (data > ((double) TpmsServer.getWarnHighTemperature())) {
                 return 4;
             }
-        } else if (5 == id && data > ((double) TpmsServer.getWarnHT())) {
+        } else if (5 == id && data > ((double) TpmsServer.getWarnHighTemperature())) {
             return 5;
         }
         return 0;
@@ -96,22 +96,22 @@ public class UnitTools {
     public static int returnWarnP_LOW(byte b, int id) {
         double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
         if (0 == id) {
-            if (data < ((double) TpmsServer.getWarnLP())) {
+            if (data < ((double) TpmsServer.getWarnLowPressure())) {
                 return 1;
             }
         } else if (16 == id) {
-            if (data < ((double) TpmsServer.getWarnLP())) {
+            if (data < ((double) TpmsServer.getWarnLowPressure())) {
                 return 2;
             }
         } else if (1 == id) {
-            if (data < ((double) TpmsServer.getWarnLP())) {
+            if (data < ((double) TpmsServer.getWarnLowPressure())) {
                 return 3;
             }
         } else if (17 == id) {
-            if (data < ((double) TpmsServer.getWarnLP())) {
+            if (data < ((double) TpmsServer.getWarnLowPressure())) {
                 return 4;
             }
-        } else if (5 == id && data < ((double) TpmsServer.getWarnLP())) {
+        } else if (5 == id && data < ((double) TpmsServer.getWarnLowPressure())) {
             return 5;
         }
         return 0;
@@ -119,7 +119,7 @@ public class UnitTools {
 
     public static void returnHP(int progress, TextView t, int unit) {
         if (t != null) {
-            TpmsServer.setWarnHP(progress + 100);
+            TpmsServer.setWarnHighPressure(progress + 100);
             switch (unit) {
                 case 0:
                     t.setText((progress + 100) + "Kpa");
@@ -138,7 +138,7 @@ public class UnitTools {
 
     public static void returnDP(int progress, TextView t, int unit) {
         if (t != null) {
-            TpmsServer.setWarnLP(progress + 100);
+            TpmsServer.setWarnLowPressure(progress + 100);
             switch (unit) {
                 case 0:
                     t.setText((progress + 100) + "Kpa");
@@ -157,7 +157,7 @@ public class UnitTools {
 
     public static void returnT(int progress, TextView t, int unit) {
         if (t != null) {
-            TpmsServer.setWarnHT(progress + 10);
+            TpmsServer.setWarnHighTemperature(progress + 10);
             switch (unit) {
                 case 0:
                     t.setText((progress + 10) + "\u2103");

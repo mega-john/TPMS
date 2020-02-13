@@ -33,8 +33,6 @@ import com.cz.usbserial.tpms.R;
 import com.cz.usbserial.util.Tools;
 import com.cz.usbserial.util.UnitTools;
 import com.cz.usbserial.view.Alart;
-import com.tencent.bugly.Bugly;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,9 +43,8 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 public class TpmsServer extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
-    public static final int HP_PROGRESS = 220;
+    public static final int HP_PROGRESS = 120;
     public static final int HP_PROGRESS_STATAR = 100;
     public static final int HT_PROGRESS = 65;
     public static final int LP_PROGRESS = 80;
@@ -420,105 +417,105 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-    public static int getP_UNIT() {
+    public static int getPressure_UNIT() {
         if (sp != null) {
-            return sp.getInt("P", 2);
+            return sp.getInt("P", P_UNIT);
         }
         return 0;
     }
 
-    public static void setP_UNIT(int i) {
+    public static void setPressure_UNIT(int i) {
         if (sp != null) {
             sp.edit().putInt("P", i).commit();
         }
     }
 
-    public static int getT_UNIT() {
+    public static int getTemperature_UNIT() {
         if (sp != null) {
-            return sp.getInt("T", 0);
+            return sp.getInt("T", T_UNIT);
         }
         return 0;
     }
 
-    public static void setT_UNIT(int i) {
+    public static void setTemperature_UNIT(int i) {
         if (sp != null) {
             sp.edit().putInt("T", i).commit();
         }
     }
 
-    public static int getWarnHP_Progress() {
+    public static int getWarnHighPressure_Progress() {
         if (sp != null) {
             return sp.getInt("HP_PROGRESS", HP_PROGRESS);
         }
         return 0;
     }
 
-    public static void setWarnHP_Progress(int i) {
+    public static void setWarnHighPressure_Progress(int i) {
         if (sp != null) {
             sp.edit().putInt("HP_PROGRESS", i).commit();
         }
     }
 
-    public static int getWarnLP_Progress() {
+    public static int getWarnLowPressure_Progress() {
         if (sp != null) {
-            return sp.getInt("LP_PROGRESS", 80);
+            return sp.getInt("LP_PROGRESS", LP_PROGRESS);
         }
         return 0;
     }
 
-    public static void setWarnLP_Progress(int i) {
+    public static void setWarnLowPressure_Progress(int i) {
         if (sp != null) {
             sp.edit().putInt("LP_PROGRESS", i).commit();
         }
     }
 
-    public static int getWarnHT_Progress() {
+    public static int getWarnHighTemperature_Progress() {
         if (sp != null) {
-            return sp.getInt("HT_PROGRESS", 65);
+            return sp.getInt("HT_PROGRESS", HT_PROGRESS);
         }
         return 0;
     }
 
-    public static void setWarnHT_Progress(int i) {
+    public static void setWarnHighTemperature_Progress(int i) {
         if (sp != null) {
             sp.edit().putInt("HT_PROGRESS", i).commit();
         }
     }
 
-    public static int getWarnHP() {
+    public static int getWarnHighPressure() {
         if (sp != null) {
-            return sp.getInt("HP", 320);
+            return sp.getInt("HP", HP_PROGRESS);
         }
         return 0;
     }
 
-    public static void setWarnHP(int i) {
+    public static void setWarnHighPressure(int i) {
         if (sp != null) {
             sp.edit().putInt("HP", i).commit();
         }
     }
 
-    public static int getWarnLP() {
+    public static int getWarnLowPressure() {
         if (sp != null) {
             return sp.getInt("LP", 180);
         }
         return 0;
     }
 
-    public static void setWarnLP(int i) {
+    public static void setWarnLowPressure(int i) {
         if (sp != null) {
             sp.edit().putInt("LP", i).commit();
         }
     }
 
-    public static int getWarnHT() {
+    public static int getWarnHighTemperature() {
         if (sp != null) {
             return sp.getInt("HT", 75);
         }
         return 0;
     }
 
-    public static void setWarnHT(int i) {
+    public static void setWarnHighTemperature(int i) {
         if (sp != null) {
             sp.edit().putInt("HT", i).commit();
         }
@@ -821,9 +818,9 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             int ret = ServerDataP(b);
             ServerDataT(b);
             ServerDataWarn(b);
-            int retPH = getWarnHP();
-            int retPL = getWarnLP();
-            int retHT = getWarnHT();
+            int retPH = getWarnHighPressure();
+            int retPL = getWarnLowPressure();
+            int retHT = getWarnHighTemperature();
             HandShakeData(b);
             if (ret == 0 || retPH == 0 || retPL == 0 || retHT == 0) {
                 return false;
@@ -1325,8 +1322,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
     public void onCreate() {
         super.onCreate();
         Log.e(TAG, "cz onCreate ");
-        Bugly.init(getApplicationContext(), "52b5212ec9", false);
-        CrashReport.initCrashReport(getApplicationContext(), "52b5212ec9", false);
         sp = getSharedPreferences("TAG", 0);
         this.mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         this.mEntries = new ArrayList();

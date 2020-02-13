@@ -376,9 +376,6 @@
     <public name="presure_min_seekbar" id="2131361882" type="id" />
     <public name="temp_max" id="2131361883" type="id" />
     <public name="temp_max_seekbar" id="2131361884" type="id" />
-    <public name="vers_line" id="2131361885" type="id" />
-    <public name="verinfo" id="2131361886" type="id" />
-    <public name="vers_update_line" id="2131361887" type="id" />
     <public name="resdef_line" id="2131361888" type="id" />
     <public name="exit_app" id="2131361889" type="id" />
     <public name="match_id" id="2131361890" type="id" />

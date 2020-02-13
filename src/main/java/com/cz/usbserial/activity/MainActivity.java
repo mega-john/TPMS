@@ -14,7 +14,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -201,9 +200,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 int ret1 = MainActivity.this.ShowDataP((byte[]) msg.getData().get("data"));
                 int ret2 = MainActivity.this.ShowDataT((byte[]) msg.getData().get("data"));
-                int retPH = TpmsServer.getWarnHP();
-                int retPL = TpmsServer.getWarnLP();
-                int retHT = TpmsServer.getWarnHT();
+                int retPH = TpmsServer.getWarnHighPressure();
+                int retPL = TpmsServer.getWarnLowPressure();
+                int retHT = TpmsServer.getWarnHighTemperature();
                 if ((ret1 != 0 || ret2 != 0) && retPH != 0 && retPL != 0 && retHT != 0) {
                     if (ret1 == 1 || ret2 == 1) {
                         if (TpmsServer.left1_TyrePressure > retPH || TpmsServer.left1_TyrePressure < retPL || TpmsServer.left1_TyreTemperature > retHT || UnitTools.warning_AIR(TpmsServer.left1_Byte).booleanValue() || UnitTools.warning_P(TpmsServer.left1_Byte).booleanValue() || UnitTools.warning_Signal(TpmsServer.left1_Byte).booleanValue()) {
@@ -507,30 +506,30 @@ public class MainActivity extends Activity implements View.OnClickListener {
             int data = (int) (((double) Integer.valueOf(Integer.toBinaryString(buff[4] & 255), 2).intValue()) * 3.44d);
             switch (buff[3]) {
                 case 0:
-                    UnitTools.returnP(buff[4], this.Left1_P, TpmsServer.getP_UNIT(), this.Left1_P_UINT);
+                    UnitTools.returnP(buff[4], this.Left1_P, TpmsServer.getPressure_UNIT(), this.Left1_P_UINT);
                     ShowDataBat(buff[7], this.left1_bat);
                     ret = 1;
                     break;
                 case 1:
-                    UnitTools.returnP(buff[4], this.Right1_P, TpmsServer.getP_UNIT(), this.Right1_P_UINT);
+                    UnitTools.returnP(buff[4], this.Right1_P, TpmsServer.getPressure_UNIT(), this.Right1_P_UINT);
                     ShowDataBat(buff[7], this.right1_bat);
                     ret = 3;
                     break;
                 case 5:
                     if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
-                        UnitTools.returnP(buff[4], this.Backup_P, TpmsServer.getP_UNIT(), this.Backup_P_UINT);
+                        UnitTools.returnP(buff[4], this.Backup_P, TpmsServer.getPressure_UNIT(), this.Backup_P_UINT);
                         ShowDataBat(buff[7], this.backup_bat);
                         ret = 5;
                         break;
                     }
                     break;
                 case 16:
-                    UnitTools.returnP(buff[4], this.Left2_P, TpmsServer.getP_UNIT(), this.Left2_P_UINT);
+                    UnitTools.returnP(buff[4], this.Left2_P, TpmsServer.getPressure_UNIT(), this.Left2_P_UINT);
                     ShowDataBat(buff[7], this.left2_bat);
                     ret = 2;
                     break;
                 case 17:
-                    UnitTools.returnP(buff[4], this.Right2_P, TpmsServer.getP_UNIT(), this.Right2_P_UINT);
+                    UnitTools.returnP(buff[4], this.Right2_P, TpmsServer.getPressure_UNIT(), this.Right2_P_UINT);
                     ShowDataBat(buff[7], this.right2_bat);
                     ret = 4;
                     break;
@@ -550,30 +549,30 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (buff[2] == 10) {
             switch (buff[3]) {
                 case 0:
-                    UnitTools.returnT(buff[5], this.Left1_T, TpmsServer.getT_UNIT(), 0, this.Left1_T_UINT);
+                    UnitTools.returnT(buff[5], this.Left1_T, TpmsServer.getTemperature_UNIT(), 0, this.Left1_T_UINT);
                     ShowDataBat(buff[7], this.left1_bat);
                     ret = 1;
                     break;
                 case 1:
-                    UnitTools.returnT(buff[5], this.Right1_T, TpmsServer.getT_UNIT(), 0, this.Right1_T_UINT);
+                    UnitTools.returnT(buff[5], this.Right1_T, TpmsServer.getTemperature_UNIT(), 0, this.Right1_T_UINT);
                     ShowDataBat(buff[7], this.right1_bat);
                     ret = 3;
                     break;
                 case 5:
                     if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
-                        UnitTools.returnT(buff[5], this.Backup_T, TpmsServer.getT_UNIT(), 0, this.Backup_T_UINT);
+                        UnitTools.returnT(buff[5], this.Backup_T, TpmsServer.getTemperature_UNIT(), 0, this.Backup_T_UINT);
                         ShowDataBat(buff[7], this.backup_bat);
                         ret = 5;
                         break;
                     }
                     break;
                 case 16:
-                    UnitTools.returnT(buff[5], this.Left2_T, TpmsServer.getT_UNIT(), 0, this.Left2_T_UINT);
+                    UnitTools.returnT(buff[5], this.Left2_T, TpmsServer.getTemperature_UNIT(), 0, this.Left2_T_UINT);
                     ShowDataBat(buff[7], this.left2_bat);
                     ret = 2;
                     break;
                 case 17:
-                    UnitTools.returnT(buff[5], this.Right2_T, TpmsServer.getT_UNIT(), 0, this.Right2_T_UINT);
+                    UnitTools.returnT(buff[5], this.Right2_T, TpmsServer.getTemperature_UNIT(), 0, this.Right2_T_UINT);
                     ShowDataBat(buff[7], this.right2_bat);
                     ret = 4;
                     break;

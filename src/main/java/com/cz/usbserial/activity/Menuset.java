@@ -21,7 +21,12 @@ import com.cz.usbserial.tpms.R;
 import com.cz.usbserial.util.Tools;
 import com.cz.usbserial.util.UnitTools;
 import com.cz.usbserial.view.UnbindDialog;
-import com.tencent.bugly.beta.Beta;
+
+import static com.cz.usbserial.activity.TpmsServer.HP_PROGRESS;
+import static com.cz.usbserial.activity.TpmsServer.HT_PROGRESS;
+import static com.cz.usbserial.activity.TpmsServer.LP_PROGRESS;
+import static com.cz.usbserial.activity.TpmsServer.P_UNIT;
+import static com.cz.usbserial.activity.TpmsServer.T_UNIT;
 
 public class Menuset extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
     public static final int UPDATE_PS_MAX_VALUE = 2;
@@ -43,18 +48,18 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    UnitTools.returnT(TpmsServer.getWarnHT_Progress(), Menuset.this.tp_max_value, TpmsServer.getT_UNIT());
-                    UnitTools.returnHP(TpmsServer.getWarnHP_Progress(), Menuset.this.ps_max_value, TpmsServer.getP_UNIT());
-                    UnitTools.returnDP(TpmsServer.getWarnLP_Progress(), Menuset.this.ps_min_value, TpmsServer.getP_UNIT());
+                    UnitTools.returnT(TpmsServer.getWarnHighTemperature_Progress(), Menuset.this.tp_max_value, TpmsServer.getTemperature_UNIT());
+                    UnitTools.returnHP(TpmsServer.getWarnHighPressure_Progress(), Menuset.this.ps_max_value, TpmsServer.getPressure_UNIT());
+                    UnitTools.returnDP(TpmsServer.getWarnLowPressure_Progress(), Menuset.this.ps_min_value, TpmsServer.getPressure_UNIT());
                     return;
                 case 1:
-                    UnitTools.returnT(((Integer) msg.obj).intValue(), Menuset.this.tp_max_value, TpmsServer.getT_UNIT());
+                    UnitTools.returnT(((Integer) msg.obj).intValue(), Menuset.this.tp_max_value, TpmsServer.getTemperature_UNIT());
                     return;
                 case 2:
-                    UnitTools.returnHP(((Integer) msg.obj).intValue(), Menuset.this.ps_max_value, TpmsServer.getP_UNIT());
+                    UnitTools.returnHP(((Integer) msg.obj).intValue(), Menuset.this.ps_max_value, TpmsServer.getPressure_UNIT());
                     return;
                 case 3:
-                    UnitTools.returnDP(((Integer) msg.obj).intValue(), Menuset.this.ps_min_value, TpmsServer.getP_UNIT());
+                    UnitTools.returnDP(((Integer) msg.obj).intValue(), Menuset.this.ps_min_value, TpmsServer.getPressure_UNIT());
                     return;
                 default:
                     return;
@@ -69,7 +74,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     private ToggleButton MuteButton;
     private SeekBar.OnSeekBarChangeListener PsMaxBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         public void onStopTrackingTouch(SeekBar seekBar) {
-            TpmsServer.setWarnHP_Progress(Menuset.this.ps_max_progress);
+            TpmsServer.setWarnHighPressure_Progress(Menuset.this.ps_max_progress);
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -91,7 +96,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     };
     private SeekBar.OnSeekBarChangeListener PsMinBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         public void onStopTrackingTouch(SeekBar seekBar) {
-            TpmsServer.setWarnLP_Progress(Menuset.this.ps_min_progress);
+            TpmsServer.setWarnLowPressure_Progress(Menuset.this.ps_min_progress);
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -115,7 +120,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         int new_progress = 0;
 
         public void onStopTrackingTouch(SeekBar seekBar) {
-            TpmsServer.setWarnHT_Progress(this.new_progress);
+            TpmsServer.setWarnHighTemperature_Progress(this.new_progress);
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -130,7 +135,6 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         }
     };
     private View Transposition;
-    private TextView VerInfo;
     private RadioGroup kpa_group;
     private RadioButton rb1;
     private RadioButton rb2;
@@ -141,8 +145,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     private RadioButton temp2;
     private RadioGroup tmp_group;
     private SeekBar tp_max_seekbar;
-    private View vers_line;
-    private View vers_update_line;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,11 +180,6 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.Electricity_query.setOnClickListener(this);
         this.Exit_app = findViewById(R.id.exit_app);
         this.Exit_app.setOnClickListener(this);
-        this.vers_line = findViewById(R.id.vers_line);
-        this.vers_line.setOnClickListener(this);
-        this.VerInfo = findViewById(R.id.verinfo);
-        this.vers_update_line = findViewById(R.id.vers_update_line);
-        this.vers_update_line.setOnClickListener(this);
         this.resdef_line = findViewById(R.id.resdef_line);
         this.resdef_line.setOnClickListener(this);
         this.kpa_group = findViewById(R.id.kpa_unit);
@@ -200,42 +198,42 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.ps_max_seekbar = findViewById(R.id.presure_max_seekbar);
         this.ps_min_seekbar = findViewById(R.id.presure_min_seekbar);
         this.tp_max_seekbar = findViewById(R.id.temp_max_seekbar);
-        this.ps_max_seekbar.setMax(700);
+        this.ps_max_seekbar.setMax(250);
         this.ps_max_seekbar.setOnSeekBarChangeListener(this.PsMaxBarChangeListener);
-        this.ps_min_seekbar.setMax(700);
+        this.ps_min_seekbar.setMax(250);
         this.ps_min_seekbar.setOnSeekBarChangeListener(this.PsMinBarChangeListener);
         this.tp_max_seekbar.setMax(116);
         this.tp_max_seekbar.setOnSeekBarChangeListener(this.TpBarChangeListener);
     }
 
     public void defView() {
-        if (!"".equals(TpmsServer.VERS_INFO)) {
-            if (this.VerInfo != null) {
-                this.VerInfo.setText("V" + TpmsServer.VERS_INFO + "\n" + Tools.getAppBuildTime(this.mContext));
-            }
-        } else if (this.VerInfo != null) {
-            try {
-                this.VerInfo.setText("V" + Tools.getVersionName(this.mContext) + " " + Tools.getAppBuildTime(this.mContext));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        if (TpmsServer.getP_UNIT() == 0) {
+//        if (!"".equals(TpmsServer.VERS_INFO)) {
+//            if (this.VerInfo != null) {
+//                this.VerInfo.setText("V" + TpmsServer.VERS_INFO + "\n" + Tools.getAppBuildTime(this.mContext));
+//            }
+//        } else if (this.VerInfo != null) {
+//            try {
+//                this.VerInfo.setText("V" + Tools.getVersionName(this.mContext) + " " + Tools.getAppBuildTime(this.mContext));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+        if (TpmsServer.getPressure_UNIT() == 0) {
             if (this.rb1 != null) {
                 this.rb1.setChecked(true);
             }
-        } else if (TpmsServer.getP_UNIT() == 1) {
+        } else if (TpmsServer.getPressure_UNIT() == 1) {
             if (this.rb2 != null) {
                 this.rb2.setChecked(true);
             }
-        } else if (TpmsServer.getP_UNIT() == 2 && this.rb3 != null) {
+        } else if (TpmsServer.getPressure_UNIT() == P_UNIT && this.rb3 != null) {
             this.rb3.setChecked(true);
         }
-        if (TpmsServer.getT_UNIT() == 0) {
+        if (TpmsServer.getTemperature_UNIT() == T_UNIT) {
             if (this.temp1 != null) {
                 this.temp1.setChecked(true);
             }
-        } else if (TpmsServer.getT_UNIT() == 1 && this.temp2 != null) {
+        } else if (TpmsServer.getTemperature_UNIT() == 1 && this.temp2 != null) {
             this.temp2.setChecked(true);
         }
         if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
@@ -260,25 +258,25 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
             this.BootButton.setChecked(false);
         }
         if (this.ps_max_seekbar != null) {
-            this.ps_max_seekbar.setProgress(TpmsServer.getWarnHP_Progress());
+            this.ps_max_seekbar.setProgress(TpmsServer.getWarnHighPressure_Progress());
         }
         if (this.ps_min_seekbar != null) {
-            this.ps_min_seekbar.setProgress(TpmsServer.getWarnLP_Progress());
+            this.ps_min_seekbar.setProgress(TpmsServer.getWarnLowPressure_Progress());
         }
         if (this.tp_max_seekbar != null) {
-            this.tp_max_seekbar.setProgress(TpmsServer.getWarnHT_Progress());
+            this.tp_max_seekbar.setProgress(TpmsServer.getWarnHighTemperature_Progress());
         }
     }
 
     public void defInitView() {
-        TpmsServer.setP_UNIT(2);
-        TpmsServer.setT_UNIT(0);
+        TpmsServer.setPressure_UNIT(P_UNIT);
+        TpmsServer.setTemperature_UNIT(T_UNIT);
         TpmsServer.setBackUpTyreStaus(false);
         TpmsServer.setMuteStaus(false);
         TpmsServer.setBootStaus(true);
-        TpmsServer.setWarnHP_Progress(TpmsServer.HP_PROGRESS);
-        TpmsServer.setWarnLP_Progress(80);
-        TpmsServer.setWarnHT_Progress(65);
+        TpmsServer.setWarnHighPressure_Progress(HP_PROGRESS);
+        TpmsServer.setWarnLowPressure_Progress(LP_PROGRESS);
+        TpmsServer.setWarnHighTemperature_Progress(HT_PROGRESS);
     }
 
     public void onClick(View v) {
@@ -304,29 +302,17 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
                     return;
                 }
                 return;
-            case R.id.vers_line /*2131361885*/:
-                if (vers_info_btn_count > 5) {
-                    Intent intent3 = new Intent(this.mContext, SeriaTest.class);
-                    if (intent3 != null) {
-                        this.mContext.startActivity(intent3);
-                    }
-                    vers_info_btn_count = 0;
-                }
-                vers_info_btn_count++;
-                return;
-            case R.id.vers_update_line /*2131361887*/:
-                if (Tools.isNetworkAvailable(this.mContext)) {
-                    try {
-                        Beta.checkUpgrade();
-                        return;
-                    } catch (Exception e) {
-                        Tools.Toast(getApplicationContext(), "Already the latest version");
-                        return;
-                    }
-                } else {
-                    Tools.Toast(getApplicationContext(), getString(R.string.no_internet));
-                    return;
-                }
+                //TODO
+//            case R.id.vers_line /*2131361885*/:
+//                if (vers_info_btn_count > 5) {
+//                    Intent intent3 = new Intent(this.mContext, SeriaTest.class);
+//                    if (intent3 != null) {
+//                        this.mContext.startActivity(intent3);
+//                    }
+//                    vers_info_btn_count = 0;
+//                }
+//                vers_info_btn_count++;
+//                return;
             case R.id.resdef_line /*2131361888*/:
                 View view1 = LayoutInflater.from(this.mContext).inflate(R.layout.setdefault_dialog, null);
                 final UnbindDialog dialog1 = new UnbindDialog(this.mContext, view1);
@@ -370,19 +356,19 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_kpa /*2131361870*/:
-                TpmsServer.setP_UNIT(0);
+                TpmsServer.setPressure_UNIT(0);
                 break;
             case R.id.rb_psi /*2131361871*/:
-                TpmsServer.setP_UNIT(1);
+                TpmsServer.setPressure_UNIT(1);
                 break;
             case R.id.rb_bar /*2131361872*/:
-                TpmsServer.setP_UNIT(2);
+                TpmsServer.setPressure_UNIT(P_UNIT);
                 break;
             case R.id.temp0 /*2131361874*/:
-                TpmsServer.setT_UNIT(0);
+                TpmsServer.setTemperature_UNIT(T_UNIT);
                 break;
             case R.id.temp1 /*2131361875*/:
-                TpmsServer.setT_UNIT(1);
+                TpmsServer.setTemperature_UNIT(1);
                 break;
         }
         this.mHandler.sendEmptyMessage(0);
