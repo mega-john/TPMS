@@ -202,7 +202,7 @@ public class Emitter_Matching extends Activity {
         this.backup_tire_id = findViewById(R.id.backup_tire_id);
         this.ico_car = findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
-            this.ico_car.setImageResource(R.drawable.ico_car_pharos);
+            this.ico_car.setImageResource(R.drawable.ico_car);
         }
         stopTimerSearchID();
         startTimerSearchID();

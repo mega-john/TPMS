@@ -69,6 +69,9 @@ public class HeartbeatServer extends Service {
 
     public void onDestroy() {
         super.onDestroy();
+        if (this.mContext != null) {
+            this.mContext.unregisterReceiver(this.mReceiver);
+        }
         stopTimer();
     }
 

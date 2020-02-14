@@ -174,7 +174,7 @@ public class UnitTools {
     public static void show_car_iamge_warn(Context mContext, ImageView v, boolean left1, boolean left2, boolean right1, boolean right2, boolean space) {
         if (v != null) {
             Resources r = mContext.getResources();
-            layers[0] = r.getDrawable(R.drawable.car);
+            layers[0] = r.getDrawable(R.drawable.ico_car);
             if (left1) {
                 layers[1] = r.getDrawable(R.drawable.car_left1_warn);
             } else {

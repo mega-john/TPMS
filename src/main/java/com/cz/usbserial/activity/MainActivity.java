@@ -420,7 +420,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         this.topMenuButton.setOnClickListener(this);
         this.topMuteButton.setOnClickListener(this);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
-            this.ico_car.setImageResource(R.drawable.ico_car_pharos);
+            this.ico_car.setImageResource(R.drawable.ico_car);
         }
     }
 

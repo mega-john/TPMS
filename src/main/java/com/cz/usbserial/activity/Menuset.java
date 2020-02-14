@@ -71,6 +71,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     private View Electricity_query;
     private View Emitter_Matching;
     private View Exit_app;
+    private View SerialTest;
     private ToggleButton MuteButton;
     private SeekBar.OnSeekBarChangeListener PsMaxBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -180,6 +181,8 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.Electricity_query.setOnClickListener(this);
         this.Exit_app = findViewById(R.id.exit_app);
         this.Exit_app.setOnClickListener(this);
+        this.SerialTest = findViewById(R.id.serial_test);
+        this.SerialTest.setOnClickListener(this);
         this.resdef_line = findViewById(R.id.resdef_line);
         this.resdef_line.setOnClickListener(this);
         this.kpa_group = findViewById(R.id.kpa_unit);
@@ -347,6 +350,13 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
                         dialog.dismiss();
                     }
                 });
+                return;
+            case R.id.serial_test :
+                Intent si = new Intent(this.mContext, SeriaTest.class);
+                if (si != null) {
+                    this.mContext.startActivity(si);
+                    return;
+                }
                 return;
             default:
                 return;

@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingTop="40dp"
-                    android:src="@drawable/car" />
+                    android:src="@drawable/ico_car" />
             </LinearLayout>
 
             <LinearLayout

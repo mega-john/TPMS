@@ -295,7 +295,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             }
         }
     };
-    private Timer timer1;
+//    private Timer timer1;
 
     public static TpmsServer getInstance() {
         return SingletonHolder.mUSBService;
@@ -1467,15 +1467,16 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             this.mContext.unregisterReceiver(this.mUsbReceiver);
         }
         stopTimer();
-        if (this.timer1 != null) {
-            this.timer1.cancel();
-        }
+//        if (this.timer1 != null) {
+//            this.timer1.cancel();
+//        }
         if (sp != null) {
             sp.unregisterOnSharedPreferenceChangeListener(this);
             sp = null;
         }
-        if (this.mediaPlayer != null || this.mediaPlayer.isPlaying()) {
-            this.mediaPlayer.stop();
+        if (this.mediaPlayer != null) {
+            if(this.mediaPlayer.isPlaying())
+                this.mediaPlayer.stop();
             this.mediaPlayer.release();
             this.mediaPlayer = null;
         }

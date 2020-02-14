@@ -147,7 +147,7 @@ public class Tyre_Transposition extends Activity {
         this.context = this;
         this.ico_car = findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
-            this.ico_car.setImageResource(R.drawable.ico_car_pharos);
+            this.ico_car.setImageResource(R.drawable.ico_car);
         }
         this.rl_top_left_id = findViewById(R.id.rl_top_left_id);
         this.rl_top_right_id = findViewById(R.id.rl_top_right_id);
