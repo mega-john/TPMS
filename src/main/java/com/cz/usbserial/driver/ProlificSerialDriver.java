@@ -4,7 +4,6 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
-//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
     public static Map<Integer, int[]> getSupportedDevices() {
         Map<Integer, int[]> supportedDevices = new LinkedHashMap<>();
-        supportedDevices.put(Integer.valueOf(UsbId.VENDOR_PROLIFIC), new int[]{8963});
+        supportedDevices.put(Integer.valueOf(UsbId.VENDOR_PROLIFIC), new int[]{UsbId.PROLIFIC_PL2303});
         return supportedDevices;
     }
 
@@ -90,7 +89,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         private final byte[] inControlTransfer(int requestType, int request, int value, int index, int length) throws IOException {
             byte[] buffer = new byte[length];
-            int result = this.mConnection.controlTransfer(requestType, request, value, index, buffer, length, 1000);
+            int result = this.mConnection.controlTransfer(requestType, request, value, index, buffer, length, USB_READ_TIMEOUT_MILLIS);
             if (result == length) {
                 return buffer;
             }
@@ -99,18 +98,18 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         private final void outControlTransfer(int requestType, int request, int value, int index, byte[] data) throws IOException {
             int length = data == null ? 0 : data.length;
-            int result = this.mConnection.controlTransfer(requestType, request, value, index, data, length, 5000);
+            int result = this.mConnection.controlTransfer(requestType, request, value, index, data, length, USB_WRITE_TIMEOUT_MILLIS);
             if (result != length) {
                 throw new IOException(String.format("ControlTransfer with value 0x%x failed: %d", new Object[]{Integer.valueOf(value), Integer.valueOf(result)}));
             }
         }
 
         private final byte[] vendorIn(int value, int index, int length) throws IOException {
-            return inControlTransfer(192, 1, value, index, length);
+            return inControlTransfer(PROLIFIC_VENDOR_IN_REQTYPE, 1, value, index, length);
         }
 
         private final void vendorOut(int value, int index, byte[] data) throws IOException {
-            outControlTransfer(64, 1, value, index, data);
+            outControlTransfer(PROLIFIC_VENDOR_OUT_REQTYPE, 1, value, index, data);
         }
 
         private void resetDevice() throws IOException {
@@ -118,7 +117,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
         }
 
         private final void ctrlOut(int request, int value, int index, byte[] data) throws IOException {
-            outControlTransfer(33, request, value, index, data);
+            outControlTransfer(PROLIFIC_CTRL_OUT_REQTYPE, request, value, index, data);
         }
 
         private void doBlackMagic() throws IOException {
@@ -140,15 +139,14 @@ public class ProlificSerialDriver implements UsbSerialDriver {
             this.mControlLinesValue = newControlLinesValue;
         }
 
-        /* access modifiers changed from: private */
-        public final void readStatusThreadFunction() {
+        private final void readStatusThreadFunction() {
             while (!this.mStopReadStatusThread) {
                 try {
                     byte[] buffer = new byte[10];
                     int readBytesCount = this.mConnection.bulkTransfer(this.mInterruptEndpoint, buffer, 10, 500);
                     if (readBytesCount > 0) {
                         if (readBytesCount == 10) {
-                            this.mStatus = buffer[8] & 255;
+                            this.mStatus = buffer[8] & 0xFF;
                         } else {
                             throw new IOException(String.format("Invalid CTS / DSR / CD / RI status buffer received, expected %d bytes, but received %d", new Object[]{10, Integer.valueOf(readBytesCount)}));
                         }
@@ -168,7 +166,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                         if (this.mConnection.bulkTransfer(this.mInterruptEndpoint, buffer, 10, 100) != 10) {
                             Log.w(ProlificSerialDriver.this.TAG, "Could not read initial CTS / DSR / CD / RI status");
                         } else {
-                            this.mStatus = buffer[8] & 255;
+                            this.mStatus = buffer[8] & 0xFF;
                         }
                         this.mReadStatusThread = new Thread(new Runnable() {
                             public void run() {
@@ -327,10 +325,10 @@ public class ProlificSerialDriver implements UsbSerialDriver {
         public void setParameters(int baudRate, int dataBits, int stopBits, int parity) throws IOException {
             if (this.mBaudRate != baudRate || this.mDataBits != dataBits || this.mStopBits != stopBits || this.mParity != parity) {
                 byte[] lineRequestData = new byte[7];
-                lineRequestData[0] = (byte) (baudRate & 255);
-                lineRequestData[1] = (byte) ((baudRate >> 8) & 255);
-                lineRequestData[2] = (byte) ((baudRate >> 16) & 255);
-                lineRequestData[3] = (byte) ((baudRate >> 24) & 255);
+                lineRequestData[0] = (byte) (baudRate & 0xFF);
+                lineRequestData[1] = (byte) ((baudRate >> 8) & 0xFF);
+                lineRequestData[2] = (byte) ((baudRate >> 16) & 0xFF);
+                lineRequestData[3] = (byte) ((baudRate >> 24) & 0xFF);
                 switch (stopBits) {
                     case 1:
                         lineRequestData[4] = 0;
@@ -374,15 +372,15 @@ public class ProlificSerialDriver implements UsbSerialDriver {
         }
 
         public boolean getCD() throws IOException {
-            return testStatusFlag(1);
+            return testStatusFlag(STATUS_FLAG_CD);
         }
 
         public boolean getCTS() throws IOException {
-            return testStatusFlag(128);
+            return testStatusFlag(STATUS_FLAG_CTS);
         }
 
         public boolean getDSR() throws IOException {
-            return testStatusFlag(2);
+            return testStatusFlag(STATUS_FLAG_DSR);
         }
 
         public boolean getDTR() throws IOException {

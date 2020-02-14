@@ -1,5 +1,6 @@
 package com.cz.usbserial.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -37,6 +38,7 @@ public class HeartbeatServer extends Service {
         }
     };
 
+    @SuppressLint("NewApi")
     private boolean isRunningForeground(Context context) {
         String currentPackageName = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningTasks(1).get(0).topActivity.getPackageName();
         if (TextUtils.isEmpty(currentPackageName) || !currentPackageName.equals(getPackageName())) {

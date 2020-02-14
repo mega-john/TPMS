@@ -21,8 +21,8 @@ public class SerialInputOutputManager implements Runnable {
     }
 
     public SerialInputOutputManager(UsbSerialPort driver, Listener listener) {
-        this.mReadBuffer = ByteBuffer.allocate(4096);
-        this.mWriteBuffer = ByteBuffer.allocate(4096);
+        this.mReadBuffer = ByteBuffer.allocate(BUFSIZ);
+        this.mWriteBuffer = ByteBuffer.allocate(BUFSIZ);
         this.mState = State.STOPPED;
         this.mDriver = driver;
         this.mListener = listener;

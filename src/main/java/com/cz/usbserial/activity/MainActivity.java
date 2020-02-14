@@ -503,7 +503,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             return 0;
         }
         if (buff[2] == 10) {
-            int data = (int) (((double) Integer.valueOf(Integer.toBinaryString(buff[4] & 255), 2).intValue()) * 3.44d);
+            int data = (int) (((double) Integer.valueOf(Integer.toBinaryString(buff[4] & 0xFF), 2).intValue()) * 3.44d);
             switch (buff[3]) {
                 case 0:
                     UnitTools.returnP(buff[4], this.Left1_P, TpmsServer.getPressure_UNIT(), this.Left1_P_UINT);
@@ -586,7 +586,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public int ShowDataWarn(byte[] buff) {
         if (buff.length >= 10 && buff[2] == 10) {
-            byte data = (byte) (buff[6] & 255);
+            byte data = (byte) (buff[6] & 0xFF);
             switch (buff[3]) {
                 case 0:
                     TpmsServer.left1_Byte = data;

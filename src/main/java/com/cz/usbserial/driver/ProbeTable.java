@@ -18,7 +18,7 @@ public class ProbeTable {
     public ProbeTable addDriver(Class<? extends UsbSerialDriver> driverClass) {
         try {
             try {
-                for (Object entry : ((Map) driverClass.getMethod("getSupportedDevices", new Class[0]).invoke((Object) null, new Object[0])).entrySet()) {
+                for (Object entry : ((Map) driverClass.getMethod("getSupportedDevices").invoke(null, new Object[0])).entrySet()) {
                     int vendorId = ((Map.Entry<Integer, int[]>) entry).getKey().intValue();
                     for (int productId : ((Map.Entry<Integer, int[]>) entry).getValue()) {
                         addProduct(vendorId, productId, driverClass);

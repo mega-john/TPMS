@@ -1,10 +1,10 @@
 package com.cz.usbserial.driver;
 
+import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
-//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Cp21xxSerialDriver implements UsbSerialDriver {
-    /* access modifiers changed from: private */
-    public static final String TAG = Cp21xxSerialDriver.class.getSimpleName();
+    private static final String TAG = Cp21xxSerialDriver.class.getSimpleName();
     private final UsbDevice mDevice;
     private final UsbSerialPort mPort;// = new Cp21xxSerialPort(this.mDevice, 0);
 
@@ -66,9 +65,7 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
             super(device, portNumber);
         }
 
-        public /* bridge */ /* synthetic */ int getPortNumber() {
-            return super.getPortNumber();
-        }
+        public /* bridge */ /* synthetic */ int getPortNumber() { return super.getPortNumber(); }
 
         public /* bridge */ /* synthetic */ String getSerial() {
             return super.getSerial();
@@ -83,7 +80,7 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
         }
 
         private int setConfigSingle(int request, int value) {
-            return this.mConnection.controlTransfer(65, request, value, 0, (byte[]) null, 0, 5000);
+            return this.mConnection.controlTransfer(65, request, value, 0, (byte[]) null, 0, USB_WRITE_TIMEOUT_MILLIS);
         }
 
         public void open(UsbDeviceConnection connection) throws IOException {
@@ -113,8 +110,8 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
             UsbInterface dataIface = this.mDevice.getInterface(this.mDevice.getInterfaceCount() - 1);
             for (int i2 = 0; i2 < dataIface.getEndpointCount(); i2++) {
                 UsbEndpoint ep = dataIface.getEndpoint(i2);
-                if (ep.getType() == 2) {
-                    if (ep.getDirection() == 128) {
+                if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                    if (ep.getDirection() == UsbConstants.USB_DIR_IN) {
                         this.mReadEndpoint = ep;
                     } else {
                         this.mWriteEndpoint = ep;
@@ -177,10 +174,10 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
 
         private void setBaudRate(int baudRate) throws IOException {
             if (this.mConnection.controlTransfer(65, SILABSER_SET_BAUDRATE, 0, 0,
-                    new byte[]{(byte) (baudRate & 255),
-                            (byte) ((baudRate >> 8) & 255),
-                            (byte) ((baudRate >> 16) & 255),
-                            (byte) ((baudRate >> 24) & 255)}, 4, 5000) < 0) {
+                    new byte[]{(byte) (baudRate & 0xFF),
+                            (byte) ((baudRate >> 8) & 0xFF),
+                            (byte) ((baudRate >> 16) & 0xFF),
+                            (byte) ((baudRate >> 24) & 0xFF)}, 4, USB_WRITE_TIMEOUT_MILLIS) < 0) {
                 throw new IOException("Error setting baud rate.");
             }
         }
@@ -190,19 +187,19 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
             setBaudRate(baudRate);
             switch (dataBits) {
                 case 5:
-                    configDataBits = 0 | 1280;
+                    configDataBits = 0 | 0x500;
                     break;
                 case 6:
-                    configDataBits = 0 | 1536;
+                    configDataBits = 0 | 0x600;
                     break;
                 case 7:
-                    configDataBits = 0 | 1792;
+                    configDataBits = 0 | 0x700;
                     break;
                 case 8:
-                    configDataBits = 0 | 2048;
+                    configDataBits = 0 | 0x800;
                     break;
                 default:
-                    configDataBits = 0 | 2048;
+                    configDataBits = 0 | 0x800;
                     break;
             }
             switch (parity) {

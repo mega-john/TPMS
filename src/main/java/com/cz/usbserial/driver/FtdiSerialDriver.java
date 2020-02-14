@@ -58,7 +58,6 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         public static final int USB_TYPE_RESERVED = 0;
         public static final int USB_TYPE_STANDARD = 0;
         public static final int USB_TYPE_VENDOR = 0;
-        public static final int USB_WRITE_TIMEOUT_MILLIS = 5000;
         private static final boolean ENABLE_ASYNC_READS = false;
         private static final int MODEM_STATUS_HEADER_LENGTH = 2;
         private static final int SIO_MODEM_CTRL_REQUEST = 1;
@@ -99,7 +98,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
         public void reset() throws IOException {
-            int result = this.mConnection.controlTransfer(64, 0, 0, 0, (byte[]) null, 0, 5000);
+            int result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 0, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
             if (result != 0) {
                 throw new IOException("Reset failed: result=" + result);
             }
@@ -185,7 +184,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
             long[] vals = convertBaudrate(baudRate);
             long actualBaudrate = vals[0];
             long index = vals[1];
-            int result = this.mConnection.controlTransfer(64, 3, (int) vals[2], (int) index, (byte[]) null, 0, 5000);
+            int result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 3, (int) vals[2], (int) index, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
             if (result == 0) {
                 return (int) actualBaudrate;
             }
@@ -229,7 +228,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
                 default:
                     throw new IllegalArgumentException("Unknown stopBits value: " + stopBits);
             }
-            int result = this.mConnection.controlTransfer(64, 4, config2, 0, (byte[]) null, 0, 5000);
+            int result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 4, config2, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
             if (result != 0) {
                 throw new IOException("Setting parameters failed: result=" + result);
             }
@@ -324,9 +323,9 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         public boolean purgeHwBuffers(boolean purgeReadBuffers, boolean purgeWriteBuffers) throws IOException {
             int result;
             int result2;
-            if (purgeReadBuffers && (result2 = this.mConnection.controlTransfer(64, 0, 1, 0, (byte[]) null, 0, 5000)) != 0) {
+            if (purgeReadBuffers && (result2 = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 1, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS)) != 0) {
                 throw new IOException("Flushing RX failed: result=" + result2);
-            } else if (!purgeWriteBuffers || (result = this.mConnection.controlTransfer(64, 0, 2, 0, (byte[]) null, 0, 5000)) == 0) {
+            } else if (!purgeWriteBuffers || (result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 2, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS)) == 0) {
                 return true;
             } else {
                 throw new IOException("Flushing RX failed: result=" + result);

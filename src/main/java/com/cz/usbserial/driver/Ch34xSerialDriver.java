@@ -1,10 +1,10 @@
 package com.cz.usbserial.driver;
 
+import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
-//import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class Ch34xSerialDriver implements UsbSerialDriver {
     private static final String TAG = Ch34xSerialDriver.class.getSimpleName();
     private final UsbDevice mDevice;
-    private final UsbSerialPort mPort;// = new Ch340SerialPort(this.mDevice, 0);
+    private final UsbSerialPort mPort;
 
     public Ch34xSerialDriver(UsbDevice device) {
         this.mDevice = device;
@@ -25,7 +25,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
 
     public static Map<Integer, int[]> getSupportedDevices() {
         Map<Integer, int[]> supportedDevices = new LinkedHashMap<>();
-        supportedDevices.put(Integer.valueOf(UsbId.VENDOR_QINHENG), new int[]{29987});
+        supportedDevices.put(Integer.valueOf(UsbId.VENDOR_QINHENG), new int[]{UsbId.QINHENG_HL340});
         return supportedDevices;
     }
 
@@ -38,6 +38,8 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
     }
 
     public class Ch340SerialPort extends CommonUsbSerialPort {
+        private static final int REQTYPE_HOST_TO_DEVICE = 65;
+        private static final int REQTYPE_DEVICE_TO_HOST = 192;
         private static final int USB_TIMEOUT_MILLIS = 5000;
         private final int DEFAULT_BAUD_RATE = 9600;
         private boolean dtr = false;
@@ -45,9 +47,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         private UsbEndpoint mWriteEndpoint;
         private boolean rts = false;
 
-        public Ch340SerialPort(UsbDevice device, int portNumber) {
-            super(device, portNumber);
-        }
+        public Ch340SerialPort(UsbDevice device, int portNumber) { super(device, portNumber); }
 
         public /* bridge */ /* synthetic */ int getPortNumber() {
             return super.getPortNumber();
@@ -79,21 +79,19 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
                     } else {
                         Log.d(Ch34xSerialDriver.TAG, "claimInterface " + i + " FAIL");
                     }
-                    i++;
                 } finally {
+                    i++;
                     if (!opened) {
-                        try {
-                            close();
-                        } catch (IOException e) {
-                        }
+                        try { close(); }
+                        catch (IOException e) { }
                     }
                 }
             }
             UsbInterface dataIface = this.mDevice.getInterface(this.mDevice.getInterfaceCount() - 1);
-            for (int i2 = 0; i2 < dataIface.getEndpointCount(); i2++) {
-                UsbEndpoint ep = dataIface.getEndpoint(i2);
-                if (ep.getType() == 2) {
-                    if (ep.getDirection() == 128) {
+            for (i = 0; i < dataIface.getEndpointCount(); i++) {
+                UsbEndpoint ep = dataIface.getEndpoint(i);
+                if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                    if (ep.getDirection() == UsbConstants.USB_DIR_IN) {
                         this.mReadEndpoint = ep;
                     } else {
                         this.mWriteEndpoint = ep;
@@ -101,8 +99,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
                 }
             }
             initialize();
-            setBaudRate(9600);
-            opened = true;
+            setBaudRate(DEFAULT_BAUD_RATE);
         }
 
         public void close() throws IOException {
@@ -118,7 +115,11 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
 
         public int read(byte[] dest, int timeoutMillis) throws IOException {
             synchronized (this.mReadBufferLock) {
-                int numBytesRead = this.mConnection.bulkTransfer(this.mReadEndpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
+                int numBytesRead = this.mConnection.bulkTransfer(
+                        this.mReadEndpoint,
+                        this.mReadBuffer,
+                        Math.min(dest.length, this.mReadBuffer.length),
+                        timeoutMillis);
                 if (numBytesRead < 0) {
                     return 0;
                 }
@@ -153,11 +154,11 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         }
 
         private int controlOut(int request, int value, int index) {
-            return this.mConnection.controlTransfer(65, request, value, index, (byte[]) null, 0, 5000);
+            return this.mConnection.controlTransfer(REQTYPE_HOST_TO_DEVICE, request, value, index, null, 0, USB_TIMEOUT_MILLIS);
         }
 
         private int controlIn(int request, int value, int index, byte[] buffer) {
-            return this.mConnection.controlTransfer(FtdiSerialDriver.FtdiSerialPort.FTDI_DEVICE_IN_REQTYPE, request, value, index, buffer, buffer.length, 5000);
+            return this.mConnection.controlTransfer(REQTYPE_DEVICE_TO_HOST, request, value, index, buffer, buffer.length, USB_TIMEOUT_MILLIS);
         }
 
         private void checkState(String msg, int request, int value, int[] expected) throws IOException {
@@ -171,7 +172,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
             } else {
                 int i = 0;
                 while (i < expected.length) {
-                    if (expected[i] == -1 || expected[i] == (current = buffer[i] & 255)) {
+                    if (expected[i] == -1 || expected[i] == (current = buffer[i] & 0xFF)) {
                         i++;
                     } else {
                         throw new IOException("Expected 0x" + Integer.toHexString(expected[i]) + " bytes, but get 0x" + Integer.toHexString(current) + " [" + msg + "]");
@@ -199,7 +200,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
             if (controlOut(161, 0, 0) < 0) {
                 throw new IOException("init failed! #2");
             }
-            setBaudRate(9600);
+            setBaudRate(DEFAULT_BAUD_RATE);
             int[] iArr2 = new int[2];
             iArr2[0] = -1;
             checkState("init #4", 149, 9496, iArr2);
@@ -210,7 +211,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
             if (controlOut(161, 20511, 55562) < 0) {
                 throw new IOException("init failed! #7");
             }
-            setBaudRate(9600);
+            setBaudRate(DEFAULT_BAUD_RATE);
             writeHandshakeByte();
             checkState("init #10", 149, 1798, new int[]{-1, 238});
         }

@@ -19,8 +19,8 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
     public CommonUsbSerialPort(UsbDevice device, int portNumber) {
         this.mDevice = device;
         this.mPortNumber = portNumber;
-        this.mReadBuffer = new byte[16384];
-        this.mWriteBuffer = new byte[16384];
+        this.mReadBuffer = new byte[DEFAULT_READ_BUFFER_SIZE];
+        this.mWriteBuffer = new byte[DEFAULT_WRITE_BUFFER_SIZE];
     }
 
     public abstract void close() throws IOException;
@@ -50,7 +50,11 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
     public abstract int write(byte[] bArr, int i) throws IOException;
 
     public String toString() {
-        return String.format("<%s device_name=%s device_id=%s port_number=%s>", new Object[]{getClass().getSimpleName(), this.mDevice.getDeviceName(), Integer.valueOf(this.mDevice.getDeviceId()), Integer.valueOf(this.mPortNumber)});
+        return String.format("<%s device_name=%s device_id=%s port_number=%s>",
+                new Object[]{getClass().getSimpleName(),
+                        this.mDevice.getDeviceName(),
+                        Integer.valueOf(this.mDevice.getDeviceId()),
+                        Integer.valueOf(this.mPortNumber)});
     }
 
     public final UsbDevice getDevice() {

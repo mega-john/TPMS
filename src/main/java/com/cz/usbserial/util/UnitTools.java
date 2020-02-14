@@ -31,7 +31,7 @@ public class UnitTools {
 
     public static void returnP(byte b, TextView t, int unit, TextView unit_id) {
         if (t != null && unit_id != null) {
-            double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
+            double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue()) * 3.44d));
             switch (unit) {
                 case 0:
                     t.setText(((int) Math.round(data * 10.0d)) / 10 + " ");
@@ -55,7 +55,7 @@ public class UnitTools {
         if (t == null || unit_id == null) {
             return false;
         }
-        int data = Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue() - 50;
+        int data = Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue() - 50;
         switch (unit) {
             case 0:
                 t.setText(data + " ");
@@ -70,7 +70,7 @@ public class UnitTools {
     }
 
     public static int returnWarnP_HIGHT(byte b, int id) {
-        double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
+        double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue()) * 3.44d));
         if (0 == id) {
             if (data > ((double) TpmsServer.getWarnHighTemperature())) {
                 return 1;
@@ -94,7 +94,7 @@ public class UnitTools {
     }
 
     public static int returnWarnP_LOW(byte b, int id) {
-        double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 255), 2).intValue()) * 3.44d));
+        double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue()) * 3.44d));
         if (0 == id) {
             if (data < ((double) TpmsServer.getWarnLowPressure())) {
                 return 1;
@@ -232,7 +232,7 @@ public class UnitTools {
     }
 
     public static String byteToHexString(byte b) {
-        String stmp = Integer.toHexString(b & 255);
+        String stmp = Integer.toHexString(b & 0xFF);
         if (stmp.length() == 1) {
             stmp = "0" + stmp;
         }

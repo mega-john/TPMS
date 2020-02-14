@@ -68,7 +68,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
     private static final int MESSAGE_WARN_LOW_TIRE_PRESSURE = 109;
     private static final int MESSAGE_WARN_NO_RF_SIGNAL = 113;
     private static final int MESSAGE_WARN_TIRE_LEAK = 108;
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
     public static int DEF_WARN_COUNT = 1;
     public static String VERS_INFO = "";
     public static boolean activityFlag = true;
@@ -155,6 +155,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             }
         }
     };
+
     private MediaPlayer mediaPlayer;
     private Alart view;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -233,9 +234,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                                     if (!TpmsServer.this.isZh()) {
                                         TpmsServer.this.play();
                                     }
-//                                    else if (TpmsServer.offline != null) {
-//                                        TpmsServer.offline.play(data);
-//                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -251,85 +249,25 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     Tools.Toast(TpmsServer.this.mContext, "handshake ok");
                     return;
                 case TpmsServer.MESSAGE_WARN_TIRE_LEAK /*108*/:
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
-                    if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
-                        TpmsServer.this.view.closeDialog();
-                        TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + TpmsServer.this.getString(R.string.alarm_leak));
-                        return;
-                    }
+                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_leak));
                     return;
                 case TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE /*109*/:
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
-                    if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
-                        TpmsServer.this.view.closeDialog();
-                        TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + TpmsServer.this.getString(R.string.alarm_low_pressure));
-                        return;
-                    }
+                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_low_pressure));
                     return;
                 case TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE /*110*/:
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
-                    if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
-                        TpmsServer.this.view.closeDialog();
-                        TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + TpmsServer.this.getString(R.string.alarm_high_pressure));
-                        return;
-                    }
+                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_high_pressure));
                     return;
                 case TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE /*111*/:
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
-                    if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
-                        TpmsServer.this.view.closeDialog();
-                        TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + TpmsServer.this.getString(R.string.alarm_high_temprature));
-                        return;
-                    }
+                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_high_temprature));
                     return;
                 case TpmsServer.MESSAGE_WARN_LOW_BATTERY /*112*/:
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
-                    if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
-                        TpmsServer.this.view.closeDialog();
-                        TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + TpmsServer.this.getString(R.string.alarm_low_battery));
-                        return;
-                    }
+                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_low_battery));
                     return;
                 case TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL /*113*/:
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
-                    TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
-                    if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
-                        TpmsServer.this.view.closeDialog();
-                        TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + TpmsServer.this.getString(R.string.alarm_signal_error));
-                        return;
-                    }
+                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_signal_error));
                     return;
                 default:
-                    boolean unused = TpmsServer.this.isDataWarn((byte[]) msg.getData().get("data"));
+                    TpmsServer.this.isDataWarn((byte[]) msg.getData().get("data"));
                     return;
             }
         }
@@ -528,19 +466,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         return true;
     }
 
-    public void setALARM(boolean b) {
-        if (sp != null) {
-            sp.edit().putBoolean("ALARM", b).commit();
-        }
-    }
-
-    public static boolean getALARMSOUND() {
-        if (sp != null) {
-            return sp.getBoolean("ALARMSOUND", true);
-        }
-        return true;
-    }
-
     public static Boolean getDebugTest() {
         if (sp != null) {
             return Boolean.valueOf(sp.getBoolean("DEBUG_TEST", false));
@@ -619,38 +544,52 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-    private void reset() {
-        this.timer1 = new Timer();
-        this.timer1.schedule(new TimerTask() {
-            public void run() {
-                if (TpmsServer.this.data_count > 10) {
-                    try {
-                        byte[] bArr = new byte[6];
-                        bArr[0] = 85;
-                        bArr[1] = -86;
-                        bArr[2] = 6;
-                        bArr[3] = 25;
-                        TpmsServer.writeData(Tools.sum(bArr));
-                    } catch (Exception e) {
-                    }
-                    TpmsServer.this.data_count = 0;
-                }
-                TpmsServer tpmsServer = TpmsServer.this;
-                tpmsServer.data_count = tpmsServer.data_count + 1;
-            }
-        }, 8000, 8000);
+    private void ShowWarnMessage(String msg) {
+        TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE);
+        TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE);
+        TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE);
+        TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_TIRE_LEAK);
+        TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_LOW_BATTERY);
+        TpmsServer.this.serviceHandler.removeMessages(TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL);
+        if (TpmsServer.activityFlag && !TpmsServer.this.isRunningForeground(TpmsServer.this.mApplication)) {
+            TpmsServer.this.view.closeDialog();
+            TpmsServer.this.view.showDialog(TpmsServer.this.getString(R.string.alarm) + " " + msg);
+            return;
+        }
     }
 
-    private boolean isDataBoolean(byte[] buff) {
-        byte sum = buff[0];
-        if (buff[0] != 85 || buff[1] != -86) {
-            return false;
-        }
-        for (int i = 1; i < buff.length - 1; i++) {
-            sum = (byte) (buff[i] ^ sum);
-        }
-        return sum == buff[buff.length - 1];
-    }
+//    private void reset() {
+//        this.timer1 = new Timer();
+//        this.timer1.schedule(new TimerTask() {
+//            public void run() {
+//                if (TpmsServer.this.data_count > 10) {
+//                    try {
+//                        byte[] bArr = new byte[6];
+//                        bArr[0] = 85;
+//                        bArr[1] = -86;
+//                        bArr[2] = 6;
+//                        bArr[3] = 25;
+//                        TpmsServer.writeData(Tools.sum(bArr));
+//                    } catch (Exception e) {
+//                    }
+//                    TpmsServer.this.data_count = 0;
+//                }
+//                TpmsServer tpmsServer = TpmsServer.this;
+//                tpmsServer.data_count = tpmsServer.data_count + 1;
+//            }
+//        }, 8000, 8000);
+//    }
+
+//    private boolean isDataBoolean(byte[] buff) {
+//        byte sum = buff[0];
+//        if (buff[0] != 85 || buff[1] != -86) {
+//            return false;
+//        }
+//        for (int i = 1; i < buff.length - 1; i++) {
+//            sum = (byte) (buff[i] ^ sum);
+//        }
+//        return sum == buff[buff.length - 1];
+//    }
 
     private boolean isDataBoolean(byte[] buff, int len) {
         byte sum = buff[0];
@@ -1144,7 +1083,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         if (buff[2] != 10) {
             return 0;
         }
-        int data = (int) (((double) Integer.valueOf(Integer.toBinaryString(buff[4] & 255), 2).intValue()) * 3.44d);
+        int data = (int) (((double) Integer.valueOf(Integer.toBinaryString(buff[4] & 0xFF), 2).intValue()) * 3.44d);
         switch (buff[3]) {
             case 0:
                 left1_TyrePressure = data;
@@ -1170,7 +1109,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         if (buff[2] != 10) {
             return 0;
         }
-        int data = Integer.valueOf(Integer.toBinaryString(buff[5] & 255), 2).intValue() - 50;
+        int data = Integer.valueOf(Integer.toBinaryString(buff[5] & 0xFF), 2).intValue() - 50;
         switch (buff[3]) {
             case 0:
                 left1_TyreTemperature = data;
@@ -1196,7 +1135,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         if (buff[2] != 10) {
             return 0;
         }
-        byte data = (byte) (buff[6] & 255);
+        byte data = (byte) (buff[6] & 0xFF);
         switch (buff[3]) {
             case 0:
                 if (data == left1_temp_Byte) {
@@ -1249,14 +1188,14 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-    private void delay(int ms) {
-        try {
-            Thread.currentThread();
-            Thread.sleep((long) ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void delay(int ms) {
+//        try {
+//            Thread.currentThread();
+//            Thread.sleep((long) ms);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void registerHandler(Handler h) {
         mHandler = h;
@@ -1268,15 +1207,15 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-    public void registerSeriaTestHandler(Handler h) {
-        mHandlerSeriaTest = h;
-    }
-
-    public void unregisterSeriaTestHandler() {
-        if (mHandlerSeriaTest != null) {
-            mHandlerSeriaTest = null;
-        }
-    }
+//    public void registerSeriaTestHandler(Handler h) {
+//        mHandlerSeriaTest = h;
+//    }
+//
+//    public void unregisterSeriaTestHandler() {
+//        if (mHandlerSeriaTest != null) {
+//            mHandlerSeriaTest = null;
+//        }
+//    }
 
     private void sendMessage(Handler mHandler2, byte[] data) {
         Message msg = Message.obtain();
@@ -1295,7 +1234,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         mHandler2.sendMessage(msg);
     }
 
-
     @SuppressLint("NewApi")
     private boolean isRunningForeground(Context context) {
         String currentPackageName = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningTasks(1).get(0).topActivity.getPackageName();
@@ -1307,7 +1245,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             activitys.add(activity);
         }
     }
-
 
     private void closeActivity() {
         for (Activity activity : activitys) {
@@ -1343,11 +1280,9 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         onStartUsbConnent();
     }
 
-
     private void onStartUsbConnent() {
         new AsyncTask<Void, Void, List<UsbSerialPort>>() {
-            /* access modifiers changed from: protected */
-            public List<UsbSerialPort> doInBackground(Void... params) {
+            protected List<UsbSerialPort> doInBackground(Void... params) {
                 String str;
                 if (TpmsServer.DEBUG) {
                     Log.d(TpmsServer.TAG, "Refreshing device list ...");
@@ -1378,22 +1313,21 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                 return result;
             }
 
-            private void doInBackground() {
-                if (TpmsServer.DEBUG) {
-                    Log.e(TpmsServer.TAG, "doInBackground ...");
-                }
-                TpmsServer.this.stopIoManager();
-                try {
-                    if (TpmsServer.this.sPort != null) {
-                        TpmsServer.this.sPort.close();
-                    }
-                } catch (IOException e) {
-                }
-                TpmsServer.this.sPort = null;
-            }
+//            private void doInBackground() {
+//                if (TpmsServer.DEBUG) {
+//                    Log.e(TpmsServer.TAG, "doInBackground ...");
+//                }
+//                TpmsServer.this.stopIoManager();
+//                try {
+//                    if (TpmsServer.this.sPort != null) {
+//                        TpmsServer.this.sPort.close();
+//                    }
+//                } catch (IOException e) {
+//                }
+//                TpmsServer.this.sPort = null;
+//            }
 
-            /* access modifiers changed from: protected */
-            public void onPostExecute(List<UsbSerialPort> result) {
+            protected void onPostExecute(List<UsbSerialPort> result) {
                 TpmsServer.this.mEntries.clear();
                 TpmsServer.this.mEntries.addAll(result);
                 if (TpmsServer.DEBUG) {
@@ -1499,7 +1433,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             }
         }
     }
-
 
     public void stopIoManager() {
         if (mSerialIoManager != null) {
@@ -1653,7 +1586,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-
     private void stopTimerHandShake() {
         if (this.mTimerHandShake != null) {
             this.mTimerHandShake.cancel();
@@ -1664,7 +1596,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             this.mTimerTaskHandShake = null;
         }
     }
-
 
     private void play() {
         if (!this.mediaPlayer.isPlaying() && getALARM()) {
@@ -1679,7 +1610,6 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-
     private boolean isZh() {
         Locale locale = getResources().getConfiguration().locale;
         String language = locale.getLanguage();
@@ -1689,11 +1619,11 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     }
 
-    public void setALARMSound(int i) {
-        if (sp != null) {
-            sp.edit().putInt("ALARMSOUND", i).commit();
-        }
-    }
+//    public void setALARMSound(int i) {
+//        if (sp != null) {
+//            sp.edit().putInt("ALARMSOUND", i).commit();
+//        }
+//    }
 
     private static class SingletonHolder {
         static final TpmsServer mUSBService = new TpmsServer();
