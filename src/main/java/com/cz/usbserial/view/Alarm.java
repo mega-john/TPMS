@@ -12,8 +12,8 @@ import com.cz.usbserial.activity.MainActivity;
 import com.cz.usbserial.activity.TpmsServer;
 import com.cz.usbserial.tpms.R;
 
-public class Alart {
-    private static Alart mEasyTouch;
+public class Alarm {
+    private static Alarm mEasyTouch;
     private Context context;
     private boolean isShowIng = false;
     private ViewHolder mHolder;
@@ -21,14 +21,14 @@ public class Alart {
     private WindowManager mWindowManager;
     private View mainView;
 
-    private Alart(Context context2) {
+    private Alarm(Context context2) {
         this.context = context2;
         creatWM();
     }
 
-    public static Alart initEasyTouch(Context context2) {
+    public static Alarm initEasyTouch(Context context2) {
         if (mEasyTouch == null) {
-            mEasyTouch = new Alart(context2);
+            mEasyTouch = new Alarm(context2);
         }
         return mEasyTouch;
     }
@@ -58,17 +58,17 @@ public class Alart {
                 if (this.mHolder.btn_examine != null) {
                     this.mHolder.btn_examine.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            Intent intent = new Intent(Alart.this.context, MainActivity.class);
+                            Intent intent = new Intent(Alarm.this.context, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            Alart.this.context.startActivity(intent);
-                            Alart.this.closeDialog();
+                            Alarm.this.context.startActivity(intent);
+                            Alarm.this.closeDialog();
                         }
                     });
                 }
                 if (this.mHolder.btn_unexamine != null) {
                     this.mHolder.btn_unexamine.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            Alart.this.closeDialog();
+                            Alarm.this.closeDialog();
                             TpmsServer.activityFlag = false;
                         }
                     });
@@ -107,7 +107,7 @@ public class Alart {
         private ViewHolder() {
         }
 
-        public ViewHolder(Alart alart, ViewHolder viewHolder) {
+        public ViewHolder(Alarm alarm, ViewHolder viewHolder) {
             this();
         }
     }

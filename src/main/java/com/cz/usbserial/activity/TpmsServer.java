@@ -33,7 +33,7 @@ import com.cz.usbserial.driver.UsbSerialProber;
 import com.cz.usbserial.tpms.R;
 import com.cz.usbserial.util.Tools;
 import com.cz.usbserial.util.UnitTools;
-import com.cz.usbserial.view.Alart;
+import com.cz.usbserial.view.Alarm;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,11 +46,11 @@ import java.util.concurrent.Executors;
 
 public class TpmsServer extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int HP_PROGRESS = 120;
-    public static final int HP_PROGRESS_STATAR = 100;
+//    public static final int HP_PROGRESS_STATAR = 100;
     public static final int HT_PROGRESS = 65;
     public static final int LP_PROGRESS = 80;
-    public static final int LP_PROGRESS_STATAR = 100;
-    public static final int LT_PROGRESS_STATAR = 10;
+//    public static final int LP_PROGRESS_STATAR = 100;
+//    public static final int LT_PROGRESS_STATAR = 10;
     public static final int P_UNIT = 2;
     public static final int T_UNIT = 0;
     static final String EXIT_APP_ACTION = "com.cz.action.exit_app";
@@ -158,7 +158,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
     };
 
     private MediaPlayer mediaPlayer;
-    private Alart view;
+    private Alarm view;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context arg0, Intent intent) {
             String action = intent.getAction();
@@ -1263,7 +1263,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             this.mediaPlayer = MediaPlayer.create(this.mApplication, R.raw.alarm1);
         }
         if (this.view == null) {
-            this.view = Alart.initEasyTouch(this.mApplication);
+            this.view = Alarm.initEasyTouch(this.mApplication);
         }
         onStartUsbConnent();
     }
