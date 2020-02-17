@@ -71,7 +71,7 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name="com.cz.usbserial.activity.SeriaTest"
+            android:name="com.cz.usbserial.activity.SerialTest"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar" />

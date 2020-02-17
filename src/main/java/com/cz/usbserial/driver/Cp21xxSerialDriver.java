@@ -65,7 +65,9 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
             super(device, portNumber);
         }
 
-        public /* bridge */ /* synthetic */ int getPortNumber() { return super.getPortNumber(); }
+        public /* bridge */ /* synthetic */ int getPortNumber() {
+            return super.getPortNumber();
+        }
 
         public /* bridge */ /* synthetic */ String getSerial() {
             return super.getSerial();

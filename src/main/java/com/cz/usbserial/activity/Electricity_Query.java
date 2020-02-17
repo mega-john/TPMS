@@ -40,21 +40,21 @@ public class Electricity_Query extends Activity {
                 }
                 if (buff[3] == 0) {
                     if (Electricity_Query.this.rl_top_left_id != null) {
-                        Electricity_Query.this.rl_top_left_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d) + "V");
+                        Electricity_Query.this.rl_top_left_id.setText(formatElectricicty(buff[7]));
                     }
                 } else if (buff[3] == 1) {
                     if (Electricity_Query.this.rl_top_right_id != null) {
-                        Electricity_Query.this.rl_top_right_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d) + "V");
+                        Electricity_Query.this.rl_top_right_id.setText(formatElectricicty(buff[7]));
                     }
                 } else if (buff[3] == 16) {
                     if (Electricity_Query.this.rl_low_left_id != null) {
-                        Electricity_Query.this.rl_low_left_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d) + "V");
+                        Electricity_Query.this.rl_low_left_id.setText(formatElectricicty(buff[7]));
                     }
                 } else if (buff[3] == 17) {
                     if (Electricity_Query.this.rl_low_right_id != null) {
-                        Electricity_Query.this.rl_low_right_id.setText(Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d) + "V");
+                        Electricity_Query.this.rl_low_right_id.setText(formatElectricicty(buff[7]));
                     }
-                } else if (buff[3] == 5 && TpmsServer.getBackUpTyreStaus().booleanValue() && Electricity_Query.this.backup_tire_id != null) {
+                } else if (buff[3] == 5 && TpmsServer.getBackUpTyreStatus().booleanValue() && Electricity_Query.this.backup_tire_id != null) {
                     if (Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue() < 42) {
                         Electricity_Query.this.backup_tire_id.setText(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d + "V");
                     } else {
@@ -64,6 +64,11 @@ public class Electricity_Query extends Activity {
             }
         }
     };
+
+    private String formatElectricicty(byte b) {
+        return Electricity_Query.df.format(((double) Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue()) * 0.1d) + "V";
+    }
+
     private byte position = -1;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +87,8 @@ public class Electricity_Query extends Activity {
         this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
         this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
         this.ico_car = (ImageView) findViewById(R.id.ico_car);
-        if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
+        if (FileUtils.BufferReaderFile().contains("Pharos") &&
+                !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car);
         }
     }
@@ -90,7 +96,7 @@ public class Electricity_Query extends Activity {
     protected void onResume() {
         super.onResume();
         this.mUSBService.registerHandler(this.mHandler);
-        if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
+        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
             if (findViewById(R.id.backup_tire_bat) != null) {
                 findViewById(R.id.backup_tire_bat).setVisibility(View.VISIBLE);
             }

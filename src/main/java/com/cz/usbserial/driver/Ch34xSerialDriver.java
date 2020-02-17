@@ -47,7 +47,9 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         private UsbEndpoint mWriteEndpoint;
         private boolean rts = false;
 
-        public Ch340SerialPort(UsbDevice device, int portNumber) { super(device, portNumber); }
+        public Ch340SerialPort(UsbDevice device, int portNumber) {
+            super(device, portNumber);
+        }
 
         public /* bridge */ /* synthetic */ int getPortNumber() {
             return super.getPortNumber();
@@ -82,8 +84,10 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
                 } finally {
                     i++;
                     if (!opened) {
-                        try { close(); }
-                        catch (IOException e) { }
+                        try {
+                            close();
+                        } catch (IOException e) {
+                        }
                     }
                 }
             }

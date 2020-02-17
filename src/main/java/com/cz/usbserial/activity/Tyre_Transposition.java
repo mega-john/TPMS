@@ -8,8 +8,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,14 +57,21 @@ public class Tyre_Transposition extends Activity {
                     Tyre_Transposition.this.stopTimerSearchID();
                     Tyre_Transposition.this.startTimerSearchID();
                     Tyre_Transposition.this.setTimeNsSearchID(1);
-                    Tyre_Transposition.this.mHandler.removeMessages(8888);
+                    Tyre_Transposition.this.mHandler.removeMessages(SHOW_ANOTHER_ACTIVITY);
                     Tyre_Transposition.this.closeProgress(Tyre_Transposition.this.context.getString(R.string.msg_switch_success));
                 }
             } else if (msg.arg1 == 9) {
                 byte[] buff2 = (byte[]) msg.getData().get("data");
+                String str = Tools.byteToHexString(buff2[4]) +
+                        Tools.byteToHexString(buff2[5]) +
+                        Tools.byteToHexString(buff2[6]) +
+                        Tools.byteToHexString(buff2[7]);
                 switch (buff2[3]) {
                     case 1:
-                        String str = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
+//                        String str = Tools.byteToHexString(buff2[4]) +
+//                                Tools.byteToHexString(buff2[5]) +
+//                                Tools.byteToHexString(buff2[6]) +
+//                                Tools.byteToHexString(buff2[7]);
                         if (Tyre_Transposition.this.rl_top_left_id != null && !"".equals(str)) {
                             Tyre_Transposition.this.rl_top_left_id.setText(str);
                             Tyre_Transposition.this.ret1 = 1;
@@ -75,45 +80,45 @@ public class Tyre_Transposition extends Activity {
                         }
                         return;
                     case 2:
-                        String str1 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
-                        if (Tyre_Transposition.this.rl_top_right_id != null && !"".equals(str1)) {
-                            Tyre_Transposition.this.rl_top_right_id.setText(str1);
+//                        String str1 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
+                        if (Tyre_Transposition.this.rl_top_right_id != null && !"".equals(str)) {
+                            Tyre_Transposition.this.rl_top_right_id.setText(str);
                             Tyre_Transposition.this.ret2 = 2;
-                            TpmsServer.setRIGHT1_ID(str1);
+                            TpmsServer.setRIGHT1_ID(str);
                             return;
                         }
                         return;
                     case 3:
-                        String str2 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
-                        if (Tyre_Transposition.this.rl_low_left_id != null && !"".equals(str2)) {
-                            Tyre_Transposition.this.rl_low_left_id.setText(str2);
+//                        String str2 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
+                        if (Tyre_Transposition.this.rl_low_left_id != null && !"".equals(str)) {
+                            Tyre_Transposition.this.rl_low_left_id.setText(str);
                             Tyre_Transposition.this.ret3 = 3;
-                            TpmsServer.setLeft2_ID(str2);
+                            TpmsServer.setLeft2_ID(str);
                             return;
                         }
                         return;
                     case 4:
-                        String str3 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
-                        if (Tyre_Transposition.this.rl_low_right_id != null && !"".equals(str3)) {
-                            Tyre_Transposition.this.rl_low_right_id.setText(str3);
+//                        String str3 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
+                        if (Tyre_Transposition.this.rl_low_right_id != null && !"".equals(str)) {
+                            Tyre_Transposition.this.rl_low_right_id.setText(str);
                             Tyre_Transposition.this.ret4 = 4;
-                            TpmsServer.setRIGHT2_ID(str3);
+                            TpmsServer.setRIGHT2_ID(str);
                             return;
                         }
                         return;
                     case 5:
-                        String str4 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
-                        if (Tyre_Transposition.this.backup_tire_id != null && !"".equals(str4)) {
-                            Tyre_Transposition.this.backup_tire_id.setText(str4);
+//                        String str4 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
+                        if (Tyre_Transposition.this.backup_tire_id != null && !"".equals(str)) {
+                            Tyre_Transposition.this.backup_tire_id.setText(str);
                             Tyre_Transposition.this.ret5 = 5;
-                            TpmsServer.setSPARE_ID(str4);
+                            TpmsServer.setSPARE_ID(str);
                             return;
                         }
                         return;
                     default:
                         return;
                 }
-            } else if (msg.what == 8888) {
+            } else if (msg.what == SHOW_ANOTHER_ACTIVITY) {
                 Tyre_Transposition.this.stopTimerSearchID();
                 Tyre_Transposition.this.startTimerSearchID();
                 Tyre_Transposition.this.setTimeNsSearchID(1);
@@ -133,7 +138,6 @@ public class Tyre_Transposition extends Activity {
         this.mTimerSearchID = null;
         this.mTimerTaskSearchID = null;
     }
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,14 +163,13 @@ public class Tyre_Transposition extends Activity {
         setTimeNsSearchID(1);
     }
 
-
     protected void onResume() {
         super.onResume();
         this.mUSBService.registerHandler(this.mHandler);
         stopTimerSearchID();
         startTimerSearchID();
         setTimeNsSearchID(1);
-        if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
+        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
             if (findViewById(R.id.backup_tire_transposition) != null) {
                 findViewById(R.id.backup_tire_transposition).setVisibility(View.VISIBLE);
             }
@@ -190,14 +193,12 @@ public class Tyre_Transposition extends Activity {
         }
     }
 
-
     protected void onPause() {
         super.onPause();
         this.mUSBService.unregisterHandler();
-        this.mHandler.removeMessages(8888);
+        this.mHandler.removeMessages(SHOW_ANOTHER_ACTIVITY);
         stopTimerSearchID();
     }
-
 
     protected void onDestroy() {
         super.onDestroy();
@@ -237,7 +238,6 @@ public class Tyre_Transposition extends Activity {
         }
     }
 
-
     public void creatList() {
         this.list.clear();
         findViewById(R.id.rl_top_left_transposition).getBackground().setLevel(0);
@@ -246,7 +246,6 @@ public class Tyre_Transposition extends Activity {
         findViewById(R.id.rl_low_right_transposition).getBackground().setLevel(0);
         findViewById(R.id.backup_tire_transposition).getBackground().setLevel(0);
     }
-
 
     public void getMessage() {
         if (this.list.size() == 2) {
@@ -339,7 +338,7 @@ public class Tyre_Transposition extends Activity {
         int b = this.list.get(1).intValue();
         this.var1 = b1;
         this.var2 = b2;
-        this.mHandler.sendMessageDelayed(this.mHandler.obtainMessage(8888), 1200);
+        this.mHandler.sendMessageDelayed(this.mHandler.obtainMessage(SHOW_ANOTHER_ACTIVITY), 1200);
         View view = LayoutInflater.from(this.context).inflate(R.layout.exchange_dialog, null);
         this.canceDialogTile = new UnbindDialog(this.context, view);
         this.canceDialogTile.show();
@@ -370,13 +369,12 @@ public class Tyre_Transposition extends Activity {
                 bArr[2] = 6;
                 bArr[3] = 6;
                 TpmsServer.writeData(Tools.sum(bArr));
-                Tyre_Transposition.this.mHandler.removeMessages(8888);
+                Tyre_Transposition.this.mHandler.removeMessages(SHOW_ANOTHER_ACTIVITY);
                 Tyre_Transposition.this.canceDialogTile.cancel();
                 Tyre_Transposition.this.creatList();
             }
         });
     }
-
 
     public void closeProgress(final String str) {
         byte[] bArr = new byte[6];
@@ -395,7 +393,6 @@ public class Tyre_Transposition extends Activity {
             }
         }, 2500);
     }
-
 
     public void startTimerSearchID() {
         if (this.mTimerSearchID == null) {
@@ -441,7 +438,6 @@ public class Tyre_Transposition extends Activity {
             this.mTimerSearchID.schedule(this.mTimerTaskSearchID, dalayms * 1000, 1000 * dalayms);
         }
     }
-
 
     public void stopTimerSearchID() {
         this.ret1 = 0;

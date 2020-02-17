@@ -268,41 +268,6 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="#545454"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="#222222"
-                android:gravity="left|center_vertical|center_horizontal|center"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/boot_app"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp" />
-
-                <ToggleButton
-                    android:id="@+id/boot_btn"
-                    android:layout_width="90dp"
-                    android:layout_height="45dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/toggle_clk"
-                    android:textOff=""
-                    android:textOn="" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:background="#545454" />
 
             <LinearLayout

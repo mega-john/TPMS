@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 import com.cz.usbserial.activity.MainActivity;
 import com.cz.usbserial.activity.TpmsServer;
 import com.cz.usbserial.tpms.R;
-
-import java.util.Locale;
 
 public class Alart {
     private static Alart mEasyTouch;
@@ -98,9 +95,9 @@ public class Alart {
         }
     }
 
-    private boolean isZh() {
-        return this.context.getResources().getConfiguration().locale.equals(Locale.SIMPLIFIED_CHINESE);
-    }
+//    private boolean isZh() {
+//        return this.context.getResources().getConfiguration().locale.equals(Locale.SIMPLIFIED_CHINESE);
+//    }
 
     private class ViewHolder {
         private Button btn_examine;
@@ -110,6 +107,8 @@ public class Alart {
         private ViewHolder() {
         }
 
-        public ViewHolder(Alart alart, ViewHolder viewHolder) { this(); }
+        public ViewHolder(Alart alart, ViewHolder viewHolder) {
+            this();
+        }
     }
 }

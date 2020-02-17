@@ -25,7 +25,7 @@ public class Emitter_Matching extends Activity {
     public static final int SHOW_WAIT_TEXTVIEW = 10000;
     private static final int MATCHING_WAIT_TIME = 120;
 
-    private static UnbindDialog canceDialogTile = null;
+    private static UnbindDialog cancelDialogTile = null;
     private static LayoutInflater Inflate = null;
     private static View view = null;
     public TextView backup_tire_id;
@@ -94,9 +94,16 @@ public class Emitter_Matching extends Activity {
                 if (TpmsServer.DEBUG) {
                     Log.e("cz  id", "-- " + Tools.bytesToHexString(buff));
                 }
+                String str = Tools.byteToHexString(buff[4]) +
+                        Tools.byteToHexString(buff[5]) +
+                        Tools.byteToHexString(buff[6]) +
+                        Tools.byteToHexString(buff[7]);
                 switch (buff[3]) {
                     case 1:
-                        String str = Tools.byteToHexString(buff[4]) + Tools.byteToHexString(buff[5]) + Tools.byteToHexString(buff[6]) + Tools.byteToHexString(buff[7]);
+//                        String str = Tools.byteToHexString(buff[4]) +
+//                                Tools.byteToHexString(buff[5]) +
+//                                Tools.byteToHexString(buff[6]) +
+//                                Tools.byteToHexString(buff[7]);
                         if (TpmsServer.DEBUG) {
                             Log.e("cz  id", "1 -- " + str + "  " + TpmsServer.getLeft1_ID());
                         }
@@ -108,52 +115,64 @@ public class Emitter_Matching extends Activity {
                         }
                         return;
                     case 2:
-                        String str1 = Tools.byteToHexString(buff[4]) + Tools.byteToHexString(buff[5]) + Tools.byteToHexString(buff[6]) + Tools.byteToHexString(buff[7]);
-                        if (Emitter_Matching.this.rl_top_right_id != null && !"".equals(str1)) {
-                            Emitter_Matching.this.rl_top_right_id.setText(str1);
+//                        String str1 = Tools.byteToHexString(buff[4]) +
+//                                Tools.byteToHexString(buff[5]) +
+//                                Tools.byteToHexString(buff[6]) +
+//                                Tools.byteToHexString(buff[7]);
+                        if (Emitter_Matching.this.rl_top_right_id != null && !"".equals(str)) {
+                            Emitter_Matching.this.rl_top_right_id.setText(str);
                             Emitter_Matching.this.ret2 = 2;
-                            TpmsServer.setRIGHT1_ID(str1);
+                            TpmsServer.setRIGHT1_ID(str);
                             return;
                         }
                         return;
                     case 3:
-                        String str2 = Tools.byteToHexString(buff[4]) + Tools.byteToHexString(buff[5]) + Tools.byteToHexString(buff[6]) + Tools.byteToHexString(buff[7]);
-                        if (Emitter_Matching.this.rl_low_left_id != null && !"".equals(str2)) {
-                            Emitter_Matching.this.rl_low_left_id.setText(str2);
+//                        String str2 = Tools.byteToHexString(buff[4]) +
+//                                Tools.byteToHexString(buff[5]) +
+//                                Tools.byteToHexString(buff[6]) +
+//                                Tools.byteToHexString(buff[7]);
+                        if (Emitter_Matching.this.rl_low_left_id != null && !"".equals(str)) {
+                            Emitter_Matching.this.rl_low_left_id.setText(str);
                             Emitter_Matching.this.ret3 = 3;
-                            TpmsServer.setLeft2_ID(str2);
+                            TpmsServer.setLeft2_ID(str);
                             return;
                         }
                         return;
                     case 4:
-                        String str3 = Tools.byteToHexString(buff[4]) + Tools.byteToHexString(buff[5]) + Tools.byteToHexString(buff[6]) + Tools.byteToHexString(buff[7]);
-                        if (Emitter_Matching.this.rl_low_right_id != null && !"".equals(str3)) {
-                            Emitter_Matching.this.rl_low_right_id.setText(str3);
+//                        String str3 = Tools.byteToHexString(buff[4]) +
+//                                Tools.byteToHexString(buff[5]) +
+//                                Tools.byteToHexString(buff[6]) +
+//                                Tools.byteToHexString(buff[7]);
+                        if (Emitter_Matching.this.rl_low_right_id != null && !"".equals(str)) {
+                            Emitter_Matching.this.rl_low_right_id.setText(str);
                             Emitter_Matching.this.ret4 = 4;
-                            TpmsServer.setRIGHT2_ID(str3);
+                            TpmsServer.setRIGHT2_ID(str);
                             return;
                         }
                         return;
                     case 5:
-                        String str4 = Tools.byteToHexString(buff[4]) + Tools.byteToHexString(buff[5]) + Tools.byteToHexString(buff[6]) + Tools.byteToHexString(buff[7]);
-                        if (Emitter_Matching.this.backup_tire_id != null && !"".equals(str4)) {
-                            Emitter_Matching.this.backup_tire_id.setText(str4);
+//                        String str4 = Tools.byteToHexString(buff[4]) +
+//                                Tools.byteToHexString(buff[5]) +
+//                                Tools.byteToHexString(buff[6]) +
+//                                Tools.byteToHexString(buff[7]);
+                        if (Emitter_Matching.this.backup_tire_id != null && !"".equals(str)) {
+                            Emitter_Matching.this.backup_tire_id.setText(str);
                             Emitter_Matching.this.ret5 = 5;
-                            TpmsServer.setSPARE_ID(str4);
+                            TpmsServer.setSPARE_ID(str);
                             return;
                         }
                         return;
                     default:
                         return;
                 }
-            } else if (msg.what == 10000) {
+            } else if (msg.what == SHOW_WAIT_TEXTVIEW) {
                 if (Emitter_Matching.this.wait_time != null) {
                     Emitter_Matching.this.wait_time.setText(Emitter_Matching.this.Time_count + " S");
                 }
                 if (Emitter_Matching.this.Time_count < 1) {
                     Emitter_Matching.this.closeProgress(Emitter_Matching.this.mContext.getString(R.string.matching_fail));
                 }
-            } else if (msg.what == 8888) {
+            } else if (msg.what == SHOW_ANOTHER_ACTIVITY) {
                 Emitter_Matching.this.resetBackgroundColor();
                 Emitter_Matching.this.closeProgress(Emitter_Matching.this.mContext.getString(R.string.matching_fail));
             } else if (Emitter_Matching.this.position != 255 && msg.arg1 > 6 && Emitter_Matching.this.flag) {
@@ -194,7 +213,7 @@ public class Emitter_Matching extends Activity {
         this.mContext = this;
         Inflate = LayoutInflater.from(this.mContext);
         view = Inflate.inflate(R.layout.matching_dialog, null);
-        canceDialogTile = new UnbindDialog(this.mContext, view);
+        cancelDialogTile = new UnbindDialog(this.mContext, view);
         this.rl_top_left_id = (TextView) findViewById(R.id.rl_top_left_id);
         this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
         this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
@@ -209,14 +228,13 @@ public class Emitter_Matching extends Activity {
         setTimeNsSearchID(1);
     }
 
-
     protected void onResume() {
         super.onResume();
         this.mUSBService.registerHandler(this.mHandler);
         stopTimerSearchID();
         startTimerSearchID();
         setTimeNsSearchID(1);
-        if (TpmsServer.getBackUpTyreStaus().booleanValue()) {
+        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
             if (findViewById(R.id.backup_tire_matching) != null) {
                 findViewById(R.id.backup_tire_matching).setVisibility(View.VISIBLE);
             }
@@ -240,7 +258,6 @@ public class Emitter_Matching extends Activity {
         }
     }
 
-
     protected void onPause() {
         super.onPause();
         this.mUSBService.unregisterHandler();
@@ -249,11 +266,9 @@ public class Emitter_Matching extends Activity {
         stopTimerSearchID();
     }
 
-
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
     public void resetBackgroundColor() {
         findViewById(R.id.rl_top_left_matching).getBackground().setLevel(0);
@@ -321,13 +336,13 @@ public class Emitter_Matching extends Activity {
                     } catch (Exception e) {
                     }
                     Emitter_Matching.this.mHandler.removeMessages(Emitter_Matching.SHOW_ANOTHER_ACTIVITY);
-                    Emitter_Matching.canceDialogTile.cancel();
+                    Emitter_Matching.cancelDialogTile.cancel();
                     Emitter_Matching.this.wait_time = null;
                     Emitter_Matching.this.resetBackgroundColor();
                 }
             });
             this.wait_time.setText("120 S");
-            canceDialogTile.show();
+            cancelDialogTile.show();
             try {
                 byte[] bArr = new byte[6];
                 bArr[0] = 85;
@@ -347,7 +362,6 @@ public class Emitter_Matching extends Activity {
         Log.i("Agint", "cz key = 0xff ");
     }
 
-
     private void isLearnState(byte b1) {
         if (b1 == 16) {
             Log.v("Agint", "one");
@@ -364,7 +378,6 @@ public class Emitter_Matching extends Activity {
             Log.v("Agint", "two");
         }
     }
-
 
     private void closeProgress(final String str) {
         try {
@@ -384,8 +397,8 @@ public class Emitter_Matching extends Activity {
                     Tools.Toast(Emitter_Matching.this.mContext, str);
                     Emitter_Matching.this.position = (byte) -1;
                     Emitter_Matching.this.Par_flag = false;
-                } else if (Emitter_Matching.canceDialogTile != null) {
-                    Emitter_Matching.canceDialogTile.dismiss();
+                } else if (Emitter_Matching.cancelDialogTile != null) {
+                    Emitter_Matching.cancelDialogTile.dismiss();
                     Tools.Toast(Emitter_Matching.this.mContext, str);
                     Emitter_Matching.this.position = (byte) -1;
                     Emitter_Matching.this.wait_time = null;
@@ -402,11 +415,11 @@ public class Emitter_Matching extends Activity {
         if (this.mTimerTask == null) {
             this.mTimerTask = new TimerTask() {
                 public void run() {
-                    if (Emitter_Matching.canceDialogTile != null) {
+                    if (Emitter_Matching.cancelDialogTile != null) {
                         Emitter_Matching emitter_Matching = Emitter_Matching.this;
                         emitter_Matching.Time_count--;
                         Message message = new Message();
-                        message.what = 10000;
+                        message.what = SHOW_WAIT_TEXTVIEW;
                         message.obj = Integer.valueOf(Emitter_Matching.this.Time_count);
                         Emitter_Matching.this.mHandler.sendMessage(message);
                         if (Emitter_Matching.this.Time_count < 1) {

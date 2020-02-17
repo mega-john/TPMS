@@ -171,7 +171,7 @@ public class UnitTools {
         }
     }
 
-    public static void show_car_iamge_warn(Context mContext, ImageView v, boolean left1, boolean left2, boolean right1, boolean right2, boolean space) {
+    public static void show_car_image_warn(Context mContext, ImageView v, boolean left1, boolean left2, boolean right1, boolean right2, boolean space) {
         if (v != null) {
             Resources r = mContext.getResources();
             layers[0] = r.getDrawable(R.drawable.ico_car);
@@ -195,7 +195,7 @@ public class UnitTools {
             } else {
                 layers[4] = r.getDrawable(R.drawable.car0);
             }
-            if (!TpmsServer.getBackUpTyreStaus().booleanValue()) {
+            if (!TpmsServer.getBackUpTyreStatus().booleanValue()) {
                 layers[5] = r.getDrawable(R.drawable.car0);
             } else if (space) {
                 layers[5] = r.getDrawable(R.drawable.car_spare_warn);

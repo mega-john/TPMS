@@ -10,8 +10,8 @@
     <public name="bg1" id="2130837510" type="drawable" />
     <public name="bg2" id="2130837511" type="drawable" />
     <public name="bg3" id="2130837512" type="drawable" />
-     <public name="btn_clk" id="2130837514" type="drawable" />
-     <public name="btn_switch_bg" id="2130837516" type="drawable" />
+    <public name="btn_clk" id="2130837514" type="drawable" />
+    <public name="btn_switch_bg" id="2130837516" type="drawable" />
     <public name="btn_unpressed" id="2130837517" type="drawable" />
     <public name="cance_btn_clk" id="2130837518" type="drawable" />
     <public name="cance_btn_normal" id="2130837519" type="drawable" />
@@ -266,7 +266,6 @@
     <public name="backup_tire_show" id="2131230858" type="string" />
     <public name="backup_tire_hide" id="2131230859" type="string" />
     <public name="tip_handshake" id="2131230860" type="string" />
-    <public name="no_internet" id="2131230861" type="string" />
     <public name="to" id="2131230862" type="string" />
     <public name="alarm" id="2131230863" type="string" />
     <public name="app_summary" id="2131230864" type="string" />

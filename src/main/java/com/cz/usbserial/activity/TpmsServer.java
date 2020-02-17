@@ -224,7 +224,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     TpmsServer.this.onStartUsbConnent();
                     return;
                 case TpmsServer.MESSAGE_VOICE_SPEK /*104*/:
-                    if (!TpmsServer.getMuteStaus().booleanValue() && TpmsServer.activityFlag) {
+                    if (!TpmsServer.getMuteStatus().booleanValue() && TpmsServer.activityFlag) {
                         final String data = (String) msg.obj;
                         if (TpmsServer.DEBUG) {
                             Log.d(TpmsServer.TAG, "isZh " + TpmsServer.this.isZh() + "MESSAGE_VOICE_SPEK " + data);
@@ -317,42 +317,29 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         Log.e(TAG, "cz writeAsync mSerialIoManager =null ");
     }
 
-    public static Boolean getBackUpTyreStaus() {
+    public static Boolean getBackUpTyreStatus() {
         if (sp != null) {
-            return Boolean.valueOf(sp.getBoolean("BACKUP_STAUS", false));
+            return Boolean.valueOf(sp.getBoolean("BACKUP_STATUS", false));
         }
         return false;
     }
 
-    public static void setBackUpTyreStaus(Boolean val) {
+    public static void setBackUpTyreStatus(Boolean val) {
         if (sp != null) {
-            sp.edit().putBoolean("BACKUP_STAUS", val.booleanValue()).commit();
+            sp.edit().putBoolean("BACKUP_STATUS", val.booleanValue()).commit();
         }
     }
 
-    public static Boolean getMuteStaus() {
+    public static Boolean getMuteStatus() {
         if (sp != null) {
-            return Boolean.valueOf(sp.getBoolean("MUTE_STAUS", false));
+            return Boolean.valueOf(sp.getBoolean("MUTE_STATUS", false));
         }
         return false;
     }
 
-    public static void setMuteStaus(Boolean val) {
+    public static void setMuteStatus(Boolean val) {
         if (sp != null) {
-            sp.edit().putBoolean("MUTE_STAUS", val.booleanValue()).commit();
-        }
-    }
-
-    public static Boolean getBootStaus() {
-        if (sp != null) {
-            return Boolean.valueOf(sp.getBoolean("BOOT_STAUS", true));
-        }
-        return true;
-    }
-
-    public static void setBootStaus(Boolean val) {
-        if (sp != null) {
-            sp.edit().putBoolean("BOOT_STAUS", val.booleanValue()).commit();
+            sp.edit().putBoolean("MUTE_STATUS", val.booleanValue()).commit();
         }
     }
 
@@ -1012,7 +999,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     right2_Warning_Signal_count = 0;
                 }
             }
-            if (ret == 5 && getBackUpTyreStaus().booleanValue()) {
+            if (ret == 5 && getBackUpTyreStatus().booleanValue()) {
                 if (backup_TyrePressure > retPH ||
                         backup_TyrePressure < retPL ||
                         backup_TyreTemperature > retHT ||
@@ -1476,7 +1463,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
             sp = null;
         }
         if (this.mediaPlayer != null) {
-            if(this.mediaPlayer.isPlaying())
+            if (this.mediaPlayer.isPlaying())
                 this.mediaPlayer.stop();
             this.mediaPlayer.release();
             this.mediaPlayer = null;

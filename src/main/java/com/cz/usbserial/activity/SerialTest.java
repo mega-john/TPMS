@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.cz.usbserial.tpms.R;
 import com.cz.usbserial.util.Tools;
 
-public class SeriaTest extends Activity {
+public class SerialTest extends Activity {
     private final String TAG = MainActivity.class.getSimpleName();
     private Button debug_btn;
     private TextView mDumpTextView;
@@ -21,8 +21,8 @@ public class SeriaTest extends Activity {
             super.handleMessage(msg);
             int i = msg.what;
             try {
-                Log.i(SeriaTest.this.TAG, "cz1  " + Tools.bytesToHexString((byte[]) msg.getData().get("data")));
-                SeriaTest.this.mDumpTextView.append(" " + Tools.bytesToHexString((byte[]) msg.getData().get("data")) + " ");
+                Log.i(SerialTest.this.TAG, "cz1  " + Tools.bytesToHexString((byte[]) msg.getData().get("data")));
+                SerialTest.this.mDumpTextView.append(" " + Tools.bytesToHexString((byte[]) msg.getData().get("data")) + " ");
             } catch (Exception e) {
             }
         }
@@ -38,11 +38,11 @@ public class SeriaTest extends Activity {
         this.debug_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (TpmsServer.getDebugTest().booleanValue()) {
-                    SeriaTest.this.debug_btn.setText("Turn on desktop debug display");
+                    SerialTest.this.debug_btn.setText("Turn on desktop debug display");
                     TpmsServer.setDebugTest(false);
                     return;
                 }
-                SeriaTest.this.debug_btn.setText("Turn off the desktop debug display");
+                SerialTest.this.debug_btn.setText("Turn off the desktop debug display");
                 TpmsServer.setDebugTest(true);
             }
         });

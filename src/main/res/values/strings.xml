@@ -134,14 +134,12 @@
     <string name="tpms_notification">In the background TPMS</string>
     <string name="exit_app">Exit APP</string>
     <string name="confirm_exit_app">Confirm exit application ?</string>
-    <string name="boot_app">Start on Boot</string>
     <string name="ver_info">Version</string>
     <string name="ver_update">Version Upgrade</string>
     <string name="backup_tire">Spare Tire</string>
     <string name="backup_tire_show">Show Spare tire</string>
     <string name="backup_tire_hide">Hide Spare tire</string>
     <string name="tip_handshake">With the equipment manufacture</string>
-    <string name="no_internet">There is no Internet</string>
     <string name="to">TO</string>
     <string name="alarm">Warning:</string>
 </resources>
