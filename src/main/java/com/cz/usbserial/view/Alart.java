@@ -49,9 +49,9 @@ public class Alart {
             if (this.mainView == null) {
                 this.mainView = LayoutInflater.from(this.context).inflate(R.layout.warn_app_dialog, null);
                 this.mHolder = new ViewHolder(this, null);
-                this.mHolder.btn_examine = this.mainView.findViewById(R.id.btn_examine);
-                this.mHolder.btn_unexamine = this.mainView.findViewById(R.id.btn_unexamine);
-                this.mHolder.tv_warn_data = this.mainView.findViewById(R.id.tv_warn_data);
+                this.mHolder.btn_examine = (Button) this.mainView.findViewById(R.id.btn_examine);
+                this.mHolder.btn_unexamine = (Button) this.mainView.findViewById(R.id.btn_unexamine);
+                this.mHolder.tv_warn_data = (TextView) this.mainView.findViewById(R.id.tv_warn_data);
                 if (str == null || "".equals(str)) {
                     str = this.context.getString(R.string.alart_tip);
                 }

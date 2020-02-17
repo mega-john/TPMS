@@ -195,12 +195,12 @@ public class Emitter_Matching extends Activity {
         Inflate = LayoutInflater.from(this.mContext);
         view = Inflate.inflate(R.layout.matching_dialog, null);
         canceDialogTile = new UnbindDialog(this.mContext, view);
-        this.rl_top_left_id = findViewById(R.id.rl_top_left_id);
-        this.rl_top_right_id = findViewById(R.id.rl_top_right_id);
-        this.rl_low_left_id = findViewById(R.id.rl_low_left_id);
-        this.rl_low_right_id = findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = findViewById(R.id.backup_tire_id);
-        this.ico_car = findViewById(R.id.ico_car);
+        this.rl_top_left_id = (TextView) findViewById(R.id.rl_top_left_id);
+        this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
+        this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
+        this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
+        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
+        this.ico_car = (ImageView) findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car);
         }
@@ -294,7 +294,7 @@ public class Emitter_Matching extends Activity {
     private void sendMatch(byte key) {
         if (-1 != key) {
             this.mHandler.sendMessageDelayed(this.mHandler.obtainMessage(SHOW_ANOTHER_ACTIVITY), 120000);
-            this.match_id = view.findViewById(R.id.match_id);
+            this.match_id = (TextView) view.findViewById(R.id.match_id);
             if (0 == key) {
                 this.match_id.setText(getString(R.string.l_f_tire) + getString(R.string.matchinging));
             } else if (1 == key) {
@@ -307,7 +307,7 @@ public class Emitter_Matching extends Activity {
                 this.match_id.setText(getString(R.string.r_spare_tire) + getString(R.string.matchinging));
             }
             if (this.wait_time == null) {
-                this.wait_time = view.findViewById(R.id.wait_time);
+                this.wait_time = (TextView) view.findViewById(R.id.wait_time);
             }
             view.findViewById(R.id.cance_domain).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

@@ -165,11 +165,11 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     }
 
     public void initRadioBtn() {
-        this.rb1 = findViewById(R.id.rb_kpa);
-        this.rb2 = findViewById(R.id.rb_psi);
-        this.rb3 = findViewById(R.id.rb_bar);
-        this.temp1 = findViewById(R.id.temp0);
-        this.temp2 = findViewById(R.id.temp1);
+        this.rb1 = (RadioButton) findViewById(R.id.rb_kpa);
+        this.rb2 = (RadioButton) findViewById(R.id.rb_psi);
+        this.rb3 = (RadioButton) findViewById(R.id.rb_bar);
+        this.temp1 = (RadioButton) findViewById(R.id.temp0);
+        this.temp2 = (RadioButton) findViewById(R.id.temp1);
     }
 
     public void initView() {
@@ -185,22 +185,22 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.SerialTest.setOnClickListener(this);
         this.resdef_line = findViewById(R.id.resdef_line);
         this.resdef_line.setOnClickListener(this);
-        this.kpa_group = findViewById(R.id.kpa_unit);
+        this.kpa_group = (RadioGroup) findViewById(R.id.kpa_unit);
         this.kpa_group.setOnCheckedChangeListener(this);
-        this.tmp_group = findViewById(R.id.temp_group);
+        this.tmp_group = (RadioGroup) findViewById(R.id.temp_group);
         this.tmp_group.setOnCheckedChangeListener(this);
-        this.BackUpButton = findViewById(R.id.backup_btn);
+        this.BackUpButton = (ToggleButton) findViewById(R.id.backup_btn);
         this.BackUpButton.setOnCheckedChangeListener(this);
-        this.MuteButton = findViewById(R.id.voice_btn);
+        this.MuteButton = (ToggleButton) findViewById(R.id.voice_btn);
         this.MuteButton.setOnCheckedChangeListener(this);
-        this.BootButton = findViewById(R.id.boot_btn);
+        this.BootButton = (ToggleButton) findViewById(R.id.boot_btn);
         this.BootButton.setOnCheckedChangeListener(this);
-        this.ps_max_value = findViewById(R.id.presure_max);
-        this.ps_min_value = findViewById(R.id.presure_min);
-        this.tp_max_value = findViewById(R.id.temp_max);
-        this.ps_max_seekbar = findViewById(R.id.presure_max_seekbar);
-        this.ps_min_seekbar = findViewById(R.id.presure_min_seekbar);
-        this.tp_max_seekbar = findViewById(R.id.temp_max_seekbar);
+        this.ps_max_value = (TextView) findViewById(R.id.presure_max);
+        this.ps_min_value = (TextView) findViewById(R.id.presure_min);
+        this.tp_max_value = (TextView) findViewById(R.id.temp_max);
+        this.ps_max_seekbar = (SeekBar) findViewById(R.id.presure_max_seekbar);
+        this.ps_min_seekbar = (SeekBar) findViewById(R.id.presure_min_seekbar);
+        this.tp_max_seekbar = (SeekBar) findViewById(R.id.temp_max_seekbar);
         this.ps_max_seekbar.setMax(250);
         this.ps_max_seekbar.setOnSeekBarChangeListener(this.PsMaxBarChangeListener);
         this.ps_min_seekbar.setMax(250);
@@ -334,22 +334,27 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
                 });
                 return;
             case R.id.exit_app /*2131361889*/:
-                View view = LayoutInflater.from(this.mContext).inflate(R.layout.exit_app_dialog, null);
-                final UnbindDialog dialog = new UnbindDialog(this.mContext, view);
-                dialog.show();
-                view.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setAction(Menuset.EXIT_APP_ACTION);
-                        Menuset.this.sendBroadcast(intent);
-                        Menuset.this.finish();
-                    }
-                });
-                view.findViewById(R.id.refuse).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+//                View view = LayoutInflater.from(this.mContext).inflate(R.layout.exit_app_dialog, null);
+//                final UnbindDialog dialog = new UnbindDialog(this.mContext, view);
+//                dialog.show();
+//                view.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent();
+//                        intent.setAction(Menuset.EXIT_APP_ACTION);
+//                        Menuset.this.sendBroadcast(intent);
+//                        Menuset.this.finish();
+//                    }
+//                });
+//                view.findViewById(R.id.refuse).setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+                Intent intent_exit = new Intent();
+                intent_exit.setAction(Menuset.EXIT_APP_ACTION);
+                Menuset.this.sendBroadcast(intent_exit);
+                Menuset.this.finish();
+
                 return;
             case R.id.serial_test :
                 Intent si = new Intent(this.mContext, SeriaTest.class);

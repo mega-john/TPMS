@@ -34,7 +34,7 @@ public class SeriaTest extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         setContentView(R.layout.serial_console);
-        this.debug_btn = findViewById(R.id.debug_btn);
+        this.debug_btn = (Button) findViewById(R.id.debug_btn);
         this.debug_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (TpmsServer.getDebugTest().booleanValue()) {
@@ -46,7 +46,7 @@ public class SeriaTest extends Activity {
                 TpmsServer.setDebugTest(true);
             }
         });
-        this.mDumpTextView = findViewById(R.id.consoleText);
+        this.mDumpTextView = (TextView) findViewById(R.id.consoleText);
         this.mTpmsServer = TpmsServer.getInstance();
         this.mTpmsServer.addActivity(this);
     }

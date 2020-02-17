@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -1355,9 +1356,9 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         startTimer();
         setTimeNs(1);
         //TODO
-//        Notification notification = new Notification(R.drawable.ic_launcher1, getString(R.string.app_name), System.currentTimeMillis());
-//        notification.setLatestEventInfo(this, "TPMS", getString(R.string.msg_tpms_running), PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0));
-//        startForeground(273, notification);
+        Notification notification = new Notification(R.drawable.ic_launcher1, getString(R.string.app_name), System.currentTimeMillis());
+        notification.setLatestEventInfo(this, "TPMS", getString(R.string.msg_tpms_running), PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0));
+        startForeground(273, notification);
         return Service.START_STICKY_COMPATIBILITY;
     }
 

@@ -145,15 +145,15 @@ public class Tyre_Transposition extends Activity {
         this.mUSBService = TpmsServer.getInstance();
         this.mUSBService.addActivity(this);
         this.context = this;
-        this.ico_car = findViewById(R.id.ico_car);
+        this.ico_car = (ImageView) findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car);
         }
-        this.rl_top_left_id = findViewById(R.id.rl_top_left_id);
-        this.rl_top_right_id = findViewById(R.id.rl_top_right_id);
-        this.rl_low_left_id = findViewById(R.id.rl_low_left_id);
-        this.rl_low_right_id = findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = findViewById(R.id.backup_tire_id);
+        this.rl_top_left_id = (TextView) findViewById(R.id.rl_top_left_id);
+        this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
+        this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
+        this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
+        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
         stopTimerSearchID();
         startTimerSearchID();
         setTimeNsSearchID(1);
@@ -299,7 +299,7 @@ public class Tyre_Transposition extends Activity {
             View view = LayoutInflater.from(this.context).inflate(R.layout.is_transposition_dialog, null);
             final UnbindDialog dialog = new UnbindDialog(this.context, view);
             dialog.show();
-            TextView tyre_switch_id = view.findViewById(R.id.tyre_switch_id);
+            TextView tyre_switch_id = (TextView) view.findViewById(R.id.tyre_switch_id);
             if (this.list.get(0).intValue() >= 6 || this.list.get(1).intValue() >= 6) {
                 if (tyre_switch_id != null) {
                     tyre_switch_id.setText(getString(R.string.tyre_switch));
@@ -351,7 +351,7 @@ public class Tyre_Transposition extends Activity {
         bArr[4] = b1;
         bArr[5] = b2;
         TpmsServer.writeData(Tools.sum(bArr));
-        TextView tyre_switching_id = view.findViewById(R.id.tyre_switching_id);
+        TextView tyre_switching_id = (TextView) view.findViewById(R.id.tyre_switching_id);
         if (a >= 6 || b >= 6) {
             if (tyre_switching_id != null) {
                 tyre_switching_id.setText(getString(R.string.msg_switching));

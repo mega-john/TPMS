@@ -76,12 +76,12 @@ public class Electricity_Query extends Activity {
         this.mUSBService = TpmsServer.getInstance();
         this.mUSBService.addActivity(this);
         this.mContext = this;
-        this.rl_top_left_id = findViewById(R.id.rl_top_left_id);
-        this.rl_top_right_id = findViewById(R.id.rl_top_right_id);
-        this.rl_low_left_id = findViewById(R.id.rl_low_left_id);
-        this.rl_low_right_id = findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = findViewById(R.id.backup_tire_id);
-        this.ico_car = findViewById(R.id.ico_car);
+        this.rl_top_left_id = (TextView) findViewById(R.id.rl_top_left_id);
+        this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
+        this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
+        this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
+        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
+        this.ico_car = (ImageView) findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car);
         }

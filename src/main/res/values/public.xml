@@ -10,10 +10,8 @@
     <public name="bg1" id="2130837510" type="drawable" />
     <public name="bg2" id="2130837511" type="drawable" />
     <public name="bg3" id="2130837512" type="drawable" />
-    <public name="bottom" id="2130837513" type="drawable" />
-    <public name="btn_clk" id="2130837514" type="drawable" />
-    <public name="btn_pressed" id="2130837515" type="drawable" />
-    <public name="btn_switch_bg" id="2130837516" type="drawable" />
+     <public name="btn_clk" id="2130837514" type="drawable" />
+     <public name="btn_switch_bg" id="2130837516" type="drawable" />
     <public name="btn_unpressed" id="2130837517" type="drawable" />
     <public name="cance_btn_clk" id="2130837518" type="drawable" />
     <public name="cance_btn_normal" id="2130837519" type="drawable" />
