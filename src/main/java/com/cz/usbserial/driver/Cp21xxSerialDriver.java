@@ -82,19 +82,19 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
         }
 
         private int setConfigSingle(int request, int value) {
-            return this.mConnection.controlTransfer(65, request, value, 0, (byte[]) null, 0, USB_WRITE_TIMEOUT_MILLIS);
+            return getConnection().controlTransfer(65, request, value, 0, (byte[]) null, 0, USB_WRITE_TIMEOUT_MILLIS);
         }
 
         public void open(UsbDeviceConnection connection) throws IOException {
-            if (this.mConnection != null) {
+            if (getConnection() != null) {
                 throw new IOException("Already opened.");
             }
-            this.mConnection = connection;
+            setConnection(connection);
             boolean opened = false;
             int i = 0;
             while (i < this.mDevice.getInterfaceCount()) {
                 try {
-                    if (this.mConnection.claimInterface(this.mDevice.getInterface(i), true)) {
+                    if (getConnection().claimInterface(this.mDevice.getInterface(i), true)) {
                         Log.d(Cp21xxSerialDriver.TAG, "claimInterface " + i + " SUCCESS");
                     } else {
                         Log.d(Cp21xxSerialDriver.TAG, "claimInterface " + i + " FAIL");
@@ -127,20 +127,20 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
         }
 
         public void close() throws IOException {
-            if (this.mConnection == null) {
+            if (getConnection() == null) {
                 throw new IOException("Already closed");
             }
             try {
                 setConfigSingle(0, 0);
-                this.mConnection.close();
+                getConnection().close();
             } finally {
-                this.mConnection = null;
+                setConnection(null);
             }
         }
 
         public int read(byte[] dest, int timeoutMillis) throws IOException {
             synchronized (this.mReadBufferLock) {
-                int numBytesRead = this.mConnection.bulkTransfer(this.mReadEndpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
+                int numBytesRead = getConnection().bulkTransfer(this.mReadEndpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
                 if (numBytesRead < 0) {
                     return 0;
                 }
@@ -163,7 +163,7 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
                         System.arraycopy(src, offset, this.mWriteBuffer, 0, writeLength);
                         writeBuffer = this.mWriteBuffer;
                     }
-                    amtWritten = this.mConnection.bulkTransfer(this.mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
+                    amtWritten = getConnection().bulkTransfer(this.mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
                 }
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength + " bytes at offset " + offset + " length=" + src.length);
@@ -175,7 +175,7 @@ public class Cp21xxSerialDriver implements UsbSerialDriver {
         }
 
         private void setBaudRate(int baudRate) throws IOException {
-            if (this.mConnection.controlTransfer(65, SILABSER_SET_BAUDRATE, 0, 0,
+            if (getConnection().controlTransfer(65, SILABSER_SET_BAUDRATE, 0, 0,
                     new byte[]{(byte) (baudRate & 0xFF),
                             (byte) ((baudRate >> 8) & 0xFF),
                             (byte) ((baudRate >> 16) & 0xFF),

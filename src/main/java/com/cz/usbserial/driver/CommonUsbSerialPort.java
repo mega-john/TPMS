@@ -12,9 +12,17 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
     protected final int mPortNumber;
     protected final Object mReadBufferLock = new Object();
     protected final Object mWriteBufferLock = new Object();
-    protected UsbDeviceConnection mConnection = null;
+    private UsbDeviceConnection mConnection = null;
     protected byte[] mReadBuffer;
     protected byte[] mWriteBuffer;
+
+    public void setConnection(UsbDeviceConnection connection) {
+        this.mConnection = connection;
+    }
+
+    public UsbDeviceConnection getConnection() {
+        return this.mConnection;
+    }
 
     public CommonUsbSerialPort(UsbDevice device, int portNumber) {
         this.mDevice = device;

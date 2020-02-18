@@ -89,7 +89,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         private final byte[] inControlTransfer(int requestType, int request, int value, int index, int length) throws IOException {
             byte[] buffer = new byte[length];
-            int result = this.mConnection.controlTransfer(requestType, request, value, index, buffer, length, USB_READ_TIMEOUT_MILLIS);
+            int result = getConnection().controlTransfer(requestType, request, value, index, buffer, length, USB_READ_TIMEOUT_MILLIS);
             if (result == length) {
                 return buffer;
             }
@@ -98,7 +98,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         private final void outControlTransfer(int requestType, int request, int value, int index, byte[] data) throws IOException {
             int length = data == null ? 0 : data.length;
-            int result = this.mConnection.controlTransfer(requestType, request, value, index, data, length, USB_WRITE_TIMEOUT_MILLIS);
+            int result = getConnection().controlTransfer(requestType, request, value, index, data, length, USB_WRITE_TIMEOUT_MILLIS);
             if (result != length) {
                 throw new IOException(String.format("ControlTransfer with value 0x%x failed: %d", new Object[]{Integer.valueOf(value), Integer.valueOf(result)}));
             }
@@ -143,7 +143,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
             while (!this.mStopReadStatusThread) {
                 try {
                     byte[] buffer = new byte[10];
-                    int readBytesCount = this.mConnection.bulkTransfer(this.mInterruptEndpoint, buffer, 10, 500);
+                    int readBytesCount = getConnection().bulkTransfer(this.mInterruptEndpoint, buffer, 10, 500);
                     if (readBytesCount > 0) {
                         if (readBytesCount == 10) {
                             this.mStatus = buffer[8] & 0xFF;
@@ -163,7 +163,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                 synchronized (this.mReadStatusThreadLock) {
                     if (this.mReadStatusThread == null) {
                         byte[] buffer = new byte[10];
-                        if (this.mConnection.bulkTransfer(this.mInterruptEndpoint, buffer, 10, 100) != 10) {
+                        if (getConnection().bulkTransfer(this.mInterruptEndpoint, buffer, 10, 100) != 10) {
                             Log.w(ProlificSerialDriver.this.TAG, "Could not read initial CTS / DSR / CD / RI status");
                         } else {
                             this.mStatus = buffer[8] & 0xFF;
@@ -191,14 +191,14 @@ public class ProlificSerialDriver implements UsbSerialDriver {
         }
 
         public void open(UsbDeviceConnection connection) throws IOException {
-            if (this.mConnection != null) {
+            if (getConnection() != null) {
                 throw new IOException("Already open");
             }
             UsbInterface usbInterface = this.mDevice.getInterface(0);
             if (!connection.claimInterface(usbInterface, true)) {
                 throw new IOException("Error claiming Prolific interface 0");
             }
-            this.mConnection = connection;
+            setConnection(connection);
             int i = 0;
             while (i < usbInterface.getEndpointCount()) {
                 try {
@@ -223,7 +223,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                     Log.e(ProlificSerialDriver.this.TAG, "An unexpected exception occured while trying to detect PL2303 subtype", e2);
                 } catch (Throwable th) {
                     if (0 == 0) {
-                        this.mConnection = null;
+                        setConnection(null);
                         connection.releaseInterface(usbInterface);
                     }
                     throw th;
@@ -233,7 +233,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                 this.mDeviceType = 1;
             } else {
                 try {
-                    if (((byte[]) this.mConnection.getClass().getMethod("getRawDescriptors", new Class[0]).invoke(this.mConnection, new Object[0]))[7] == 64) {
+                    if (((byte[]) getConnection().getClass().getMethod("getRawDescriptors", new Class[0]).invoke(getConnection(), new Object[0]))[7] == 64) {
                         this.mDeviceType = 0;
                     } else if (this.mDevice.getDeviceClass() == 0 || this.mDevice.getDeviceClass() == 255) {
                         this.mDeviceType = 2;
@@ -253,13 +253,13 @@ public class ProlificSerialDriver implements UsbSerialDriver {
             resetDevice();
             doBlackMagic();
             if (1 == 0) {
-                this.mConnection = null;
+                setConnection(null);
                 connection.releaseInterface(usbInterface);
             }
         }
 
         public void close() throws IOException {
-            if (this.mConnection == null) {
+            if (getConnection() == null) {
                 throw new IOException("Already closed");
             }
             try {
@@ -276,20 +276,20 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                 resetDevice();
                 try {
                 } finally {
-                    this.mConnection = null;
+                    setConnection(null);
                 }
             } finally {
                 try {
-                    this.mConnection.releaseInterface(this.mDevice.getInterface(0));
+                    getConnection().releaseInterface(this.mDevice.getInterface(0));
                 } finally {
-                    this.mConnection = null;
+                    setConnection(null);
                 }
             }
         }
 
         public int read(byte[] dest, int timeoutMillis) throws IOException {
             synchronized (this.mReadBufferLock) {
-                int numBytesRead = this.mConnection.bulkTransfer(this.mReadEndpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
+                int numBytesRead = getConnection().bulkTransfer(this.mReadEndpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
                 if (numBytesRead < 0) {
                     return 0;
                 }
@@ -312,7 +312,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                         System.arraycopy(src, offset, this.mWriteBuffer, 0, writeLength);
                         writeBuffer = this.mWriteBuffer;
                     }
-                    amtWritten = this.mConnection.bulkTransfer(this.mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
+                    amtWritten = getConnection().bulkTransfer(this.mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
                 }
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength + " bytes at offset " + offset + " length=" + src.length);

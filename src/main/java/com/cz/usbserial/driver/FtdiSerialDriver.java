@@ -98,7 +98,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
         public void reset() throws IOException {
-            int result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 0, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
+            int result = getConnection().controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 0, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
             if (result != 0) {
                 throw new IOException("Reset failed: result=" + result);
             }
@@ -106,10 +106,10 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
         public void open(UsbDeviceConnection connection) throws IOException {
-            if (this.mConnection != null) {
+            if (getConnection() != null) {
                 throw new IOException("Already open");
             }
-            this.mConnection = connection;
+            setConnection(connection);
             boolean opened = false;
             int i = 0;
             while (i < this.mDevice.getInterfaceCount()) {
@@ -123,7 +123,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
                 } finally {
                     if (!opened) {
                         close();
-                        this.mConnection = null;
+                        setConnection(null);
                     }
                 }
             }
@@ -132,13 +132,13 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
         public void close() throws IOException {
-            if (this.mConnection == null) {
+            if (getConnection() == null) {
                 throw new IOException("Already closed");
             }
             try {
-                this.mConnection.close();
+                getConnection().close();
             } finally {
-                this.mConnection = null;
+                setConnection(null);
             }
         }
 
@@ -146,7 +146,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
             int filterStatusBytes;
             UsbEndpoint endpoint = this.mDevice.getInterface(0).getEndpoint(0);
             synchronized (this.mReadBufferLock) {
-                int totalBytesRead = this.mConnection.bulkTransfer(endpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
+                int totalBytesRead = getConnection().bulkTransfer(endpoint, this.mReadBuffer, Math.min(dest.length, this.mReadBuffer.length), timeoutMillis);
                 if (totalBytesRead < 2) {
                     throw new IOException("Expected at least 2 bytes");
                 }
@@ -170,7 +170,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
                         System.arraycopy(src, offset, this.mWriteBuffer, 0, writeLength);
                         writeBuffer = this.mWriteBuffer;
                     }
-                    amtWritten = this.mConnection.bulkTransfer(endpoint, writeBuffer, writeLength, timeoutMillis);
+                    amtWritten = getConnection().bulkTransfer(endpoint, writeBuffer, writeLength, timeoutMillis);
                 }
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength + " bytes at offset " + offset + " length=" + src.length);
@@ -184,7 +184,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
             long[] vals = convertBaudrate(baudRate);
             long actualBaudrate = vals[0];
             long index = vals[1];
-            int result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 3, (int) vals[2], (int) index, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
+            int result = getConnection().controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 3, (int) vals[2], (int) index, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
             if (result == 0) {
                 return (int) actualBaudrate;
             }
@@ -228,7 +228,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
                 default:
                     throw new IllegalArgumentException("Unknown stopBits value: " + stopBits);
             }
-            int result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 4, config2, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
+            int result = getConnection().controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 4, config2, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS);
             if (result != 0) {
                 throw new IOException("Setting parameters failed: result=" + result);
             }
@@ -323,9 +323,9 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         public boolean purgeHwBuffers(boolean purgeReadBuffers, boolean purgeWriteBuffers) throws IOException {
             int result;
             int result2;
-            if (purgeReadBuffers && (result2 = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 1, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS)) != 0) {
+            if (purgeReadBuffers && (result2 = getConnection().controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 1, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS)) != 0) {
                 throw new IOException("Flushing RX failed: result=" + result2);
-            } else if (!purgeWriteBuffers || (result = this.mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 2, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS)) == 0) {
+            } else if (!purgeWriteBuffers || (result = getConnection().controlTransfer(FTDI_DEVICE_OUT_REQTYPE, 0, 2, 0, (byte[]) null, 0, USB_READ_TIMEOUT_MILLIS)) == 0) {
                 return true;
             } else {
                 throw new IOException("Flushing RX failed: result=" + result);

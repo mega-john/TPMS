@@ -68,27 +68,26 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         }
 
         public void open(UsbDeviceConnection connection) throws IOException {
-            if (this.mConnection != null) {
+            if (getConnection() != null) {
                 throw new IOException("Already opened.");
             }
-            this.mConnection = connection;
-            boolean opened = false;
+            setConnection(connection);
             int i = 0;
             while (i < this.mDevice.getInterfaceCount()) {
                 try {
-                    if (this.mConnection.claimInterface(this.mDevice.getInterface(i), true)) {
+                    if (getConnection().claimInterface(this.mDevice.getInterface(i), true)) {
                         Log.d(Ch34xSerialDriver.TAG, "claimInterface " + i + " SUCCESS");
                     } else {
                         Log.d(Ch34xSerialDriver.TAG, "claimInterface " + i + " FAIL");
                     }
                 } finally {
                     i++;
-                    if (!opened) {
-                        try {
-                            close();
-                        } catch (IOException e) {
-                        }
-                    }
+//                    if (!opened) {
+//                        try {
+//                            close();
+//                        } catch (IOException e) {
+//                        }
+//                    }
                 }
             }
             UsbInterface dataIface = this.mDevice.getInterface(this.mDevice.getInterfaceCount() - 1);
@@ -107,19 +106,19 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         }
 
         public void close() throws IOException {
-            if (this.mConnection == null) {
+            if (getConnection()== null) {
                 throw new IOException("Already closed");
             }
             try {
-                this.mConnection.close();
+                getConnection().close();
             } finally {
-                this.mConnection = null;
+                setConnection(null);
             }
         }
 
         public int read(byte[] dest, int timeoutMillis) throws IOException {
             synchronized (this.mReadBufferLock) {
-                int numBytesRead = this.mConnection.bulkTransfer(
+                int numBytesRead = getConnection().bulkTransfer(
                         this.mReadEndpoint,
                         this.mReadBuffer,
                         Math.min(dest.length, this.mReadBuffer.length),
@@ -146,7 +145,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
                         System.arraycopy(src, offset, this.mWriteBuffer, 0, writeLength);
                         writeBuffer = this.mWriteBuffer;
                     }
-                    amtWritten = this.mConnection.bulkTransfer(this.mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
+                    amtWritten = getConnection().bulkTransfer(this.mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
                 }
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength + " bytes at offset " + offset + " length=" + src.length);
@@ -158,11 +157,11 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         }
 
         private int controlOut(int request, int value, int index) {
-            return this.mConnection.controlTransfer(REQTYPE_HOST_TO_DEVICE, request, value, index, null, 0, USB_TIMEOUT_MILLIS);
+            return getConnection().controlTransfer(REQTYPE_HOST_TO_DEVICE, request, value, index, null, 0, USB_TIMEOUT_MILLIS);
         }
 
         private int controlIn(int request, int value, int index, byte[] buffer) {
-            return this.mConnection.controlTransfer(REQTYPE_DEVICE_TO_HOST, request, value, index, buffer, buffer.length, USB_TIMEOUT_MILLIS);
+            return getConnection().controlTransfer(REQTYPE_DEVICE_TO_HOST, request, value, index, buffer, buffer.length, USB_TIMEOUT_MILLIS);
         }
 
         private void checkState(String msg, int request, int value, int[] expected) throws IOException {
