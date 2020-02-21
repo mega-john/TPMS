@@ -51,15 +51,15 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
             super(device, portNumber);
         }
 
-        public /* bridge */ /* synthetic */ int getPortNumber() {
+        public int getPortNumber() {
             return super.getPortNumber();
         }
 
-        public /* bridge */ /* synthetic */ String getSerial() {
+        public String getSerial() {
             return super.getSerial();
         }
 
-        public /* bridge */ /* synthetic */ String toString() {
+        public String toString() {
             return super.toString();
         }
 

@@ -93,14 +93,14 @@ public class ProlificSerialDriver implements UsbSerialDriver {
             if (result == length) {
                 return buffer;
             }
-            throw new IOException(String.format("ControlTransfer with value 0x%x failed: %d", new Object[]{Integer.valueOf(value), Integer.valueOf(result)}));
+            throw new IOException(String.format("ControlTransfer with value 0x%x failed: %d", Integer.valueOf(value), Integer.valueOf(result)));
         }
 
         private final void outControlTransfer(int requestType, int request, int value, int index, byte[] data) throws IOException {
             int length = data == null ? 0 : data.length;
             int result = getConnection().controlTransfer(requestType, request, value, index, data, length, USB_WRITE_TIMEOUT_MILLIS);
             if (result != length) {
-                throw new IOException(String.format("ControlTransfer with value 0x%x failed: %d", new Object[]{Integer.valueOf(value), Integer.valueOf(result)}));
+                throw new IOException(String.format("ControlTransfer with value 0x%x failed: %d", Integer.valueOf(value), Integer.valueOf(result)));
             }
         }
 
@@ -122,20 +122,20 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         private void doBlackMagic() throws IOException {
             vendorIn(33924, 0, 1);
-            vendorOut(1028, 0, (byte[]) null);
+            vendorOut(1028, 0, null);
             vendorIn(33924, 0, 1);
             vendorIn(33667, 0, 1);
             vendorIn(33924, 0, 1);
-            vendorOut(1028, 1, (byte[]) null);
+            vendorOut(1028, 1, null);
             vendorIn(33924, 0, 1);
             vendorIn(33667, 0, 1);
-            vendorOut(0, 1, (byte[]) null);
-            vendorOut(1, 0, (byte[]) null);
-            vendorOut(2, this.mDeviceType == 0 ? 68 : 36, (byte[]) null);
+            vendorOut(0, 1, null);
+            vendorOut(1, 0, null);
+            vendorOut(2, this.mDeviceType == 0 ? 68 : 36, null);
         }
 
         private void setControlLines(int newControlLinesValue) throws IOException {
-            ctrlOut(34, newControlLinesValue, 0, (byte[]) null);
+            ctrlOut(34, newControlLinesValue, 0, null);
             this.mControlLinesValue = newControlLinesValue;
         }
 
@@ -148,7 +148,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                         if (readBytesCount == 10) {
                             this.mStatus = buffer[8] & 0xFF;
                         } else {
-                            throw new IOException(String.format("Invalid CTS / DSR / CD / RI status buffer received, expected %d bytes, but received %d", new Object[]{10, Integer.valueOf(readBytesCount)}));
+                            throw new IOException(String.format("Invalid CTS / DSR / CD / RI status buffer received, expected %d bytes, but received %d", 10, Integer.valueOf(readBytesCount)));
                         }
                     }
                 } catch (IOException e) {
@@ -233,7 +233,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                 this.mDeviceType = 1;
             } else {
                 try {
-                    if (((byte[]) getConnection().getClass().getMethod("getRawDescriptors", new Class[0]).invoke(getConnection(), new Object[0]))[7] == 64) {
+                    if (((byte[]) getConnection().getClass().getMethod("getRawDescriptors").invoke(getConnection(), new Object[0]))[7] == 64) {
                         this.mDeviceType = 0;
                     } else if (this.mDevice.getDeviceClass() == 0 || this.mDevice.getDeviceClass() == 255) {
                         this.mDeviceType = 2;
@@ -323,7 +323,10 @@ public class ProlificSerialDriver implements UsbSerialDriver {
         }
 
         public void setParameters(int baudRate, int dataBits, int stopBits, int parity) throws IOException {
-            if (this.mBaudRate != baudRate || this.mDataBits != dataBits || this.mStopBits != stopBits || this.mParity != parity) {
+            if (this.mBaudRate != baudRate ||
+                    this.mDataBits != dataBits ||
+                    this.mStopBits != stopBits ||
+                    this.mParity != parity) {
                 byte[] lineRequestData = new byte[7];
                 lineRequestData[0] = (byte) (baudRate & 0xFF);
                 lineRequestData[1] = (byte) ((baudRate >> 8) & 0xFF);
@@ -417,15 +420,12 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         public boolean purgeHwBuffers(boolean purgeReadBuffers, boolean purgeWriteBuffers) throws IOException {
             if (purgeReadBuffers) {
-                vendorOut(8, 0, (byte[]) null);
+                vendorOut(8, 0, null);
             }
             if (purgeWriteBuffers) {
-                vendorOut(9, 0, (byte[]) null);
+                vendorOut(9, 0, null);
             }
-            if (purgeReadBuffers || purgeWriteBuffers) {
-                return true;
-            }
-            return false;
+            return purgeReadBuffers || purgeWriteBuffers;
         }
     }
 }

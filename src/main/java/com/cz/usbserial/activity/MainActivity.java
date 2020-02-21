@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ import com.cz.usbserial.view.UnbindDialog;
 public class MainActivity extends Activity implements View.OnClickListener {
     static final String EXIT_APP_ACTION = "com.cz.action.exit_app";
     private static final int MESSAGE_HANDSHAKE_NO = 107;
-//    private static final int MESSAGE_HANDSHAKE_OK = 106;
+    //    private static final int MESSAGE_HANDSHAKE_OK = 106;
     private static final int MESSAGE_LEFT1_WARN_SHOW = 1110;
     private static final int MESSAGE_LEFT2_WARN_SHOW = 1111;
     private static final int MESSAGE_RIGHT1_WARN_SHOW = 1112;
@@ -35,7 +36,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static final int MESSAGE_SPARE_WARN_SHOW = 1114;
     private static final int MESSAGE_USB_OPEN_FAIL = 101;
     private static final int MESSAGE_USB_OPEN_OK = 102;
-//    private static final int MESSAGE_VOICE_SPEK = 104;
+    //    private static final int MESSAGE_VOICE_SPEK = 104;
     public static boolean backup_warn = false;
     public static boolean left1_warn = false;
     public static boolean left2_warn = false;
@@ -43,6 +44,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static boolean right2_warn = false;
     public static int trye_warn_show_count = 10;
     private static SharedPreferences sp = null;
+
+    Context a;
 
     private final String TAG = MainActivity.class.getSimpleName();
     Context mContext = this;
@@ -369,6 +372,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private ImageView topMenuButton;
     private ImageView topMuteButton;
     private TextView warn_text;
+    private String[] e = null;
 
     public static int getT_UNIT() {
         if (sp != null) {
@@ -383,8 +387,73 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    protected void onCreate(Bundle savedInstanceState) {
+    public String[] c() {
+        this.e = new String[]{
+                "ivolk",
+                "StrelkaGPS",
+                "com.ivolk.StrelkaGPS",
+                "77",
+                "33",
+                "ivolk@gmail.com",
+                "55",
+                "11",
+                "k0nYo*sO2j.H{Lg~B-Ela7",
+                "24",
+                "55",
+                "04M6ai735u",
+                "88",
+                "85",
+                "26",
+                "16",
+                "715",
+                "15",
+                "115",
+                "1i71-05v6-35o0-l038-421k",
+                "11",
+                "94",
+                "58",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+        };
+        byte[] bytes = new byte[]{107, 48, 110, 89, 111, 42, 115, 79, 50, 106, 46, 72, 123, 76, 103, 126, 66, 45, 69, 108, 97, 55};
+//        byte[] bytes1 = new byte[]{107, (byte) (141 & 0xFF), 110, 89, 111, 42, 115, 79, (byte) (143 & 0xFF), 106, (byte) (139 & 0xFF), 72, 123, 76, 103, 126, 66, 45, 69, 108, 97, 55};
+//        this.e[8] = new String(bytes);
+//        this.e[8] = new String(bytes1);
+
+//        TelephonyManager telephonyManager = (TelephonyManager)  a.getSystemService(Service.TELEPHONY_SERVICE);
+//        String devId = telephonyManager.getDeviceId();
+//        String devId = Settings.Secure.getString(this.a.getContentResolver(), "android_id");
+        String devId=this.a(this.a);
+        byte[] devBytes = devId.getBytes();//devId.getBytes();
+        bytes[1] = (byte) (((byte) (devId.charAt(12) + (byte) 18) & 0xFF));
+        bytes[8] = (byte) (((byte) (devId.charAt(4) + (byte) 32) & 0xFF));
+        bytes[10] = (byte) (((byte) (devId.charAt(13) + (byte) 63) & 0xFF));
+        this.e[8] = new String(bytes);
+        return this.e;
+    }
+
+    private String a(Context context) {
+        return "";
+    }
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String[] str = c();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         this.mTpmsServer = TpmsServer.getInstance();
