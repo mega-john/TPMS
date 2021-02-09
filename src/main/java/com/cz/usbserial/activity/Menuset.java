@@ -62,7 +62,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
             }
         }
     };
-    private ToggleButton BackUpButton;
+    //    private ToggleButton BackUpButton;
     private View Electricity_query;
     private View Emitter_Matching;
     private View Exit_app;
@@ -181,8 +181,8 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.kpa_group.setOnCheckedChangeListener(this);
         this.tmp_group = (RadioGroup) findViewById(R.id.temp_group);
         this.tmp_group.setOnCheckedChangeListener(this);
-        this.BackUpButton = (ToggleButton) findViewById(R.id.backup_btn);
-        this.BackUpButton.setOnCheckedChangeListener(this);
+//        this.BackUpButton = (ToggleButton) findViewById(R.id.backup_btn);
+//        this.BackUpButton.setOnCheckedChangeListener(this);
         this.MuteButton = (ToggleButton) findViewById(R.id.voice_btn);
         this.MuteButton.setOnCheckedChangeListener(this);
         this.ps_max_value = (TextView) findViewById(R.id.presure_max);
@@ -218,13 +218,13 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         } else if (TpmsServer.getTemperature_UNIT() == 1 && this.temp2 != null) {
             this.temp2.setChecked(true);
         }
-        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-            if (this.BackUpButton != null) {
-                this.BackUpButton.setChecked(true);
-            }
-        } else if (this.BackUpButton != null) {
-            this.BackUpButton.setChecked(false);
-        }
+//        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
+//            if (this.BackUpButton != null) {
+//                this.BackUpButton.setChecked(true);
+//            }
+//        } else if (this.BackUpButton != null) {
+//            this.BackUpButton.setChecked(false);
+//        }
         if (TpmsServer.getMuteStatus().booleanValue()) {
             if (this.MuteButton != null) {
                 this.MuteButton.setChecked(false);
@@ -247,7 +247,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         TpmsServer.setPressure_UNIT(P_UNIT);
         TpmsServer.setTemperature_UNIT(T_UNIT);
         TpmsServer.setBackUpTyreStatus(false);
-        TpmsServer.setMuteStatus(false);
+        TpmsServer.setMuteStatus(true);
         TpmsServer.setWarnHighPressure_Progress(HP_PROGRESS);
         TpmsServer.setWarnLowPressure_Progress(LP_PROGRESS);
         TpmsServer.setWarnHighTemperature_Progress(HT_PROGRESS);
@@ -350,13 +350,14 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (R.id.backup_btn == buttonView.getId()) {
-            if (isChecked) {
-                TpmsServer.setBackUpTyreStatus(true);
-            } else {
-                TpmsServer.setBackUpTyreStatus(false);
-            }
-        } else if (R.id.voice_btn == buttonView.getId()) {
+//        if (R.id.backup_btn == buttonView.getId()) {
+//            if (isChecked) {
+//                TpmsServer.setBackUpTyreStatus(true);
+//            } else {
+//                TpmsServer.setBackUpTyreStatus(false);
+//            }
+//        } else
+        if (R.id.voice_btn == buttonView.getId()) {
             if (isChecked) {
                 TpmsServer.setMuteStatus(false);
             } else {

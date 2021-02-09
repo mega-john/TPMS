@@ -132,59 +132,21 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.8">
-
-                <ImageView
-                    android:id="@+id/ico_car"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingTop="40dp"
-                    android:src="@drawable/ico_car" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/backup_tire_matching"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.3"
-                android:background="@drawable/list_bg"
-                android:clickable="true"
+            <ImageView
+                android:id="@+id/ico_car"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="onClick"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/r_spare_tire"
-                    android:textColor="#009b43"
-                    android:textSize="22sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="#beebf5" />
-
-                <TextView
-                    android:id="@+id/backup_tire_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textColor="#4479bd"
-                    android:textSize="28sp" />
-            </LinearLayout>
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp"
+                android:src="@drawable/ico_car" />
         </LinearLayout>
 
         <LinearLayout

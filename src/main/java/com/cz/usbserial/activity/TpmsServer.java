@@ -46,10 +46,10 @@ import java.util.concurrent.Executors;
 
 public class TpmsServer extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int HP_PROGRESS = 120;
-//    public static final int HP_PROGRESS_STATAR = 100;
+    //    public static final int HP_PROGRESS_STATAR = 100;
     public static final int HT_PROGRESS = 65;
     public static final int LP_PROGRESS = 80;
-//    public static final int LP_PROGRESS_STATAR = 100;
+    //    public static final int LP_PROGRESS_STATAR = 100;
 //    public static final int LT_PROGRESS_STATAR = 10;
     public static final int P_UNIT = 2;
     public static final int T_UNIT = 0;
@@ -250,22 +250,22 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     Tools.Toast(TpmsServer.this.mContext, "handshake ok");
                     return;
                 case TpmsServer.MESSAGE_WARN_TIRE_LEAK /*108*/:
-                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_leak));
+                    ShowWarnMessage(String.format(TpmsServer.this.getString(R.string.alarm_leak), (String)msg.obj));
                     return;
                 case TpmsServer.MESSAGE_WARN_LOW_TIRE_PRESSURE /*109*/:
-                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_low_pressure));
+                    ShowWarnMessage(String.format(TpmsServer.this.getString(R.string.alarm_low_pressure), (String)msg.obj));
                     return;
                 case TpmsServer.MESSAGE_WARN_HIGH_TIRE_PRESSURE /*110*/:
-                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_high_pressure));
+                    ShowWarnMessage(String.format(TpmsServer.this.getString(R.string.alarm_high_pressure), (String)msg.obj));
                     return;
                 case TpmsServer.MESSAGE_WARN_HIGH_TIRE_TEMPERATURE /*111*/:
-                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_high_temprature));
+                    ShowWarnMessage(String.format(TpmsServer.this.getString(R.string.alarm_high_temprature), (String)msg.obj));
                     return;
                 case TpmsServer.MESSAGE_WARN_LOW_BATTERY /*112*/:
-                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_low_battery));
+                    ShowWarnMessage(String.format(TpmsServer.this.getString(R.string.alarm_low_battery), (String)msg.obj));
                     return;
                 case TpmsServer.MESSAGE_WARN_NO_RF_SIGNAL /*113*/:
-                    ShowWarnMessage(TpmsServer.this.getString(R.string.alarm_signal_error));
+                    ShowWarnMessage(String.format(TpmsServer.this.getString(R.string.alarm_signal_error), (String)msg.obj));
                     return;
                 default:
                     TpmsServer.this.isDataWarn((byte[]) msg.getData().get("data"));
@@ -764,7 +764,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (left1_TyrePressure_Hight_count > DEF_WARN_COUNT) {
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left front wheel pressure is too high, please note");
                             left1_TyrePressure_Hight_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, TpmsServer.this.getString(R.string.l_f_tire));
                         }
                         left1_TyrePressure_Hight_count++;
                     } else if (left1_TyrePressure < retPL) {
@@ -772,7 +772,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (left1_TyrePressure_Low_count > DEF_WARN_COUNT) {
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left front wheel pressure is too low, please note");
                             left1_TyrePressure_Low_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, TpmsServer.this.getString(R.string.l_f_tire));
                         }
                         left1_TyrePressure_Low_count++;
                     } else {
@@ -790,17 +790,17 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     }
                     if (UnitTools.warning_AIR(left1_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left front wheel leaks, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, TpmsServer.this.getString(R.string.l_f_tire));
                     }
                     if (UnitTools.warning_P(left1_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left front wheel battery voltage is low, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, TpmsServer.this.getString(R.string.l_f_tire));
                     }
                     if (UnitTools.warning_Signal(left1_Byte).booleanValue()) {
                         if (left1_Warning_Signal_count > DEF_WARN_COUNT + 8) {
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left front wheel signal is lost, please note");
                             left1_Warning_Signal_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, TpmsServer.this.getString(R.string.l_f_tire));
                         }
                         left1_Warning_Signal_count++;
                     } else {
@@ -825,7 +825,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (left2_TyrePressure_Hight_count > DEF_WARN_COUNT) {
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left rear wheel pressure is too high, please note");
                             left2_TyrePressure_Hight_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, TpmsServer.this.getString(R.string.l_r_tire));
                         }
                         left2_TyrePressure_Hight_count++;
                     } else if (left2_TyrePressure < retPL) {
@@ -833,7 +833,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (left2_TyrePressure_Low_count > DEF_WARN_COUNT) {
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left rear wheel pressure is too low, please note");
                             left2_TyrePressure_Low_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, TpmsServer.this.getString(R.string.l_r_tire));
                         }
                         left2_TyrePressure_Low_count++;
                     } else {
@@ -844,7 +844,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (left2_TyreTemperature_Hight_count > DEF_WARN_COUNT) {
                             left2_TyreTemperature_Hight_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left rear wheel temperature is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, TpmsServer.this.getString(R.string.l_r_tire));
                         }
                         left2_TyreTemperature_Hight_count++;
                     } else {
@@ -852,17 +852,17 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     }
                     if (UnitTools.warning_AIR(left2_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left rear wheel leaks, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, TpmsServer.this.getString(R.string.l_r_tire));
                     }
                     if (UnitTools.warning_P(left2_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left rear wheel battery voltage is low, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, TpmsServer.this.getString(R.string.l_r_tire));
                     }
                     if (UnitTools.warning_Signal(left2_Byte).booleanValue()) {
                         if (left2_Warning_Signal_count > DEF_WARN_COUNT + 8) {
                             left2_Warning_Signal_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Left rear wheel signal is lost, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, TpmsServer.this.getString(R.string.l_r_tire));
                         }
                         left2_Warning_Signal_count++;
                     } else {
@@ -887,7 +887,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (right1_TyrePressure_Hight_count > DEF_WARN_COUNT) {
                             right1_TyrePressure_Hight_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Front right wheel pressure is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, TpmsServer.this.getString(R.string.r_f_tire));
                         }
                         right1_TyrePressure_Hight_count++;
                     } else if (right1_TyrePressure < retPL) {
@@ -895,7 +895,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (right1_TyrePressure_Low_count > DEF_WARN_COUNT) {
                             right1_TyrePressure_Low_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Right front wheel pressure is too low, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, TpmsServer.this.getString(R.string.r_f_tire));
                         }
                         right1_TyrePressure_Low_count++;
                     } else {
@@ -906,7 +906,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (right1_TyreTemperature_Hight_count > DEF_WARN_COUNT) {
                             right1_TyreTemperature_Hight_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "The temperature of the right front wheel is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, TpmsServer.this.getString(R.string.r_f_tire));
                         }
                         right1_TyreTemperature_Hight_count++;
                     } else {
@@ -914,17 +914,17 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     }
                     if (UnitTools.warning_AIR(right1_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Front right wheel leaks, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, TpmsServer.this.getString(R.string.r_f_tire));
                     }
                     if (UnitTools.warning_P(right1_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Right front wheel battery voltage is low, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, TpmsServer.this.getString(R.string.r_f_tire));
                     }
                     if (UnitTools.warning_Signal(right1_Byte).booleanValue()) {
                         if (right1_Warning_Signal_count > DEF_WARN_COUNT + 8) {
                             right1_Warning_Signal_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Right front wheel signal is lost, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, TpmsServer.this.getString(R.string.r_f_tire));
                         }
                         right1_Warning_Signal_count++;
                     } else {
@@ -949,7 +949,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (right2_TyrePressure_Hight_count > DEF_WARN_COUNT) {
                             right2_TyrePressure_Hight_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Rear right wheel pressure is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, TpmsServer.this.getString(R.string.r_r_tire));
                         }
                         right2_TyrePressure_Hight_count++;
                     } else if (right2_TyrePressure < retPL) {
@@ -957,7 +957,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (right2_TyrePressure_Low_count > DEF_WARN_COUNT) {
                             right2_TyrePressure_Low_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Right rear wheel pressure is too low, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, TpmsServer.this.getString(R.string.r_r_tire));
                         }
                         right2_TyrePressure_Low_count++;
                     } else {
@@ -968,7 +968,7 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                         if (right2_TyreTemperature_Hight_count > DEF_WARN_COUNT) {
                             right2_TyreTemperature_Hight_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "The temperature of the right rear wheel is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, TpmsServer.this.getString(R.string.r_r_tire));
                         }
                         right2_TyreTemperature_Hight_count++;
                     } else {
@@ -976,17 +976,17 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     }
                     if (UnitTools.warning_AIR(right2_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Rear right wheel leaks, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, TpmsServer.this.getString(R.string.r_r_tire));
                     }
                     if (UnitTools.warning_P(right2_Byte).booleanValue()) {
                         sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Right rear wheel battery voltage is low, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, "");
+                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, TpmsServer.this.getString(R.string.r_r_tire));
                     }
                     if (UnitTools.warning_Signal(right2_Byte).booleanValue()) {
                         if (right2_Warning_Signal_count > DEF_WARN_COUNT + 8) {
                             right2_Warning_Signal_count = 0;
                             sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Right rear wheel signal is lost, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, "");
+                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, TpmsServer.this.getString(R.string.r_r_tire));
                         }
                         right2_Warning_Signal_count++;
                     } else {
@@ -999,68 +999,68 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
                     right2_Warning_Signal_count = 0;
                 }
             }
-            if (ret == 5 && getBackUpTyreStatus().booleanValue()) {
-                if (backup_TyrePressure > retPH ||
-                        backup_TyrePressure < retPL ||
-                        backup_TyreTemperature > retHT ||
-                        UnitTools.warning_AIR(backup_Byte).booleanValue() ||
-                        UnitTools.warning_P(backup_Byte).booleanValue() ||
-                        UnitTools.warning_Signal(backup_Byte).booleanValue()) {
-                    if (backup_TyrePressure > retPH) {
-                        backup_TyrePressure_Low_count = 0;
-                        if (backup_TyrePressure_Hight_count > DEF_WARN_COUNT) {
-                            backup_TyrePressure_Hight_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup tire pressure is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, "");
-                        }
-                        backup_TyrePressure_Hight_count++;
-                    } else if (backup_TyrePressure < retPL) {
-                        backup_TyrePressure_Hight_count = 0;
-                        if (backup_TyrePressure_Low_count > DEF_WARN_COUNT) {
-                            backup_TyrePressure_Low_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup tire pressure is too low, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, "");
-                        }
-                        backup_TyrePressure_Low_count++;
-                    } else {
-                        backup_TyrePressure_Hight_count = 0;
-                        backup_TyrePressure_Low_count = 0;
-                    }
-                    if (backup_TyreTemperature > retHT) {
-                        if (backup_TyreTemperature_Hight_count > DEF_WARN_COUNT) {
-                            backup_TyreTemperature_Hight_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Spare tire temperature is too high, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, "");
-                        }
-                        backup_TyreTemperature_Hight_count++;
-                    } else {
-                        backup_TyreTemperature_Hight_count = 0;
-                    }
-                    if (UnitTools.warning_AIR(backup_Byte).booleanValue()) {
-                        sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Leakage of spare tire, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, "");
-                    }
-                    if (UnitTools.warning_P(backup_Byte).booleanValue()) {
-                        sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup battery voltage is low, please note");
-                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, "");
-                    }
-                    if (UnitTools.warning_Signal(backup_Byte).booleanValue()) {
-                        if (backup_Warning_Signal_count > DEF_WARN_COUNT + 8) {
-                            backup_Warning_Signal_count = 0;
-                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup tire signal is lost, please note");
-                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, "");
-                        }
-                        backup_Warning_Signal_count++;
-                    } else {
-                        backup_Warning_Signal_count = 0;
-                    }
-                } else {
-                    backup_TyrePressure_Hight_count = 0;
-                    backup_TyrePressure_Low_count = 0;
-                    backup_TyreTemperature_Hight_count = 0;
-                    backup_Warning_Signal_count = 0;
-                }
-            }
+//            if (ret == 5 && getBackUpTyreStatus().booleanValue()) {
+//                if (backup_TyrePressure > retPH ||
+//                        backup_TyrePressure < retPL ||
+//                        backup_TyreTemperature > retHT ||
+//                        UnitTools.warning_AIR(backup_Byte).booleanValue() ||
+//                        UnitTools.warning_P(backup_Byte).booleanValue() ||
+//                        UnitTools.warning_Signal(backup_Byte).booleanValue()) {
+//                    if (backup_TyrePressure > retPH) {
+//                        backup_TyrePressure_Low_count = 0;
+//                        if (backup_TyrePressure_Hight_count > DEF_WARN_COUNT) {
+//                            backup_TyrePressure_Hight_count = 0;
+//                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup tire pressure is too high, please note");
+//                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_PRESSURE, "");
+//                        }
+//                        backup_TyrePressure_Hight_count++;
+//                    } else if (backup_TyrePressure < retPL) {
+//                        backup_TyrePressure_Hight_count = 0;
+//                        if (backup_TyrePressure_Low_count > DEF_WARN_COUNT) {
+//                            backup_TyrePressure_Low_count = 0;
+//                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup tire pressure is too low, please note");
+//                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_TIRE_PRESSURE, "");
+//                        }
+//                        backup_TyrePressure_Low_count++;
+//                    } else {
+//                        backup_TyrePressure_Hight_count = 0;
+//                        backup_TyrePressure_Low_count = 0;
+//                    }
+//                    if (backup_TyreTemperature > retHT) {
+//                        if (backup_TyreTemperature_Hight_count > DEF_WARN_COUNT) {
+//                            backup_TyreTemperature_Hight_count = 0;
+//                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Spare tire temperature is too high, please note");
+//                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_HIGH_TIRE_TEMPERATURE, "");
+//                        }
+//                        backup_TyreTemperature_Hight_count++;
+//                    } else {
+//                        backup_TyreTemperature_Hight_count = 0;
+//                    }
+//                    if (UnitTools.warning_AIR(backup_Byte).booleanValue()) {
+//                        sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Leakage of spare tire, please note");
+//                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_TIRE_LEAK, "");
+//                    }
+//                    if (UnitTools.warning_P(backup_Byte).booleanValue()) {
+//                        sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup battery voltage is low, please note");
+//                        sendServerMessage(this.serviceHandler, MESSAGE_WARN_LOW_BATTERY, "");
+//                    }
+//                    if (UnitTools.warning_Signal(backup_Byte).booleanValue()) {
+//                        if (backup_Warning_Signal_count > DEF_WARN_COUNT + 8) {
+//                            backup_Warning_Signal_count = 0;
+//                            sendServerMessage(this.serviceHandler, MESSAGE_VOICE_SPEK, "Backup tire signal is lost, please note");
+//                            sendServerMessage(this.serviceHandler, MESSAGE_WARN_NO_RF_SIGNAL, "");
+//                        }
+//                        backup_Warning_Signal_count++;
+//                    } else {
+//                        backup_Warning_Signal_count = 0;
+//                    }
+//                } else {
+//                    backup_TyrePressure_Hight_count = 0;
+//                    backup_TyrePressure_Low_count = 0;
+//                    backup_TyreTemperature_Hight_count = 0;
+//                    backup_Warning_Signal_count = 0;
+//                }
+//            }
             return true;
         } catch (Exception e) {
             return false;

@@ -28,7 +28,7 @@ public class Emitter_Matching extends Activity {
     private static UnbindDialog cancelDialogTile = null;
     private static LayoutInflater Inflate = null;
     private static View view = null;
-    public TextView backup_tire_id;
+    //    public TextView backup_tire_id;
     public ProgressDialog dialog;
     int Time_count = MATCHING_WAIT_TIME;
     Timer mTimer = null;
@@ -155,12 +155,12 @@ public class Emitter_Matching extends Activity {
 //                                Tools.byteToHexString(buff[5]) +
 //                                Tools.byteToHexString(buff[6]) +
 //                                Tools.byteToHexString(buff[7]);
-                        if (Emitter_Matching.this.backup_tire_id != null && !"".equals(str)) {
-                            Emitter_Matching.this.backup_tire_id.setText(str);
-                            Emitter_Matching.this.ret5 = 5;
-                            TpmsServer.setSPARE_ID(str);
-                            return;
-                        }
+//                        if (Emitter_Matching.this.backup_tire_id != null && !"".equals(str)) {
+//                            Emitter_Matching.this.backup_tire_id.setText(str);
+//                            Emitter_Matching.this.ret5 = 5;
+//                            TpmsServer.setSPARE_ID(str);
+//                            return;
+//                        }
                         return;
                     default:
                         return;
@@ -218,7 +218,7 @@ public class Emitter_Matching extends Activity {
         this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
         this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
         this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
+//        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
         this.ico_car = (ImageView) findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") && !FileUtils.BufferReaderFile().contains("#Pharos")) {
             this.ico_car.setImageResource(R.drawable.ico_car);
@@ -234,13 +234,13 @@ public class Emitter_Matching extends Activity {
         stopTimerSearchID();
         startTimerSearchID();
         setTimeNsSearchID(1);
-        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-            if (findViewById(R.id.backup_tire_matching) != null) {
-                findViewById(R.id.backup_tire_matching).setVisibility(View.VISIBLE);
-            }
-        } else if (findViewById(R.id.backup_tire_matching) != null) {
-            findViewById(R.id.backup_tire_matching).setVisibility(View.GONE);
-        }
+//        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
+//            if (findViewById(R.id.backup_tire_matching) != null) {
+//                findViewById(R.id.backup_tire_matching).setVisibility(View.VISIBLE);
+//            }
+//        } else if (findViewById(R.id.backup_tire_matching) != null) {
+//            findViewById(R.id.backup_tire_matching).setVisibility(View.GONE);
+//        }
         if (!"".equals(TpmsServer.getLeft1_ID()) && this.rl_top_left_id != null) {
             this.rl_top_left_id.setText(TpmsServer.getLeft1_ID());
         }
@@ -253,9 +253,9 @@ public class Emitter_Matching extends Activity {
         if (!"".equals(TpmsServer.getRIGHT2_ID()) && this.rl_low_right_id != null) {
             this.rl_low_right_id.setText(TpmsServer.getRIGHT2_ID());
         }
-        if (!"".equals(TpmsServer.getSPARE_ID()) && this.backup_tire_id != null) {
-            this.backup_tire_id.setText(TpmsServer.getSPARE_ID());
-        }
+//        if (!"".equals(TpmsServer.getSPARE_ID()) && this.backup_tire_id != null) {
+//            this.backup_tire_id.setText(TpmsServer.getSPARE_ID());
+//        }
     }
 
     protected void onPause() {
@@ -275,7 +275,7 @@ public class Emitter_Matching extends Activity {
         findViewById(R.id.rl_top_right_matching).getBackground().setLevel(0);
         findViewById(R.id.rl_low_left_matching).getBackground().setLevel(0);
         findViewById(R.id.rl_low_right_matching).getBackground().setLevel(0);
-        findViewById(R.id.backup_tire_matching).getBackground().setLevel(0);
+//        findViewById(R.id.backup_tire_matching).getBackground().setLevel(0);
     }
 
     public void onClick(View v) {
@@ -289,10 +289,10 @@ public class Emitter_Matching extends Activity {
                 this.position = 16;
                 v.getBackground().setLevel(1);
                 break;
-            case R.id.backup_tire_matching /*2131361843*/:
-                this.position = 5;
-                v.getBackground().setLevel(1);
-                break;
+//            case R.id.backup_tire_matching /*2131361843*/:
+//                this.position = 5;
+//                v.getBackground().setLevel(1);
+//                break;
             case R.id.rl_top_right_matching /*2131361844*/:
                 this.position = 1;
                 v.getBackground().setLevel(1);

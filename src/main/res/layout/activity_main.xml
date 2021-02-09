@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/id_topMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -268,111 +269,19 @@
             android:layout_height="match_parent"
             android:layout_weight="0.6"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.6">
-
-                <ImageView
-                    android:id="@+id/ico_car"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:paddingTop="40dp"
-                    android:src="@drawable/ico_car" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/backup_tyre"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:background="@drawable/data_background"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/backup_p"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="#009b43"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:id="@+id/backup_p_uint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="#009b43"
-                            android:textSize="24sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:background="#beebf5" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/backup_t"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="#4479bd"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:id="@+id/backup_t_uint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="#4479bd"
-                            android:textSize="24sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/backup_bat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="2dp"
-                        android:src="@drawable/bat0" />
-                </LinearLayout>
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/ico_car"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp"
+                android:src="@drawable/ico_car" />
         </LinearLayout>
 
         <LinearLayout

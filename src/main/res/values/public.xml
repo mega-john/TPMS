@@ -17,19 +17,7 @@
     <public name="cance_btn_normal" id="2130837519" type="drawable" />
     <public name="cance_btn_press" id="2130837520" type="drawable" />
     <public name="car" id="2130837521" type="drawable" />
-    <public name="car0" id="2130837522" type="drawable" />
-    <public name="car_left1_ok" id="2130837523" type="drawable" />
-    <public name="car_left1_warn" id="2130837524" type="drawable" />
-    <public name="car_left2_ok" id="2130837525" type="drawable" />
-    <public name="car_left2_warn" id="2130837526" type="drawable" />
-    <public name="car_right1_ok" id="2130837527" type="drawable" />
-    <public name="car_right1_warn" id="2130837528" type="drawable" />
-    <public name="car_right2_ok" id="2130837529" type="drawable" />
-    <public name="car_right2_warn" id="2130837530" type="drawable" />
-    <public name="car_spare_ok" id="2130837531" type="drawable" />
-    <public name="car_spare_warn" id="2130837532" type="drawable" />
     <public name="data_background" id="2130837533" type="drawable" />
-    <public name="data_background1" id="2130837534" type="drawable" />
     <public name="data_background_red" id="2130837535" type="drawable" />
     <public name="exit_cance_clk" id="2130837536" type="drawable" />
     <public name="frame" id="2130837537" type="drawable" />

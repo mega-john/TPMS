@@ -106,7 +106,7 @@ public class Ch34xSerialDriver implements UsbSerialDriver {
         }
 
         public void close() throws IOException {
-            if (getConnection()== null) {
+            if (getConnection() == null) {
                 throw new IOException("Already closed");
             }
             try {

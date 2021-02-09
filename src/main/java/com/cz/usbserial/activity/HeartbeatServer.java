@@ -28,9 +28,7 @@ public class HeartbeatServer extends Service {
                 Log.i(HeartbeatServer.this.TAG, "cz com.cz.action.exit_app");
                 try {
                     Intent ii = new Intent(HeartbeatServer.this.mContext, TpmsServer.class);
-                    if (ii != null) {
-                        HeartbeatServer.this.mContext.stopService(ii);
-                    }
+                    HeartbeatServer.this.mContext.stopService(ii);
                     HeartbeatServer.this.stopSelf();
                 } catch (Exception e) {
                 }

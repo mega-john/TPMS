@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
 
 public class Electricity_Query extends Activity {
     static DecimalFormat df = new DecimalFormat(".##");
-    TextView backup_tire_id;
+    //    TextView backup_tire_id;
     TextView match_id = null;
     TextView rl_low_left_id;
     TextView rl_low_right_id;
@@ -54,13 +54,14 @@ public class Electricity_Query extends Activity {
                     if (Electricity_Query.this.rl_low_right_id != null) {
                         Electricity_Query.this.rl_low_right_id.setText(formatElectricicty(buff[7]));
                     }
-                } else if (buff[3] == 5 && TpmsServer.getBackUpTyreStatus().booleanValue() && Electricity_Query.this.backup_tire_id != null) {
-                    if (Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue() < 42) {
-                        Electricity_Query.this.backup_tire_id.setText(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d + "V");
-                    } else {
-                        Electricity_Query.this.backup_tire_id.setText("--");
-                    }
                 }
+//                else if (buff[3] == 5 && TpmsServer.getBackUpTyreStatus().booleanValue() && Electricity_Query.this.backup_tire_id != null) {
+//                    if (Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue() < 42) {
+//                        Electricity_Query.this.backup_tire_id.setText(((double) Integer.valueOf(Integer.toBinaryString(buff[7] & 0xFF), 2).intValue()) * 0.1d + "V");
+//                    } else {
+//                        Electricity_Query.this.backup_tire_id.setText("--");
+//                    }
+//                }
             }
         }
     };
@@ -85,7 +86,7 @@ public class Electricity_Query extends Activity {
         this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
         this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
         this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
-        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
+//        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
         this.ico_car = (ImageView) findViewById(R.id.ico_car);
         if (FileUtils.BufferReaderFile().contains("Pharos") &&
                 !FileUtils.BufferReaderFile().contains("#Pharos")) {
@@ -96,13 +97,13 @@ public class Electricity_Query extends Activity {
     protected void onResume() {
         super.onResume();
         this.mUSBService.registerHandler(this.mHandler);
-        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-            if (findViewById(R.id.backup_tire_bat) != null) {
-                findViewById(R.id.backup_tire_bat).setVisibility(View.VISIBLE);
-            }
-        } else if (findViewById(R.id.backup_tire_bat) != null) {
-            findViewById(R.id.backup_tire_bat).setVisibility(View.GONE);
-        }
+//        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
+//            if (findViewById(R.id.backup_tire_bat) != null) {
+//                findViewById(R.id.backup_tire_bat).setVisibility(View.VISIBLE);
+//            }
+//        } else if (findViewById(R.id.backup_tire_bat) != null) {
+//            findViewById(R.id.backup_tire_bat).setVisibility(View.GONE);
+//        }
     }
 
     protected void onPause() {

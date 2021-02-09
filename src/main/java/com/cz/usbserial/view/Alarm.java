@@ -36,7 +36,7 @@ public class Alarm {
     private void creatWM() {
         this.mWindowManager = (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
         this.mLayoutParams = new WindowManager.LayoutParams();
-        this.mLayoutParams.type = 2003;
+        this.mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         this.mLayoutParams.format = -3;
         this.mLayoutParams.flags = 32776;
     }

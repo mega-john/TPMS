@@ -27,7 +27,7 @@ public class SerialTest extends Activity {
             }
         }
     };
-    private TextView mTitleTextView;
+    //    private TextView mTitleTextView;
     private TpmsServer mTpmsServer;
 
     protected void onCreate(Bundle savedInstanceState) {
