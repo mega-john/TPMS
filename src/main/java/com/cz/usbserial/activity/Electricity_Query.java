@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 public class Electricity_Query extends Activity {
     static DecimalFormat df = new DecimalFormat(".##");
     //    TextView backup_tire_id;
-    TextView match_id = null;
+//    TextView match_id = null;
     TextView rl_low_left_id;
     TextView rl_low_right_id;
     TextView rl_top_left_id;

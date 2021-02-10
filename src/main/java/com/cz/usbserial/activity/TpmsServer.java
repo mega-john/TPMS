@@ -51,8 +51,8 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
     public static final int LP_PROGRESS = 80;
     //    public static final int LP_PROGRESS_STATAR = 100;
 //    public static final int LT_PROGRESS_STATAR = 10;
-    public static final int P_UNIT = 2;
-    public static final int T_UNIT = 0;
+//    public static final int P_UNIT = 2;
+//    public static final int T_UNIT = 0;
     static final String EXIT_APP_ACTION = "com.cz.action.exit_app";
     private static final String TAG = TpmsServer.class.getSimpleName();
     private static final String ACTION_USB_PERMISSION = "com.android.cz.USB_PERMISSION";
@@ -343,31 +343,31 @@ public class TpmsServer extends Service implements SharedPreferences.OnSharedPre
         }
     }
 
-    public static int getPressure_UNIT() {
-        if (sp != null) {
-            return sp.getInt("P", P_UNIT);
-        }
-        return 0;
-    }
-
-    public static void setPressure_UNIT(int i) {
-        if (sp != null) {
-            sp.edit().putInt("P", i).commit();
-        }
-    }
-
-    public static int getTemperature_UNIT() {
-        if (sp != null) {
-            return sp.getInt("T", T_UNIT);
-        }
-        return 0;
-    }
-
-    public static void setTemperature_UNIT(int i) {
-        if (sp != null) {
-            sp.edit().putInt("T", i).commit();
-        }
-    }
+//    public static int getPressure_UNIT() {
+//        if (sp != null) {
+//            return sp.getInt("P", P_UNIT);
+//        }
+//        return 0;
+//    }
+//
+//    public static void setPressure_UNIT(int i) {
+//        if (sp != null) {
+//            sp.edit().putInt("P", i).commit();
+//        }
+//    }
+//
+//    public static int getTemperature_UNIT() {
+//        if (sp != null) {
+//            return sp.getInt("T", T_UNIT);
+//        }
+//        return 0;
+//    }
+//
+//    public static void setTemperature_UNIT(int i) {
+//        if (sp != null) {
+//            sp.edit().putInt("T", i).commit();
+//        }
+//    }
 
     public static int getWarnHighPressure_Progress() {
         if (sp != null) {

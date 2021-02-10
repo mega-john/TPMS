@@ -23,10 +23,8 @@ import com.cz.usbserial.view.UnbindDialog;
 import static com.cz.usbserial.activity.TpmsServer.HP_PROGRESS;
 import static com.cz.usbserial.activity.TpmsServer.HT_PROGRESS;
 import static com.cz.usbserial.activity.TpmsServer.LP_PROGRESS;
-import static com.cz.usbserial.activity.TpmsServer.P_UNIT;
-import static com.cz.usbserial.activity.TpmsServer.T_UNIT;
 
-public class Menuset extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
+public class Menuset extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     public static final int UPDATE_UNIT_VALUE = 0;
     public static final int UPDATE_TEMP_VALUE = 1;
     public static final int UPDATE_PS_MAX_VALUE = 2;
@@ -44,18 +42,18 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_UNIT_VALUE:
-                    UnitTools.returnT(TpmsServer.getWarnHighTemperature_Progress(), Menuset.this.tp_max_value, TpmsServer.getTemperature_UNIT());
-                    UnitTools.returnHP(TpmsServer.getWarnHighPressure_Progress(), Menuset.this.ps_max_value, TpmsServer.getPressure_UNIT());
-                    UnitTools.returnDP(TpmsServer.getWarnLowPressure_Progress(), Menuset.this.ps_min_value, TpmsServer.getPressure_UNIT());
+                    UnitTools.returnT(TpmsServer.getWarnHighTemperature_Progress(), Menuset.this.tp_max_value);
+                    UnitTools.returnHP(TpmsServer.getWarnHighPressure_Progress(), Menuset.this.ps_max_value);
+                    UnitTools.returnDP(TpmsServer.getWarnLowPressure_Progress(), Menuset.this.ps_min_value);
                     return;
                 case UPDATE_TEMP_VALUE:
-                    UnitTools.returnT(((Integer) msg.obj).intValue(), Menuset.this.tp_max_value, TpmsServer.getTemperature_UNIT());
+                    UnitTools.returnT(((Integer) msg.obj).intValue(), Menuset.this.tp_max_value);
                     return;
                 case UPDATE_PS_MAX_VALUE:
-                    UnitTools.returnHP(((Integer) msg.obj).intValue(), Menuset.this.ps_max_value, TpmsServer.getPressure_UNIT());
+                    UnitTools.returnHP(((Integer) msg.obj).intValue(), Menuset.this.ps_max_value);
                     return;
                 case UPDATE_PS_MIN_VALUE:
-                    UnitTools.returnDP(((Integer) msg.obj).intValue(), Menuset.this.ps_min_value, TpmsServer.getPressure_UNIT());
+                    UnitTools.returnDP(((Integer) msg.obj).intValue(), Menuset.this.ps_min_value);
                     return;
                 default:
                     return;
@@ -131,14 +129,14 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         }
     };
     private View Transposition;
-    private RadioGroup kpa_group;
-    private RadioButton rb1;
-    private RadioButton rb2;
-    private RadioButton rb3;
+//    private RadioGroup kpa_group;
+//    private RadioButton rb1;
+//    private RadioButton rb2;
+//    private RadioButton rb3;
     private View resdef_line;
-    private RadioButton temp1;
-    private RadioButton temp2;
-    private RadioGroup tmp_group;
+//    private RadioButton temp1;
+//    private RadioButton temp2;
+//    private RadioGroup tmp_group;
     private SeekBar tp_max_seekbar;
 
 
@@ -146,7 +144,7 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         setContentView(R.layout.layout_menu);
-        initRadioBtn();
+//        initRadioBtn();
         initView();
         defView();
         this.mHandler.sendEmptyMessage(0);
@@ -156,13 +154,13 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         super.onResume();
     }
 
-    public void initRadioBtn() {
-        this.rb1 = (RadioButton) findViewById(R.id.rb_kpa);
-        this.rb2 = (RadioButton) findViewById(R.id.rb_psi);
-        this.rb3 = (RadioButton) findViewById(R.id.rb_bar);
-        this.temp1 = (RadioButton) findViewById(R.id.temp0);
-        this.temp2 = (RadioButton) findViewById(R.id.temp1);
-    }
+//    public void initRadioBtn() {
+//        this.rb1 = (RadioButton) findViewById(R.id.rb_kpa);
+//        this.rb2 = (RadioButton) findViewById(R.id.rb_psi);
+//        this.rb3 = (RadioButton) findViewById(R.id.rb_bar);
+//        this.temp1 = (RadioButton) findViewById(R.id.temp0);
+//        this.temp2 = (RadioButton) findViewById(R.id.temp1);
+//    }
 
     public void initView() {
         this.Emitter_Matching = findViewById(R.id.emitter_matching);
@@ -177,10 +175,10 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         this.SerialTest.setOnClickListener(this);
         this.resdef_line = findViewById(R.id.resdef_line);
         this.resdef_line.setOnClickListener(this);
-        this.kpa_group = (RadioGroup) findViewById(R.id.kpa_unit);
-        this.kpa_group.setOnCheckedChangeListener(this);
-        this.tmp_group = (RadioGroup) findViewById(R.id.temp_group);
-        this.tmp_group.setOnCheckedChangeListener(this);
+//        this.kpa_group = (RadioGroup) findViewById(R.id.kpa_unit);
+//        this.kpa_group.setOnCheckedChangeListener(this);
+//        this.tmp_group = (RadioGroup) findViewById(R.id.temp_group);
+//        this.tmp_group.setOnCheckedChangeListener(this);
 //        this.BackUpButton = (ToggleButton) findViewById(R.id.backup_btn);
 //        this.BackUpButton.setOnCheckedChangeListener(this);
         this.MuteButton = (ToggleButton) findViewById(R.id.voice_btn);
@@ -200,24 +198,24 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     }
 
     public void defView() {
-        if (TpmsServer.getPressure_UNIT() == 0) {
-            if (this.rb1 != null) {
-                this.rb1.setChecked(true);
-            }
-        } else if (TpmsServer.getPressure_UNIT() == 1) {
-            if (this.rb2 != null) {
-                this.rb2.setChecked(true);
-            }
-        } else if (TpmsServer.getPressure_UNIT() == P_UNIT && this.rb3 != null) {
-            this.rb3.setChecked(true);
-        }
-        if (TpmsServer.getTemperature_UNIT() == T_UNIT) {
-            if (this.temp1 != null) {
-                this.temp1.setChecked(true);
-            }
-        } else if (TpmsServer.getTemperature_UNIT() == 1 && this.temp2 != null) {
-            this.temp2.setChecked(true);
-        }
+//        if (TpmsServer.getPressure_UNIT() == 0) {
+//            if (this.rb1 != null) {
+//                this.rb1.setChecked(true);
+//            }
+//        } else if (TpmsServer.getPressure_UNIT() == 1) {
+//            if (this.rb2 != null) {
+//                this.rb2.setChecked(true);
+//            }
+//        } else if (TpmsServer.getPressure_UNIT() == P_UNIT && this.rb3 != null) {
+//            this.rb3.setChecked(true);
+//        }
+//        if (TpmsServer.getTemperature_UNIT() == T_UNIT) {
+//            if (this.temp1 != null) {
+//                this.temp1.setChecked(true);
+//            }
+//        } else if (TpmsServer.getTemperature_UNIT() == 1 && this.temp2 != null) {
+//            this.temp2.setChecked(true);
+//        }
 //        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
 //            if (this.BackUpButton != null) {
 //                this.BackUpButton.setChecked(true);
@@ -244,8 +242,8 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
     }
 
     public void defInitView() {
-        TpmsServer.setPressure_UNIT(P_UNIT);
-        TpmsServer.setTemperature_UNIT(T_UNIT);
+//        TpmsServer.setPressure_UNIT(P_UNIT);
+//        TpmsServer.setTemperature_UNIT(T_UNIT);
         TpmsServer.setBackUpTyreStatus(false);
         TpmsServer.setMuteStatus(true);
         TpmsServer.setWarnHighPressure_Progress(HP_PROGRESS);
@@ -328,26 +326,26 @@ public class Menuset extends Activity implements View.OnClickListener, RadioGrou
         }
     }
 
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_kpa /*2131361870*/:
-                TpmsServer.setPressure_UNIT(0);
-                break;
-            case R.id.rb_psi /*2131361871*/:
-                TpmsServer.setPressure_UNIT(1);
-                break;
-            case R.id.rb_bar /*2131361872*/:
-                TpmsServer.setPressure_UNIT(P_UNIT);
-                break;
-            case R.id.temp0 /*2131361874*/:
-                TpmsServer.setTemperature_UNIT(T_UNIT);
-                break;
-            case R.id.temp1 /*2131361875*/:
-                TpmsServer.setTemperature_UNIT(1);
-                break;
-        }
-        this.mHandler.sendEmptyMessage(0);
-    }
+//    public void onCheckedChanged(RadioGroup group, int checkedId) {
+//        switch (checkedId) {
+//            case R.id.rb_kpa /*2131361870*/:
+//                TpmsServer.setPressure_UNIT(0);
+//                break;
+//            case R.id.rb_psi /*2131361871*/:
+//                TpmsServer.setPressure_UNIT(1);
+//                break;
+//            case R.id.rb_bar /*2131361872*/:
+//                TpmsServer.setPressure_UNIT(P_UNIT);
+//                break;
+//            case R.id.temp0 /*2131361874*/:
+//                TpmsServer.setTemperature_UNIT(T_UNIT);
+//                break;
+//            case R.id.temp1 /*2131361875*/:
+//                TpmsServer.setTemperature_UNIT(1);
+//                break;
+//        }
+//        this.mHandler.sendEmptyMessage(0);
+//    }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //        if (R.id.backup_btn == buttonView.getId()) {

@@ -29,19 +29,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
     static final String EXIT_APP_ACTION = "com.cz.action.exit_app";
     private static final int MESSAGE_HANDSHAKE_NO = 107;
     //    private static final int MESSAGE_HANDSHAKE_OK = 106;
-    private static final int MESSAGE_LEFT1_WARN_SHOW = 1110;
-    private static final int MESSAGE_LEFT2_WARN_SHOW = 1111;
-    private static final int MESSAGE_RIGHT1_WARN_SHOW = 1112;
-    private static final int MESSAGE_RIGHT2_WARN_SHOW = 1113;
-    private static final int MESSAGE_SPARE_WARN_SHOW = 1114;
+//    private static final int MESSAGE_LEFT1_WARN_SHOW = 1110;
+//    private static final int MESSAGE_LEFT2_WARN_SHOW = 1111;
+//    private static final int MESSAGE_RIGHT1_WARN_SHOW = 1112;
+//    private static final int MESSAGE_RIGHT2_WARN_SHOW = 1113;
+//    private static final int MESSAGE_SPARE_WARN_SHOW = 1114;
     private static final int MESSAGE_USB_OPEN_FAIL = 101;
     private static final int MESSAGE_USB_OPEN_OK = 102;
     //    private static final int MESSAGE_VOICE_SPEK = 104;
     public static boolean backup_warn = false;
-    public static boolean left1_warn = false;
-    public static boolean left2_warn = false;
-    public static boolean right1_warn = false;
-    public static boolean right2_warn = false;
+//    public static boolean left1_warn = false;
+//    public static boolean left2_warn = false;
+//    public static boolean right1_warn = false;
+//    public static boolean right2_warn = false;
     public static int trye_warn_show_count = 10;
     private static SharedPreferences sp = null;
 
@@ -65,18 +65,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private ImageView topDataStatuButton;
     //    private TextView Backup_P_UINT;
 //    private TextView Backup_T_UINT;
-    private View Left1_Back;
-    private TextView Left1_P_UINT;
-    private TextView Left1_T_UINT;
-    private View Left2_Back;
-    private TextView Left2_P_UINT;
-    private TextView Left2_T_UINT;
-    private View Right1_Back;
-    private TextView Right1_P_UINT;
-    private TextView Right1_T_UINT;
-    private View Right2_Back;
-    private TextView Right2_P_UINT;
-    private TextView Right2_T_UINT;
+//    private View Left1_Back;
+//    private TextView Left1_P_UINT;
+//    private TextView Left1_T_UINT;
+//    private View Left2_Back;
+//    private TextView Left2_P_UINT;
+//    private TextView Left2_T_UINT;
+//    private View Right1_Back;
+//    private TextView Right1_P_UINT;
+//    private TextView Right1_T_UINT;
+//    private View Right2_Back;
+//    private TextView Right2_P_UINT;
+//    private TextView Right2_T_UINT;
     //    private ImageView backup_bat;
     private ImageView left1_bat;
     private ImageView left2_bat;
@@ -200,20 +200,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (TpmsServer.DEBUG) {
                     Log.e(MainActivity.this.TAG, "cz111  " + Tools.bytesToHexString((byte[]) msg.getData().get("data")));
                 }
-                int ret1 = MainActivity.this.ShowDataP((byte[]) msg.getData().get("data"));
-                int ret2 = MainActivity.this.ShowDataT((byte[]) msg.getData().get("data"));
+                int retDataP = MainActivity.this.ShowDataP((byte[]) msg.getData().get("data"));
+                int retDataT = MainActivity.this.ShowDataT((byte[]) msg.getData().get("data"));
                 int retPH = TpmsServer.getWarnHighPressure();
                 int retPL = TpmsServer.getWarnLowPressure();
                 int retHT = TpmsServer.getWarnHighTemperature();
-                if ((ret1 != 0 || ret2 != 0) && retPH != 0 && retPL != 0 && retHT != 0) {
-                    if (ret1 == 1 || ret2 == 1) {
+                if ((retDataP != 0 || retDataT != 0) && retPH != 0 && retPL != 0 && retHT != 0) {
+                    if (retDataP == 1 || retDataT == 1) {
                         if (TpmsServer.left1_TyrePressure > retPH ||
                                 TpmsServer.left1_TyrePressure < retPL ||
                                 TpmsServer.left1_TyreTemperature > retHT ||
                                 UnitTools.warning_AIR(TpmsServer.left1_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.left1_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.left1_Byte).booleanValue()) {
-                            MainActivity.left1_warn = true;
+//                            MainActivity.left1_warn = true;
                             if (TpmsServer.left1_TyrePressure > retPH) {
                                 MainActivity.this.Left1_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.left1_TyrePressure < retPL) {
@@ -227,19 +227,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Left1_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-                            MainActivity.left1_warn = false;
+//                            MainActivity.left1_warn = false;
                             MainActivity.this.Left1_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Left1_T.setTextColor(Color.rgb(68, 121, 189));
                         }
                     }
-                    if (ret1 == 2 || ret2 == 2) {
+                    if (retDataP == 2 || retDataT == 2) {
                         if (TpmsServer.left2_TyrePressure > retPH ||
                                 TpmsServer.left2_TyrePressure < retPL ||
                                 TpmsServer.left2_TyreTemperature > retHT ||
                                 UnitTools.warning_AIR(TpmsServer.left2_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.left2_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.left2_Byte).booleanValue()) {
-                            MainActivity.left2_warn = true;
+//                            MainActivity.left2_warn = true;
                             if (TpmsServer.left2_TyrePressure > retPH) {
                                 MainActivity.this.Left2_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.left2_TyrePressure < retPL) {
@@ -253,19 +253,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Left2_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-                            MainActivity.left2_warn = false;
+//                            MainActivity.left2_warn = false;
                             MainActivity.this.Left2_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Left2_T.setTextColor(Color.rgb(68, 121, 189));
                         }
                     }
-                    if (ret1 == 3 || ret2 == 3) {
+                    if (retDataP == 3 || retDataT == 3) {
                         if (TpmsServer.right1_TyrePressure > retPH ||
                                 TpmsServer.right1_TyrePressure < retPL ||
                                 TpmsServer.right1_TyreTemperature > retHT ||
                                 UnitTools.warning_AIR(TpmsServer.right1_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.right1_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.right1_Byte).booleanValue()) {
-                            MainActivity.right1_warn = true;
+//                            MainActivity.right1_warn = true;
                             if (TpmsServer.right1_TyrePressure > retPH) {
                                 MainActivity.this.Right1_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.right1_TyrePressure < retPL) {
@@ -279,19 +279,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Right1_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-                            MainActivity.right1_warn = false;
+//                            MainActivity.right1_warn = false;
                             MainActivity.this.Right1_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Right1_T.setTextColor(Color.rgb(68, 121, 189));
                         }
                     }
-                    if (ret1 == 4 || ret2 == 4) {
+                    if (retDataP == 4 || retDataT == 4) {
                         if (TpmsServer.right2_TyrePressure > retPH ||
                                 TpmsServer.right2_TyrePressure < retPL ||
                                 TpmsServer.right2_TyreTemperature > retHT ||
                                 UnitTools.warning_AIR(TpmsServer.right2_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.right2_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.right2_Byte).booleanValue()) {
-                            MainActivity.right2_warn = true;
+//                            MainActivity.right2_warn = true;
                             if (TpmsServer.right2_TyrePressure > retPH) {
                                 MainActivity.this.Right2_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.right2_TyrePressure < retPL) {
@@ -305,12 +305,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Right2_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-                            MainActivity.right2_warn = false;
+//                            MainActivity.right2_warn = false;
                             MainActivity.this.Right2_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Right2_T.setTextColor(Color.rgb(68, 121, 189));
                         }
                     }
-//                    if ((ret1 == 5 || ret2 == 5) && MainActivity.this.Backup_Back.getVisibility() == View.VISIBLE) {
+//                    if ((ret1 == 5 || retDataT == 5) && MainActivity.this.Backup_Back.getVisibility() == View.VISIBLE) {
 //                        if (TpmsServer.backup_TyrePressure > retPH ||
 //                                TpmsServer.backup_TyrePressure < retPL ||
 //                                TpmsServer.backup_TyreTemperature > retHT ||
@@ -371,8 +371,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     };
     private ImageView topMenuButton;
     private ImageView topMuteButton;
-    private TextView warn_text;
-    private String[] e = null;
+//    private TextView warn_text;
+//    private String[] e = null;
 
     public static int getT_UNIT() {
         if (sp != null) {
@@ -424,30 +424,30 @@ public class MainActivity extends Activity implements View.OnClickListener {
         this.topMenuButton = (ImageView) findViewById(R.id.topMenuButton);
         this.topMuteButton = (ImageView) findViewById(R.id.topMuteButton);
         this.topDataStatuButton = (ImageView) findViewById(R.id.topDataStatuButton);
-        this.Left1_Back = findViewById(R.id.left1_background);
-        this.Left2_Back = findViewById(R.id.left2_background);
-        this.Right1_Back = findViewById(R.id.right1_background);
-        this.Right2_Back = findViewById(R.id.right2_background);
+//        this.Left1_Back = findViewById(R.id.left1_background);
+//        this.Left2_Back = findViewById(R.id.left2_background);
+//        this.Right1_Back = findViewById(R.id.right1_background);
+//        this.Right2_Back = findViewById(R.id.right2_background);
 //        this.Backup_Back = findViewById(R.id.backup_tyre);
         this.Left1_P = (TextView) findViewById(R.id.left1_p);
-        this.Left1_P_UINT = (TextView) findViewById(R.id.left1_p_uint);
+//        this.Left1_P_UINT = (TextView) findViewById(R.id.left1_p_uint);
         this.Left1_T = (TextView) findViewById(R.id.left1_t);
-        this.Left1_T_UINT = (TextView) findViewById(R.id.left1_t_uint);
+//        this.Left1_T_UINT = (TextView) findViewById(R.id.left1_t_uint);
         this.left1_bat = (ImageView) findViewById(R.id.left1_bat);
         this.Left2_P = (TextView) findViewById(R.id.left2_p);
-        this.Left2_P_UINT = (TextView) findViewById(R.id.left2_p_uint);
+//        this.Left2_P_UINT = (TextView) findViewById(R.id.left2_p_uint);
         this.Left2_T = (TextView) findViewById(R.id.left2_t);
-        this.Left2_T_UINT = (TextView) findViewById(R.id.left2_t_uint);
+//        this.Left2_T_UINT = (TextView) findViewById(R.id.left2_t_uint);
         this.left2_bat = (ImageView) findViewById(R.id.left2_bat);
         this.Right1_P = (TextView) findViewById(R.id.right1_p);
-        this.Right1_P_UINT = (TextView) findViewById(R.id.right1_p_uint);
+//        this.Right1_P_UINT = (TextView) findViewById(R.id.right1_p_uint);
         this.Right1_T = (TextView) findViewById(R.id.right1_t);
-        this.Right1_T_UINT = (TextView) findViewById(R.id.right1_t_uint);
+//        this.Right1_T_UINT = (TextView) findViewById(R.id.right1_t_uint);
         this.right1_bat = (ImageView) findViewById(R.id.right1_bat);
         this.Right2_P = (TextView) findViewById(R.id.right2_p);
-        this.Right2_P_UINT = (TextView) findViewById(R.id.right2_p_uint);
+//        this.Right2_P_UINT = (TextView) findViewById(R.id.right2_p_uint);
         this.Right2_T = (TextView) findViewById(R.id.right2_t);
-        this.Right2_T_UINT = (TextView) findViewById(R.id.right2_t_uint);
+//        this.Right2_T_UINT = (TextView) findViewById(R.id.right2_t_uint);
         this.right2_bat = (ImageView) findViewById(R.id.right2_bat);
 //        this.Backup_P = (TextView) findViewById(R.id.backup_p);
 //        this.Backup_P_UINT = (TextView) findViewById(R.id.backup_p_uint);
@@ -496,33 +496,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //            }
         }
         if (showdata == 0 || showdata == 2) {
-            if (this.Left1_P_UINT != null) {
-                this.Left1_P_UINT.setText("");
-            }
-            if (this.Left2_P_UINT != null) {
-                this.Left2_P_UINT.setText("");
-            }
-            if (this.Right1_P_UINT != null) {
-                this.Right1_P_UINT.setText("");
-            }
-            if (this.Right2_P_UINT != null) {
-                this.Right2_P_UINT.setText("");
-            }
+//            if (this.Left1_P_UINT != null) {
+//                this.Left1_P_UINT.setText("");
+//            }
+//            if (this.Left2_P_UINT != null) {
+//                this.Left2_P_UINT.setText("");
+//            }
+//            if (this.Right1_P_UINT != null) {
+//                this.Right1_P_UINT.setText("");
+//            }
+//            if (this.Right2_P_UINT != null) {
+//                this.Right2_P_UINT.setText("");
+//            }
 //            if (this.Backup_P_UINT != null) {
 //                this.Backup_P_UINT.setText("");
 //            }
-            if (this.Left1_T_UINT != null) {
-                this.Left1_T_UINT.setText("");
-            }
-            if (this.Left2_T_UINT != null) {
-                this.Left2_T_UINT.setText("");
-            }
-            if (this.Right1_T_UINT != null) {
-                this.Right1_T_UINT.setText("");
-            }
-            if (this.Right2_T_UINT != null) {
-                this.Right2_T_UINT.setText("");
-            }
+//            if (this.Left1_T_UINT != null) {
+//                this.Left1_T_UINT.setText("");
+//            }
+//            if (this.Left2_T_UINT != null) {
+//                this.Left2_T_UINT.setText("");
+//            }
+//            if (this.Right1_T_UINT != null) {
+//                this.Right1_T_UINT.setText("");
+//            }
+//            if (this.Right2_T_UINT != null) {
+//                this.Right2_T_UINT.setText("");
+//            }
 //            if (this.Backup_T_UINT != null) {
 //                this.Backup_T_UINT.setText("");
 //            }
@@ -543,12 +543,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
             int data = (int) (((double) Integer.valueOf(Integer.toBinaryString(buff[4] & 0xFF), 2).intValue()) * 3.44d);
             switch (buff[3]) {
                 case 0:
-                    UnitTools.returnP(buff[4], this.Left1_P, TpmsServer.getPressure_UNIT(), this.Left1_P_UINT);
+                    UnitTools.returnP(buff[4], this.Left1_P);
                     ShowDataBat(buff[7], this.left1_bat);
                     ret = 1;
                     break;
                 case 1:
-                    UnitTools.returnP(buff[4], this.Right1_P, TpmsServer.getPressure_UNIT(), this.Right1_P_UINT);
+                    UnitTools.returnP(buff[4], this.Right1_P);
                     ShowDataBat(buff[7], this.right1_bat);
                     ret = 3;
                     break;
@@ -561,12 +561,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                    }
                     break;
                 case 16:
-                    UnitTools.returnP(buff[4], this.Left2_P, TpmsServer.getPressure_UNIT(), this.Left2_P_UINT);
+                    UnitTools.returnP(buff[4], this.Left2_P);
                     ShowDataBat(buff[7], this.left2_bat);
                     ret = 2;
                     break;
                 case 17:
-                    UnitTools.returnP(buff[4], this.Right2_P, TpmsServer.getPressure_UNIT(), this.Right2_P_UINT);
+                    UnitTools.returnP(buff[4], this.Right2_P);
                     ShowDataBat(buff[7], this.right2_bat);
                     ret = 4;
                     break;
@@ -586,12 +586,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (buff[2] == 10) {
             switch (buff[3]) {
                 case 0:
-                    UnitTools.returnT(buff[5], this.Left1_T, TpmsServer.getTemperature_UNIT(), 0, this.Left1_T_UINT);
+                    UnitTools.returnT(buff[5], this.Left1_T);
                     ShowDataBat(buff[7], this.left1_bat);
                     ret = 1;
                     break;
                 case 1:
-                    UnitTools.returnT(buff[5], this.Right1_T, TpmsServer.getTemperature_UNIT(), 0, this.Right1_T_UINT);
+                    UnitTools.returnT(buff[5], this.Right1_T);
                     ShowDataBat(buff[7], this.right1_bat);
                     ret = 3;
                     break;
@@ -604,12 +604,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                    }
                     break;
                 case 16:
-                    UnitTools.returnT(buff[5], this.Left2_T, TpmsServer.getTemperature_UNIT(), 0, this.Left2_T_UINT);
+                    UnitTools.returnT(buff[5], this.Left2_T);
                     ShowDataBat(buff[7], this.left2_bat);
                     ret = 2;
                     break;
                 case 17:
-                    UnitTools.returnT(buff[5], this.Right2_T, TpmsServer.getTemperature_UNIT(), 0, this.Right2_T_UINT);
+                    UnitTools.returnT(buff[5], this.Right2_T);
                     ShowDataBat(buff[7], this.right2_bat);
                     ret = 4;
                     break;

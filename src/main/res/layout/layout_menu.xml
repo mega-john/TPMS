@@ -108,110 +108,6 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="#222222"
-                android:gravity="left|center_vertical|center_horizontal|center">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/pressure_unit"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp" />
-
-                <RadioGroup
-                    android:id="@+id/kpa_unit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <RadioButton
-                        android:id="@+id/rb_kpa"
-                        style="@style/radio_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Kpa"
-                        android:textColor="#ffffff" />
-
-                    <RadioButton
-                        android:id="@+id/rb_psi"
-                        style="@style/radio_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Psi"
-                        android:textColor="#ffffff" />
-
-                    <RadioButton
-                        android:id="@+id/rb_bar"
-                        style="@style/radio_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bar"
-                        android:textColor="#ffffff" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#545454" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="#222222"
-                android:gravity="left|center_vertical|center_horizontal|center">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/temperature_unit"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp" />
-
-                <RadioGroup
-                    android:id="@+id/temp_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/temp0"
-                        style="@style/radio_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="℃"
-                        android:textColor="#ffffff" />
-
-                    <RadioButton
-                        android:id="@+id/temp1"
-                        style="@style/radio_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="F"
-                        android:textColor="#ffffff" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#545454" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:background="#222222"
                 android:gravity="left|center_vertical|center_horizontal|center"
@@ -445,14 +341,6 @@
                         android:textSize="20dp"
                         android:visibility="gone" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="#545454"
-                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/exit_app"

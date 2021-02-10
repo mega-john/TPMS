@@ -46,12 +46,14 @@ public class Emitter_Matching extends Activity {
     private int ret3 = 0;
     private int ret4 = 0;
     private int ret5 = 0;
+    private ImageView ico_car;
+    private TextView match_id = null;
     private TextView rl_low_left_id;
     private TextView rl_low_right_id;
     private TextView rl_top_left_id;
     private TextView rl_top_right_id;
     private TextView wait_time = null;
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             byte[] buff;
             byte[] buff2;
@@ -68,17 +70,9 @@ public class Emitter_Matching extends Activity {
                 Log.d("REQUEST", new StringBuilder(String.valueOf(Emitter_Matching.this.flag)).toString());
                 switch (buff2[4]) {
                     case 0:
-                        Emitter_Matching.this.isLearnState(buff2[3]);
-                        return;
                     case 1:
-                        Emitter_Matching.this.isLearnState(buff2[3]);
-                        return;
                     case 5:
-                        Emitter_Matching.this.isLearnState(buff2[3]);
-                        return;
                     case 16:
-                        Emitter_Matching.this.isLearnState(buff2[3]);
-                        return;
                     case 17:
                         Emitter_Matching.this.isLearnState(buff2[3]);
                         return;
@@ -100,10 +94,6 @@ public class Emitter_Matching extends Activity {
                         Tools.byteToHexString(buff[7]);
                 switch (buff[3]) {
                     case 1:
-//                        String str = Tools.byteToHexString(buff[4]) +
-//                                Tools.byteToHexString(buff[5]) +
-//                                Tools.byteToHexString(buff[6]) +
-//                                Tools.byteToHexString(buff[7]);
                         if (TpmsServer.DEBUG) {
                             Log.e("cz  id", "1 -- " + str + "  " + TpmsServer.getLeft1_ID());
                         }
@@ -115,10 +105,6 @@ public class Emitter_Matching extends Activity {
                         }
                         return;
                     case 2:
-//                        String str1 = Tools.byteToHexString(buff[4]) +
-//                                Tools.byteToHexString(buff[5]) +
-//                                Tools.byteToHexString(buff[6]) +
-//                                Tools.byteToHexString(buff[7]);
                         if (Emitter_Matching.this.rl_top_right_id != null && !"".equals(str)) {
                             Emitter_Matching.this.rl_top_right_id.setText(str);
                             Emitter_Matching.this.ret2 = 2;
@@ -127,10 +113,6 @@ public class Emitter_Matching extends Activity {
                         }
                         return;
                     case 3:
-//                        String str2 = Tools.byteToHexString(buff[4]) +
-//                                Tools.byteToHexString(buff[5]) +
-//                                Tools.byteToHexString(buff[6]) +
-//                                Tools.byteToHexString(buff[7]);
                         if (Emitter_Matching.this.rl_low_left_id != null && !"".equals(str)) {
                             Emitter_Matching.this.rl_low_left_id.setText(str);
                             Emitter_Matching.this.ret3 = 3;
@@ -139,10 +121,6 @@ public class Emitter_Matching extends Activity {
                         }
                         return;
                     case 4:
-//                        String str3 = Tools.byteToHexString(buff[4]) +
-//                                Tools.byteToHexString(buff[5]) +
-//                                Tools.byteToHexString(buff[6]) +
-//                                Tools.byteToHexString(buff[7]);
                         if (Emitter_Matching.this.rl_low_right_id != null && !"".equals(str)) {
                             Emitter_Matching.this.rl_low_right_id.setText(str);
                             Emitter_Matching.this.ret4 = 4;
@@ -197,9 +175,6 @@ public class Emitter_Matching extends Activity {
             }
         }
     };
-    private ImageView ico_car;
-    private TextView match_id = null;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

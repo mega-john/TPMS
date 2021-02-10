@@ -68,10 +68,6 @@ public class Tyre_Transposition extends Activity {
                         Tools.byteToHexString(buff2[7]);
                 switch (buff2[3]) {
                     case 1:
-//                        String str = Tools.byteToHexString(buff2[4]) +
-//                                Tools.byteToHexString(buff2[5]) +
-//                                Tools.byteToHexString(buff2[6]) +
-//                                Tools.byteToHexString(buff2[7]);
                         if (Tyre_Transposition.this.rl_top_left_id != null && !"".equals(str)) {
                             Tyre_Transposition.this.rl_top_left_id.setText(str);
                             Tyre_Transposition.this.ret1 = 1;
@@ -80,7 +76,6 @@ public class Tyre_Transposition extends Activity {
                         }
                         return;
                     case 2:
-//                        String str1 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
                         if (Tyre_Transposition.this.rl_top_right_id != null && !"".equals(str)) {
                             Tyre_Transposition.this.rl_top_right_id.setText(str);
                             Tyre_Transposition.this.ret2 = 2;
@@ -89,7 +84,6 @@ public class Tyre_Transposition extends Activity {
                         }
                         return;
                     case 3:
-//                        String str2 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
                         if (Tyre_Transposition.this.rl_low_left_id != null && !"".equals(str)) {
                             Tyre_Transposition.this.rl_low_left_id.setText(str);
                             Tyre_Transposition.this.ret3 = 3;
@@ -98,7 +92,6 @@ public class Tyre_Transposition extends Activity {
                         }
                         return;
                     case 4:
-//                        String str3 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
                         if (Tyre_Transposition.this.rl_low_right_id != null && !"".equals(str)) {
                             Tyre_Transposition.this.rl_low_right_id.setText(str);
                             Tyre_Transposition.this.ret4 = 4;

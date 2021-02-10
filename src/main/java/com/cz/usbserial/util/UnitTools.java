@@ -29,43 +29,47 @@ public class UnitTools {
 //        return false;
 //    }
 
-    public static void returnP(byte b, TextView t, int unit, TextView unit_id) {
-        if (t != null && unit_id != null) {
+    public static void returnP(byte b, TextView t) {
+        if (t != null) {
             double data = (double) ((int) (((double) Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue()) * 3.44d));
-            switch (unit) {
-                case 0:
-                    t.setText(((int) Math.round(data * 10.0d)) / 10 + " ");
-                    unit_id.setText("Kpa");
-                    return;
-                case 1:
-                    t.setText(((double) Math.round((data / 6.89d) * 10.0d)) / 10.0d + " ");
-                    unit_id.setText("Psi");
-                    return;
-                case 2:
-                    t.setText(((double) Math.round(data / 10.0d)) / 10.0d + " ");
-                    unit_id.setText("Bar");
-                    return;
-                default:
-                    return;
-            }
+            t.setText(String.format("%.2f ", data / 10.0d / 10.0d));
+//            switch (unit) {
+//                case 0:
+//                    t.setText(((int) Math.round(data * 10.0d)) / 10 + " ");
+//                    unit_id.setText("Kpa");
+//                    return;
+//                case 1:
+//                    t.setText(((double) Math.round((data / 6.89d) * 10.0d)) / 10.0d + " ");
+//                    unit_id.setText("Psi");
+//                    return;
+//                case 2:
+////                    t.setText(((double) Math.round(data / 10.0d)) / 10.0d + " ");
+//                    t.setText(String.format("%.2f ", data / 10.0d / 10.0d));
+//                    unit_id.setText("Bar");
+//                    return;
+//                default:
+//                    return;
+//            }
         }
     }
 
-    public static boolean returnT(byte b, TextView t, int unit, int limit, TextView unit_id) {
-        if (t == null || unit_id == null) {
+    public static boolean returnT(byte b, TextView t) {
+        if (t == null) {
             return false;
         }
         int data = Integer.valueOf(Integer.toBinaryString(b & 0xFF), 2).intValue() - 50;
-        switch (unit) {
-            case 0:
-                t.setText(data + " ");
-                unit_id.setText(" \u2103");
-                break;
-            case 1:
-                t.setText(((double) Math.round(((((double) data) * 1.8d) + 32.0d) * 10.0d)) / 10.0d + " ");
-                unit_id.setText(" \u2109");
-                break;
-        }
+        t.setText(data + " ");
+
+//        switch (unit) {
+//            case 0:
+//                t.setText(data + " ");
+//                unit_id.setText(" \u2103");
+//                break;
+//            case 1:
+//                t.setText(((double) Math.round(((((double) data) * 1.8d) + 32.0d) * 10.0d)) / 10.0d + " ");
+//                unit_id.setText(" \u2109");
+//                break;
+//        }
         return Tools.isHT(data, TpmsServer.getWarnHighTemperature());
     }
 
@@ -117,57 +121,60 @@ public class UnitTools {
 //        return 0;
 //    }
 
-    public static void returnHP(int progress, TextView t, int unit) {
+    public static void returnHP(int progress, TextView t) {
         if (t != null) {
             TpmsServer.setWarnHighPressure(progress + 100);
-            switch (unit) {
-                case 0:
-                    t.setText((progress + 100) + "Kpa");
-                    return;
-                case 1:
-                    t.setText(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d) + "Psi");
-                    return;
-                case 2:
-                    t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
-                    return;
-                default:
-                    return;
-            }
+            t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
+//            switch (unit) {
+//                case 0:
+//                    t.setText((progress + 100) + "Kpa");
+//                    return;
+//                case 1:
+//                    t.setText(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d) + "Psi");
+//                    return;
+//                case 2:
+//                    t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
+//                    return;
+//                default:
+//                    return;
+//            }
         }
     }
 
-    public static void returnDP(int progress, TextView t, int unit) {
+    public static void returnDP(int progress, TextView t) {
         if (t != null) {
             TpmsServer.setWarnLowPressure(progress + 100);
-            switch (unit) {
-                case 0:
-                    t.setText((progress + 100) + "Kpa");
-                    return;
-                case 1:
-                    t.setText(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d) + "Psi");
-                    return;
-                case 2:
-                    t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
-                    return;
-                default:
-                    return;
-            }
+            t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
+//            switch (unit) {
+//                case 0:
+//                    t.setText((progress + 100) + "Kpa");
+//                    return;
+//                case 1:
+//                    t.setText(df1.format((Tools.div((double) progress, 100.0d, 2) * 14.5d) + 14.5d) + "Psi");
+//                    return;
+//                case 2:
+//                    t.setText(df.format(Tools.div((double) progress, 100.0d, 2) + 1.0d) + "Bar");
+//                    return;
+//                default:
+//                    return;
+//            }
         }
     }
 
-    public static void returnT(int progress, TextView t, int unit) {
+    public static void returnT(int progress, TextView t) {
         if (t != null) {
             TpmsServer.setWarnHighTemperature(progress + 10);
-            switch (unit) {
-                case 0:
-                    t.setText((progress + 10) + "\u2103");
-                    return;
-                case 1:
-                    t.setText(Math.round(((((double) (progress + 50)) * 1.8d) + 32.0d) - 72.0d) + "\u2109");
-                    return;
-                default:
-                    return;
-            }
+            t.setText((progress + 10) + "\u2103");
+//            switch (unit) {
+//                case 0:
+//                    t.setText((progress + 10) + "\u2103");
+//                    return;
+//                case 1:
+//                    t.setText(Math.round(((((double) (progress + 50)) * 1.8d) + 32.0d) - 72.0d) + "\u2109");
+//                    return;
+//                default:
+//                    return;
+//            }
         }
     }
 
