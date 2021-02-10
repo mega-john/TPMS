@@ -28,30 +28,14 @@ import com.cz.usbserial.view.UnbindDialog;
 public class MainActivity extends Activity implements View.OnClickListener {
     static final String EXIT_APP_ACTION = "com.cz.action.exit_app";
     private static final int MESSAGE_HANDSHAKE_NO = 107;
-    //    private static final int MESSAGE_HANDSHAKE_OK = 106;
-//    private static final int MESSAGE_LEFT1_WARN_SHOW = 1110;
-//    private static final int MESSAGE_LEFT2_WARN_SHOW = 1111;
-//    private static final int MESSAGE_RIGHT1_WARN_SHOW = 1112;
-//    private static final int MESSAGE_RIGHT2_WARN_SHOW = 1113;
-//    private static final int MESSAGE_SPARE_WARN_SHOW = 1114;
     private static final int MESSAGE_USB_OPEN_FAIL = 101;
     private static final int MESSAGE_USB_OPEN_OK = 102;
-    //    private static final int MESSAGE_VOICE_SPEK = 104;
-    public static boolean backup_warn = false;
-//    public static boolean left1_warn = false;
-//    public static boolean left2_warn = false;
-//    public static boolean right1_warn = false;
-//    public static boolean right2_warn = false;
-    public static int trye_warn_show_count = 10;
     private static SharedPreferences sp = null;
 
     Context a;
 
     private final String TAG = MainActivity.class.getSimpleName();
     Context mContext = this;
-    //    private View Backup_Back;
-//    private TextView Backup_P;
-//    private TextView Backup_T;
     private TextView Left1_P;
     private TextView Left1_T;
     private TextView Left2_P;
@@ -63,115 +47,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private ImageView ico_car;
     private TpmsServer mTpmsServer = null;
     private ImageView topDataStatuButton;
-    //    private TextView Backup_P_UINT;
-//    private TextView Backup_T_UINT;
-//    private View Left1_Back;
-//    private TextView Left1_P_UINT;
-//    private TextView Left1_T_UINT;
-//    private View Left2_Back;
-//    private TextView Left2_P_UINT;
-//    private TextView Left2_T_UINT;
-//    private View Right1_Back;
-//    private TextView Right1_P_UINT;
-//    private TextView Right1_T_UINT;
-//    private View Right2_Back;
-//    private TextView Right2_P_UINT;
-//    private TextView Right2_T_UINT;
-    //    private ImageView backup_bat;
     private ImageView left1_bat;
     private ImageView left2_bat;
-    private Handler mHandlerTyreWarnShow = new Handler() {
-        public void handleMessage(Message msg) {
-//            if (msg.what == MainActivity.MESSAGE_LEFT1_WARN_SHOW) {
-//                for (int i = 0; i < MainActivity.trye_warn_show_count; i++) {
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_left1_ok);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e) {
-//                    }
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_left1_warn);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e2) {
-//                    }
-//                }
-//            } else if (msg.what == MainActivity.MESSAGE_LEFT2_WARN_SHOW) {
-//                for (int i2 = 0; i2 < MainActivity.trye_warn_show_count; i2++) {
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_left2_ok);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e3) {
-//                    }
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_left2_warn);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e4) {
-//                    }
-//                }
-//            } else if (msg.what == MainActivity.MESSAGE_RIGHT1_WARN_SHOW) {
-//                for (int i3 = 0; i3 < MainActivity.trye_warn_show_count; i3++) {
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_right1_ok);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e5) {
-//                    }
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_right1_warn);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e6) {
-//                    }
-//                }
-//            } else if (msg.what == MainActivity.MESSAGE_RIGHT2_WARN_SHOW) {
-//                for (int i4 = 0; i4 < MainActivity.trye_warn_show_count; i4++) {
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_right2_ok);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e7) {
-//                    }
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_right2_warn);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e8) {
-//                    }
-//                }
-//            } else if (msg.what == MainActivity.MESSAGE_SPARE_WARN_SHOW) {
-//                for (int i5 = 0; i5 < MainActivity.trye_warn_show_count; i5++) {
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_spare_ok);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e9) {
-//                    }
-//                    if (MainActivity.this.ico_car != null) {
-//                        MainActivity.this.ico_car.setImageResource(R.drawable.car_spare_warn);
-//                    }
-//                    try {
-//                        SystemClock.sleep(10000);
-//                    } catch (Exception e10) {
-//                    }
-//                }
-//            }
-        }
-    };
     private ImageView right1_bat;
     private ImageView right2_bat;
+    private ImageView topMenuButton;
+    private ImageView topMuteButton;
+
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -213,7 +95,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 UnitTools.warning_AIR(TpmsServer.left1_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.left1_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.left1_Byte).booleanValue()) {
-//                            MainActivity.left1_warn = true;
                             if (TpmsServer.left1_TyrePressure > retPH) {
                                 MainActivity.this.Left1_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.left1_TyrePressure < retPL) {
@@ -227,7 +108,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Left1_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-//                            MainActivity.left1_warn = false;
                             MainActivity.this.Left1_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Left1_T.setTextColor(Color.rgb(68, 121, 189));
                         }
@@ -239,7 +119,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 UnitTools.warning_AIR(TpmsServer.left2_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.left2_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.left2_Byte).booleanValue()) {
-//                            MainActivity.left2_warn = true;
                             if (TpmsServer.left2_TyrePressure > retPH) {
                                 MainActivity.this.Left2_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.left2_TyrePressure < retPL) {
@@ -253,7 +132,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Left2_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-//                            MainActivity.left2_warn = false;
                             MainActivity.this.Left2_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Left2_T.setTextColor(Color.rgb(68, 121, 189));
                         }
@@ -265,7 +143,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 UnitTools.warning_AIR(TpmsServer.right1_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.right1_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.right1_Byte).booleanValue()) {
-//                            MainActivity.right1_warn = true;
                             if (TpmsServer.right1_TyrePressure > retPH) {
                                 MainActivity.this.Right1_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.right1_TyrePressure < retPL) {
@@ -279,7 +156,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Right1_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-//                            MainActivity.right1_warn = false;
                             MainActivity.this.Right1_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Right1_T.setTextColor(Color.rgb(68, 121, 189));
                         }
@@ -291,7 +167,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 UnitTools.warning_AIR(TpmsServer.right2_Byte).booleanValue() ||
                                 UnitTools.warning_P(TpmsServer.right2_Byte).booleanValue() ||
                                 UnitTools.warning_Signal(TpmsServer.right2_Byte).booleanValue()) {
-//                            MainActivity.right2_warn = true;
                             if (TpmsServer.right2_TyrePressure > retPH) {
                                 MainActivity.this.Right2_P.setTextColor(Color.rgb(230, 0, 0));
                             } else if (TpmsServer.right2_TyrePressure < retPL) {
@@ -305,45 +180,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 MainActivity.this.Right2_T.setTextColor(Color.rgb(68, 121, 189));
                             }
                         } else {
-//                            MainActivity.right2_warn = false;
                             MainActivity.this.Right2_P.setTextColor(Color.rgb(0, 155, 67));
                             MainActivity.this.Right2_T.setTextColor(Color.rgb(68, 121, 189));
                         }
                     }
-//                    if ((ret1 == 5 || retDataT == 5) && MainActivity.this.Backup_Back.getVisibility() == View.VISIBLE) {
-//                        if (TpmsServer.backup_TyrePressure > retPH ||
-//                                TpmsServer.backup_TyrePressure < retPL ||
-//                                TpmsServer.backup_TyreTemperature > retHT ||
-//                                UnitTools.warning_AIR(TpmsServer.backup_Byte).booleanValue() ||
-//                                UnitTools.warning_P(TpmsServer.backup_Byte).booleanValue() ||
-//                                UnitTools.warning_Signal(TpmsServer.backup_Byte).booleanValue()) {
-//                            MainActivity.backup_warn = true;
-//                            if (TpmsServer.backup_TyrePressure > retPH) {
-//                                MainActivity.this.Backup_P.setTextColor(Color.rgb(230, 0, 0));
-//                            } else if (TpmsServer.backup_TyrePressure < retPL) {
-//                                MainActivity.this.Backup_P.setTextColor(Color.rgb(230, 0, 0));
-//                            } else {
-//                                MainActivity.this.Backup_P.setTextColor(Color.rgb(0, 155, 67));
-//                            }
-//                            if (TpmsServer.backup_TyreTemperature > retHT) {
-//                                MainActivity.this.Backup_T.setTextColor(Color.rgb(230, 0, 0));
-//                            } else {
-//                                MainActivity.this.Backup_T.setTextColor(Color.rgb(68, 121, 189));
-//                            }
-//                        } else {
-//                            MainActivity.backup_warn = false;
-//                            MainActivity.this.Backup_P.setTextColor(Color.rgb(0, 155, 67));
-//                            MainActivity.this.Backup_T.setTextColor(Color.rgb(68, 121, 189));
-//                        }
-//                    }
-//                    UnitTools.show_car_image_warn(
-//                            MainActivity.this.mContext,
-//                            MainActivity.this.ico_car,
-//                            MainActivity.left1_warn,
-//                            MainActivity.left2_warn,
-//                            MainActivity.right1_warn,
-//                            MainActivity.right2_warn,
-//                            MainActivity.backup_warn);
                 }
             } catch (Exception e) {
             }
@@ -369,10 +209,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         }
     };
-    private ImageView topMenuButton;
-    private ImageView topMuteButton;
-//    private TextView warn_text;
-//    private String[] e = null;
 
     public static int getT_UNIT() {
         if (sp != null) {
@@ -389,7 +225,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        String[] str = c();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         this.mTpmsServer = TpmsServer.getInstance();
@@ -424,36 +259,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
         this.topMenuButton = (ImageView) findViewById(R.id.topMenuButton);
         this.topMuteButton = (ImageView) findViewById(R.id.topMuteButton);
         this.topDataStatuButton = (ImageView) findViewById(R.id.topDataStatuButton);
-//        this.Left1_Back = findViewById(R.id.left1_background);
-//        this.Left2_Back = findViewById(R.id.left2_background);
-//        this.Right1_Back = findViewById(R.id.right1_background);
-//        this.Right2_Back = findViewById(R.id.right2_background);
-//        this.Backup_Back = findViewById(R.id.backup_tyre);
         this.Left1_P = (TextView) findViewById(R.id.left1_p);
-//        this.Left1_P_UINT = (TextView) findViewById(R.id.left1_p_uint);
         this.Left1_T = (TextView) findViewById(R.id.left1_t);
-//        this.Left1_T_UINT = (TextView) findViewById(R.id.left1_t_uint);
         this.left1_bat = (ImageView) findViewById(R.id.left1_bat);
         this.Left2_P = (TextView) findViewById(R.id.left2_p);
-//        this.Left2_P_UINT = (TextView) findViewById(R.id.left2_p_uint);
         this.Left2_T = (TextView) findViewById(R.id.left2_t);
-//        this.Left2_T_UINT = (TextView) findViewById(R.id.left2_t_uint);
         this.left2_bat = (ImageView) findViewById(R.id.left2_bat);
         this.Right1_P = (TextView) findViewById(R.id.right1_p);
-//        this.Right1_P_UINT = (TextView) findViewById(R.id.right1_p_uint);
         this.Right1_T = (TextView) findViewById(R.id.right1_t);
-//        this.Right1_T_UINT = (TextView) findViewById(R.id.right1_t_uint);
         this.right1_bat = (ImageView) findViewById(R.id.right1_bat);
         this.Right2_P = (TextView) findViewById(R.id.right2_p);
-//        this.Right2_P_UINT = (TextView) findViewById(R.id.right2_p_uint);
         this.Right2_T = (TextView) findViewById(R.id.right2_t);
-//        this.Right2_T_UINT = (TextView) findViewById(R.id.right2_t_uint);
         this.right2_bat = (ImageView) findViewById(R.id.right2_bat);
-//        this.Backup_P = (TextView) findViewById(R.id.backup_p);
-//        this.Backup_P_UINT = (TextView) findViewById(R.id.backup_p_uint);
-//        this.Backup_T = (TextView) findViewById(R.id.backup_t);
-//        this.Backup_T_UINT = (TextView) findViewById(R.id.backup_t_uint);
-//        this.backup_bat = (ImageView) findViewById(R.id.backup_bat);
         this.topMenuButton.setOnClickListener(this);
         this.topMuteButton.setOnClickListener(this);
         if (FileUtils.BufferReaderFile().contains("Pharos") &&
@@ -476,9 +293,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             if (this.Right2_P != null) {
                 this.Right2_P.setText("--");
             }
-//            if (this.Backup_P != null) {
-//                this.Backup_P.setText("--");
-//            }
             if (this.Left1_T != null) {
                 this.Left1_T.setText("--");
             }
@@ -491,47 +305,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
             if (this.Right2_T != null) {
                 this.Right2_T.setText("--");
             }
-//            if (this.Backup_T != null) {
-//                this.Backup_T.setText("--");
-//            }
         }
-        if (showdata == 0 || showdata == 2) {
-//            if (this.Left1_P_UINT != null) {
-//                this.Left1_P_UINT.setText("");
-//            }
-//            if (this.Left2_P_UINT != null) {
-//                this.Left2_P_UINT.setText("");
-//            }
-//            if (this.Right1_P_UINT != null) {
-//                this.Right1_P_UINT.setText("");
-//            }
-//            if (this.Right2_P_UINT != null) {
-//                this.Right2_P_UINT.setText("");
-//            }
-//            if (this.Backup_P_UINT != null) {
-//                this.Backup_P_UINT.setText("");
-//            }
-//            if (this.Left1_T_UINT != null) {
-//                this.Left1_T_UINT.setText("");
-//            }
-//            if (this.Left2_T_UINT != null) {
-//                this.Left2_T_UINT.setText("");
-//            }
-//            if (this.Right1_T_UINT != null) {
-//                this.Right1_T_UINT.setText("");
-//            }
-//            if (this.Right2_T_UINT != null) {
-//                this.Right2_T_UINT.setText("");
-//            }
-//            if (this.Backup_T_UINT != null) {
-//                this.Backup_T_UINT.setText("");
-//            }
-        }
+
         ShowDataBat((byte) 0, this.left1_bat);
         ShowDataBat((byte) 0, this.left2_bat);
         ShowDataBat((byte) 0, this.right1_bat);
         ShowDataBat((byte) 0, this.right2_bat);
-//        ShowDataBat((byte) 0, this.backup_bat);
     }
 
     public int ShowDataP(byte[] buff) {
@@ -551,14 +330,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     UnitTools.returnP(buff[4], this.Right1_P);
                     ShowDataBat(buff[7], this.right1_bat);
                     ret = 3;
-                    break;
-                case 5:
-//                    if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-//                        UnitTools.returnP(buff[4], this.Backup_P, TpmsServer.getPressure_UNIT(), this.Backup_P_UINT);
-//                        ShowDataBat(buff[7], this.backup_bat);
-//                        ret = 5;
-//                        break;
-//                    }
                     break;
                 case 16:
                     UnitTools.returnP(buff[4], this.Left2_P);
@@ -595,14 +366,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     ShowDataBat(buff[7], this.right1_bat);
                     ret = 3;
                     break;
-                case 5:
-//                    if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-//                        UnitTools.returnT(buff[5], this.Backup_T, TpmsServer.getTemperature_UNIT(), 0, this.Backup_T_UINT);
-//                        ShowDataBat(buff[7], this.backup_bat);
-//                        ret = 5;
-//                        break;
-//                    }
-                    break;
                 case 16:
                     UnitTools.returnT(buff[5], this.Left2_T);
                     ShowDataBat(buff[7], this.left2_bat);
@@ -620,30 +383,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         return ret;
     }
-
-//    public int ShowDataWarn(byte[] buff) {
-//        if (buff.length >= 10 && buff[2] == 10) {
-//            byte data = (byte) (buff[6] & 0xFF);
-//            switch (buff[3]) {
-//                case 0:
-//                    TpmsServer.left1_Byte = data;
-//                    break;
-//                case 1:
-//                    TpmsServer.right1_Byte = data;
-//                    break;
-//                case 5:
-//                    TpmsServer.backup_Byte = data;
-//                    break;
-//                case 16:
-//                    TpmsServer.left2_Byte = data;
-//                    break;
-//                case 17:
-//                    TpmsServer.right2_Byte = data;
-//                    break;
-//            }
-//        }
-//        return 0;
-//    }
 
     public int ShowDataBat(byte buff, ImageView v) {
         if (buff > 28) {
@@ -674,13 +413,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     protected void onResume() {
         super.onResume();
-//        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-//            if (this.Backup_Back != null) {
-//                this.Backup_Back.setVisibility(View.VISIBLE);
-//            }
-//        } else if (this.Backup_Back != null) {
-//            this.Backup_Back.setVisibility(View.GONE);
-//        }
         if (!Tools.isUSBService(this)) {
             Intent intent = new Intent(this.mContext, TpmsServer.class);
             intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY | Intent.FLAG_RECEIVER_REPLACE_PENDING);
@@ -693,13 +425,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (this.mTpmsServer != null) {
             this.mTpmsServer.registerHandler(this.mHandler);
         }
-//        if (getBackUpTyreStatus().booleanValue()) {
-//            if (this.Backup_Back != null) {
-//                this.Backup_Back.setVisibility(View.VISIBLE);
-//            }
-//        } else if (this.Backup_Back != null) {
-//            this.Backup_Back.setVisibility(View.GONE);
-//        }
         if (getMuteStatus().booleanValue()) {
             if (this.topMuteButton != null) {
                 this.topMuteButton.setImageResource(R.drawable.mute_off);
@@ -728,14 +453,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-//    private void sendServerMessage(Handler mHandler2, int arg1, String str) {
-//        Message msg = Message.obtain();
-//        msg.what = arg1;
-//        msg.obj = str;
-//        msg.setData(new Bundle());
-//        mHandler2.sendMessage(msg);
-//    }
-
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.topMenuButton /*2131361808*/:
@@ -759,150 +476,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-//    private boolean isZh() {
-//        Locale locale = getResources().getConfiguration().locale;
-//        String language = locale.getLanguage();
-//        return locale.equals(Locale.SIMPLIFIED_CHINESE);
-//    }
-
-    public Boolean getBackUpTyreStatus() {
-        if (sp != null) {
-            return Boolean.valueOf(sp.getBoolean("BACKUP_STATUS", false));
-        }
-        return false;
-    }
-
-//    public void setBackUpTyreStatus(Boolean val) {
-//        if (sp != null) {
-//            sp.edit().putBoolean("BACKUP_STATUS", val.booleanValue()).commit();
-//        }
-//    }
-
     public Boolean getMuteStatus() {
         if (sp != null) {
             return Boolean.valueOf(sp.getBoolean("MUTE_STATUS", false));
         }
         return false;
     }
-
-    public java.lang.String[] c() {
-        String str = "ivolk,StrelkaGPS,com.ivolk.StrelkaGPS,77,33,ivolk@gmail.com,55,11,k0nYo*sO2j.H{Lg~B-Ela7,24,55,04M6ai735u,88,85,26,16,715,15,115,1i71-05v6-35o0-l038-421k,11,94,58,,,,,,,,,,,,,,,,,,";
-        String[] strSplitted = str.split(",", -1);
-//        this.e = new String[]{             "ivolk",                "StrelkaGPS",                "com.ivolk.StrelkaGPS",                "77",                "33",                "ivolk@gmail.com",                "55",                "11",                "k0nYo*sO2j.H{Lg~B-Ela7",                "24",                "55",                "04M6ai735u",                "88",                "85",                "26",                "16",                "715",                "15",                "115",                "1i71-05v6-35o0-l038-421k",                "11",                "94",                "58",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                "",                ""        };
-//        byte[] bytes = new byte[]{107, 48, 110, 89, 111, 42, 115, 79, 50, 106, 46, 72, 123, 76, 103, 126, 66, 45, 69, 108, 97, 55};
-        char[] bytesChar = strSplitted[8].toCharArray();
-//        byte[] bytes1 = new byte[]{107, (byte) (141 & 0xFF), 110, 89, 111, 42, 115, 79, (byte) (143 & 0xFF), 106, (byte) (139 & 0xFF), 72, 123, 76, 103, 126, 66, 45, 69, 108, 97, 55};
-//        this.e[8] = new String(bytes);
-//        this.e[8] = new String(bytes1);
-//
-//        TelephonyManager telephonyManager = (TelephonyManager)  a.getSystemService(Service.TELEPHONY_SERVICE);
-//        String devId = telephonyManager.getDeviceId();
-//        String devId = Settings.Secure.getString(this.a.getContentResolver(), "android_id");
-//var42 == bytes
-//var43 ==  android_id
-//        if (bytes != null && bytes.length() == 22 && android_id != null && android_id.length() > 14) {
-//            byte[] android_id_bytes = android_id.getBytes();
-//            byte var5 = (byte)bytes.charAt(6);
-//            byte var6 = (byte)bytes.charAt(16);
-//            byte var7 = (byte)bytes.charAt(3);
-//            byte var8 = (byte)((byte)bytes.charAt(1) - 18);54+18
-//            byte var47 = var8;
-//            if (var8 < 33) {
-//                var47 = (byte)(var8 + 93);
-//            }
-//
-//            byte var9 = (byte)((byte)bytes.charAt(8) - 32);
-//            var8 = var9;
-//            if (var9 < 33) {
-//                var8 = (byte)(var9 + 93);
-//            }
-//
-//            if (bytes.charAt(0) == 'k' && var5 - var6 == 49 && var7 > 64 && var7 < 90 && (char)var47 == android_id_bytes[12] && (char)var8 == android_id_bytes[4]) {
-
-//        byte tmp = (byte) (db[12] - 18);
-//        if(tmp < 33)
-//        {
-//            bytes[1] = (byte)(tmp + 111);
-//        }
-//        else
-//        {
-//            bytes[1] = (byte) (((byte) (db[12] + (byte) 18) & 0xFF));
-//        }
-
-
-        String id = this.a(this.a);
-//        String id = "7c00edd76c346138";
-//        String id = "";
-        if (id == null || id == "") {
-            id = Settings.Secure.getString(this.a.getContentResolver(), "android_id");
-//            id = Settings.Secure.getString(this.mContext.getContentResolver(), "android_id");
-//            id = "7c00edd76c346138";
-        }
-
-        byte[] db = id.getBytes();
-        Log.e("john", "dev id = " + id);
-        if (id != null && id != "") {
-//                bytes[1] = (byte) (((byte) (androidId.charAt(12) + (byte) 18) & 0xFF));
-            byte tmp = (byte) ((byte) id.charAt(12) - 18);
-            if (tmp < 33) {
-                bytesChar[1] = (char) ((byte) id.charAt(12) - 93 + 18);
-            } else {
-                bytesChar[1] = (char) ((byte) id.charAt(12) + 18);
-            }
-//                bytes[1] = (byte) (((byte) (db[12] + (byte) 18) & 0xFF));
-//                bytes[8] = (byte) (((byte) (androidId.charAt(4) + (byte) 32) & 0xFF));
-            tmp = (byte) ((byte) id.charAt(4) - 32);
-            if (tmp < 33) {
-                bytesChar[8] = (char) ((byte) id.charAt(4) - 93 + 32);
-            } else {
-                bytesChar[8] = (char) ((byte) id.charAt(4) + 32);
-            }
-//                bytes[8] = (byte) (((byte) (db[4] + (byte) 32) & 0xFF));
-//                bytes[10] = (byte) (((byte) (androidId.charAt(13) + (byte) 63) & 0xFF));
-            bytesChar[10] = (char) (db[13] + 63);
-        }
-        strSplitted[8] = new String(bytesChar);
-//        String var42 = this.e[8];
-//
-//        byte var8 = (byte)((byte)var42.charAt(1) - 18);
-//        byte var47 = var8;
-//        if (var8 < 33) {
-//            var47 = (byte)(var8 + 93);
-//        }
-//
-//        byte var9 = (byte)((byte)var42.charAt(8) - 32);
-//        var8 = var9;
-//        if (var9 < 33) {
-//            var8 = (byte)(var9 + 93);
-//        }
-//
-//        if (var42.charAt(0) == 'k' && (char)var47 == db[12] && (char)var8 == db[4]) {
-//            Log.e("fuck", "fuck");
-//        }
-        return strSplitted;
-    }
-
-    private String a(Context context) {
-        return "";
-    }
-
-//    public void setMuteStatus(Boolean val) {
-//        if (sp != null) {
-//            sp.edit().putBoolean("MUTE_STATUS", val.booleanValue()).commit();
-//        }
-//    }
-
-//    public int getP_UNIT() {
-//        if (sp != null) {
-//            return sp.getInt("P", 2);
-//        }
-//        return 0;
-//    }
-//
-//    public void setP_UNIT(int i) {
-//        if (sp != null) {
-//            sp.edit().putInt("P", i).commit();
-//        }
-//    }
 }
-

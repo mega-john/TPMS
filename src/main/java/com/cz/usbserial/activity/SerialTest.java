@@ -16,6 +16,7 @@ public class SerialTest extends Activity {
     private final String TAG = MainActivity.class.getSimpleName();
     private Button debug_btn;
     private TextView mDumpTextView;
+    private TpmsServer mTpmsServer;
     private Handler mHandlerSeriaTest = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -27,8 +28,6 @@ public class SerialTest extends Activity {
             }
         }
     };
-    //    private TextView mTitleTextView;
-    private TpmsServer mTpmsServer;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

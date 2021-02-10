@@ -95,10 +95,6 @@ public class Alarm {
         }
     }
 
-//    private boolean isZh() {
-//        return this.context.getResources().getConfiguration().locale.equals(Locale.SIMPLIFIED_CHINESE);
-//    }
-
     private class ViewHolder {
         private Button btn_examine;
         private Button btn_unexamine;

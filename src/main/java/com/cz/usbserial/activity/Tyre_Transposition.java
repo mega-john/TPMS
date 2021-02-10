@@ -23,7 +23,6 @@ import java.util.TimerTask;
 
 public class Tyre_Transposition extends Activity {
     private static final int SHOW_ANOTHER_ACTIVITY = 8888;
-    //    TextView backup_tire_id;
     UnbindDialog canceDialogTile = null;
     Timer mTimerSearchID;
     TimerTask mTimerTaskSearchID;
@@ -99,15 +98,6 @@ public class Tyre_Transposition extends Activity {
                             return;
                         }
                         return;
-                    case 5:
-//                        String str4 = Tools.byteToHexString(buff2[4]) + Tools.byteToHexString(buff2[5]) + Tools.byteToHexString(buff2[6]) + Tools.byteToHexString(buff2[7]);
-//                        if (Tyre_Transposition.this.backup_tire_id != null && !"".equals(str)) {
-//                            Tyre_Transposition.this.backup_tire_id.setText(str);
-//                            Tyre_Transposition.this.ret5 = 5;
-//                            TpmsServer.setSPARE_ID(str);
-//                            return;
-//                        }
-                        return;
                     default:
                         return;
                 }
@@ -150,7 +140,6 @@ public class Tyre_Transposition extends Activity {
         this.rl_top_right_id = (TextView) findViewById(R.id.rl_top_right_id);
         this.rl_low_left_id = (TextView) findViewById(R.id.rl_low_left_id);
         this.rl_low_right_id = (TextView) findViewById(R.id.rl_low_right_id);
-//        this.backup_tire_id = (TextView) findViewById(R.id.backup_tire_id);
         stopTimerSearchID();
         startTimerSearchID();
         setTimeNsSearchID(1);
@@ -162,13 +151,6 @@ public class Tyre_Transposition extends Activity {
         stopTimerSearchID();
         startTimerSearchID();
         setTimeNsSearchID(1);
-//        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-//            if (findViewById(R.id.backup_tire_transposition) != null) {
-//                findViewById(R.id.backup_tire_transposition).setVisibility(View.VISIBLE);
-//            }
-//        } else if (findViewById(R.id.backup_tire_transposition) != null) {
-//            findViewById(R.id.backup_tire_transposition).setVisibility(View.GONE);
-//        }
         if (!"".equals(TpmsServer.getLeft1_ID()) && this.rl_top_left_id != null) {
             this.rl_top_left_id.setText(TpmsServer.getLeft1_ID());
         }
@@ -181,9 +163,6 @@ public class Tyre_Transposition extends Activity {
         if (!"".equals(TpmsServer.getRIGHT2_ID()) && this.rl_low_right_id != null) {
             this.rl_low_right_id.setText(TpmsServer.getRIGHT2_ID());
         }
-//        if (!"".equals(TpmsServer.getSPARE_ID()) && this.backup_tire_id != null) {
-//            this.backup_tire_id.setText(TpmsServer.getSPARE_ID());
-//        }
     }
 
     protected void onPause() {
@@ -207,10 +186,6 @@ public class Tyre_Transposition extends Activity {
                 addList(3, R.id.rl_low_left_transposition);
                 is_Transposition();
                 return;
-//            case R.id.backup_tire_transposition /*2131361848*/:
-//                addList(5, R.id.backup_tire_transposition);
-//                is_Transposition();
-//                return;
             case R.id.rl_top_right_transposition /*2131361849*/:
                 addList(2, R.id.rl_top_right_transposition);
                 is_Transposition();
@@ -237,7 +212,6 @@ public class Tyre_Transposition extends Activity {
         findViewById(R.id.rl_top_right_transposition).getBackground().setLevel(0);
         findViewById(R.id.rl_low_left_transposition).getBackground().setLevel(0);
         findViewById(R.id.rl_low_right_transposition).getBackground().setLevel(0);
-//        findViewById(R.id.backup_tire_transposition).getBackground().setLevel(0);
     }
 
     public void getMessage() {
@@ -253,27 +227,24 @@ public class Tyre_Transposition extends Activity {
                 case 5:
                     if (a == 1 || a == 4) {
                         sendMessage((byte) 0, (byte) 17);
-                        return;
                     } else {
                         sendMessage((byte) 1, (byte) 16);
-                        return;
                     }
+                    return;
                 case 6:
                     if (a == 1 || a == 5) {
                         sendMessage((byte) 0, (byte) 5);
-                        return;
                     } else {
                         sendMessage((byte) 1, (byte) 17);
-                        return;
                     }
+                    return;
                 case 7:
                     if (a == 2 || a == 5) {
                         sendMessage((byte) 1, (byte) 5);
-                        return;
                     } else {
                         sendMessage((byte) 16, (byte) 17);
-                        return;
                     }
+                    return;
                 case 8:
                     sendMessage((byte) 16, (byte) 5);
                     return;
@@ -425,8 +396,7 @@ public class Tyre_Transposition extends Activity {
         }
     }
 
-    /* access modifiers changed from: package-private */
-    public void setTimeNsSearchID(long dalayms) {
+    private void setTimeNsSearchID(long dalayms) {
         if (this.mTimerSearchID != null && this.mTimerTaskSearchID != null) {
             this.mTimerSearchID.schedule(this.mTimerTaskSearchID, dalayms * 1000, 1000 * dalayms);
         }

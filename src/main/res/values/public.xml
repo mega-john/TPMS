@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <public name="rightPadding" id="2130771968" type="attr" />
-    <public name="backup_btn_clk" id="2130837504" type="drawable" />
     <public name="bat0" id="2130837505" type="drawable" />
     <public name="bat1" id="2130837506" type="drawable" />
     <public name="bat2" id="2130837507" type="drawable" />
@@ -250,9 +249,6 @@
     <public name="boot_app" id="2131230854" type="string" />
     <public name="ver_info" id="2131230855" type="string" />
     <public name="ver_update" id="2131230856" type="string" />
-    <public name="backup_tire" id="2131230857" type="string" />
-    <public name="backup_tire_show" id="2131230858" type="string" />
-    <public name="backup_tire_hide" id="2131230859" type="string" />
     <public name="tip_handshake" id="2131230860" type="string" />
     <public name="to" id="2131230862" type="string" />
     <public name="alarm" id="2131230863" type="string" />
@@ -272,8 +268,6 @@
     <public name="rl_low_left_bat" id="2131361794" type="id" />
     <public name="rl_low_left_id" id="2131361795" type="id" />
     <public name="ico_car" id="2131361796" type="id" />
-    <public name="backup_tire_bat" id="2131361797" type="id" />
-    <public name="backup_tire_id" id="2131361798" type="id" />
     <public name="rl_top_right_bat" id="2131361799" type="id" />
     <public name="rl_top_right_id" id="2131361800" type="id" />
     <public name="rl_low_right_bat" id="2131361801" type="id" />
@@ -298,12 +292,6 @@
     <public name="left2_t" id="2131361820" type="id" />
     <public name="left2_t_uint" id="2131361821" type="id" />
     <public name="left2_bat" id="2131361822" type="id" />
-    <public name="backup_tyre" id="2131361823" type="id" />
-    <public name="backup_p" id="2131361824" type="id" />
-    <public name="backup_p_uint" id="2131361825" type="id" />
-    <public name="backup_t" id="2131361826" type="id" />
-    <public name="backup_t_uint" id="2131361827" type="id" />
-    <public name="backup_bat" id="2131361828" type="id" />
     <public name="right1_bat" id="2131361829" type="id" />
     <public name="right1_background" id="2131361830" type="id" />
     <public name="right1_p" id="2131361831" type="id" />
@@ -318,12 +306,10 @@
     <public name="right2_t_uint" id="2131361840" type="id" />
     <public name="rl_top_left_matching" id="2131361841" type="id" />
     <public name="rl_low_left_matching" id="2131361842" type="id" />
-    <public name="backup_tire_matching" id="2131361843" type="id" />
     <public name="rl_top_right_matching" id="2131361844" type="id" />
     <public name="rl_low_right_matching" id="2131361845" type="id" />
     <public name="rl_top_left_transposition" id="2131361846" type="id" />
     <public name="rl_low_left_transposition" id="2131361847" type="id" />
-    <public name="backup_tire_transposition" id="2131361848" type="id" />
     <public name="rl_top_right_transposition" id="2131361849" type="id" />
     <public name="rl_low_right_transposition" id="2131361850" type="id" />
     <public name="title" id="2131361851" type="id" />
@@ -351,7 +337,6 @@
     <public name="temp_group" id="2131361873" type="id" />
     <public name="temp0" id="2131361874" type="id" />
     <public name="temp1" id="2131361875" type="id" />
-    <public name="backup_btn" id="2131361876" type="id" />
     <public name="voice_btn" id="2131361877" type="id" />
     <public name="boot_btn" id="2131361878" type="id" />
     <public name="presure_max" id="2131361879" type="id" />

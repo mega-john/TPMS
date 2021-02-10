@@ -38,6 +38,14 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
     private SeekBar ps_min_seekbar;
     private TextView ps_min_value;
     private TextView tp_max_value;
+    private View Electricity_query;
+    private View Emitter_Matching;
+    private View Exit_app;
+    private View SerialTest;
+    private ToggleButton MuteButton;
+    private View Transposition;
+    private View resdef_line;
+    private SeekBar tp_max_seekbar;
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -60,12 +68,6 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
             }
         }
     };
-    //    private ToggleButton BackUpButton;
-    private View Electricity_query;
-    private View Emitter_Matching;
-    private View Exit_app;
-    private View SerialTest;
-    private ToggleButton MuteButton;
     private SeekBar.OnSeekBarChangeListener PsMaxBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         public void onStopTrackingTouch(SeekBar seekBar) {
             TpmsServer.setWarnHighPressure_Progress(Menuset.this.ps_max_progress);
@@ -128,23 +130,11 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
             Menuset.this.mHandler.sendMessage(message);
         }
     };
-    private View Transposition;
-//    private RadioGroup kpa_group;
-//    private RadioButton rb1;
-//    private RadioButton rb2;
-//    private RadioButton rb3;
-    private View resdef_line;
-//    private RadioButton temp1;
-//    private RadioButton temp2;
-//    private RadioGroup tmp_group;
-    private SeekBar tp_max_seekbar;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(1);
         setContentView(R.layout.layout_menu);
-//        initRadioBtn();
         initView();
         defView();
         this.mHandler.sendEmptyMessage(0);
@@ -153,14 +143,6 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
     protected void onResume() {
         super.onResume();
     }
-
-//    public void initRadioBtn() {
-//        this.rb1 = (RadioButton) findViewById(R.id.rb_kpa);
-//        this.rb2 = (RadioButton) findViewById(R.id.rb_psi);
-//        this.rb3 = (RadioButton) findViewById(R.id.rb_bar);
-//        this.temp1 = (RadioButton) findViewById(R.id.temp0);
-//        this.temp2 = (RadioButton) findViewById(R.id.temp1);
-//    }
 
     public void initView() {
         this.Emitter_Matching = findViewById(R.id.emitter_matching);
@@ -175,12 +157,6 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
         this.SerialTest.setOnClickListener(this);
         this.resdef_line = findViewById(R.id.resdef_line);
         this.resdef_line.setOnClickListener(this);
-//        this.kpa_group = (RadioGroup) findViewById(R.id.kpa_unit);
-//        this.kpa_group.setOnCheckedChangeListener(this);
-//        this.tmp_group = (RadioGroup) findViewById(R.id.temp_group);
-//        this.tmp_group.setOnCheckedChangeListener(this);
-//        this.BackUpButton = (ToggleButton) findViewById(R.id.backup_btn);
-//        this.BackUpButton.setOnCheckedChangeListener(this);
         this.MuteButton = (ToggleButton) findViewById(R.id.voice_btn);
         this.MuteButton.setOnCheckedChangeListener(this);
         this.ps_max_value = (TextView) findViewById(R.id.presure_max);
@@ -198,31 +174,6 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
     }
 
     public void defView() {
-//        if (TpmsServer.getPressure_UNIT() == 0) {
-//            if (this.rb1 != null) {
-//                this.rb1.setChecked(true);
-//            }
-//        } else if (TpmsServer.getPressure_UNIT() == 1) {
-//            if (this.rb2 != null) {
-//                this.rb2.setChecked(true);
-//            }
-//        } else if (TpmsServer.getPressure_UNIT() == P_UNIT && this.rb3 != null) {
-//            this.rb3.setChecked(true);
-//        }
-//        if (TpmsServer.getTemperature_UNIT() == T_UNIT) {
-//            if (this.temp1 != null) {
-//                this.temp1.setChecked(true);
-//            }
-//        } else if (TpmsServer.getTemperature_UNIT() == 1 && this.temp2 != null) {
-//            this.temp2.setChecked(true);
-//        }
-//        if (TpmsServer.getBackUpTyreStatus().booleanValue()) {
-//            if (this.BackUpButton != null) {
-//                this.BackUpButton.setChecked(true);
-//            }
-//        } else if (this.BackUpButton != null) {
-//            this.BackUpButton.setChecked(false);
-//        }
         if (TpmsServer.getMuteStatus().booleanValue()) {
             if (this.MuteButton != null) {
                 this.MuteButton.setChecked(false);
@@ -242,9 +193,7 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
     }
 
     public void defInitView() {
-//        TpmsServer.setPressure_UNIT(P_UNIT);
-//        TpmsServer.setTemperature_UNIT(T_UNIT);
-        TpmsServer.setBackUpTyreStatus(false);
+//        TpmsServer.setBackUpTyreStatus(false);
         TpmsServer.setMuteStatus(true);
         TpmsServer.setWarnHighPressure_Progress(HP_PROGRESS);
         TpmsServer.setWarnLowPressure_Progress(LP_PROGRESS);
@@ -292,22 +241,6 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
                 });
                 return;
             case R.id.exit_app /*2131361889*/:
-//                View view = LayoutInflater.from(this.mContext).inflate(R.layout.exit_app_dialog, null);
-//                final UnbindDialog dialog = new UnbindDialog(this.mContext, view);
-//                dialog.show();
-//                view.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent();
-//                        intent.setAction(Menuset.EXIT_APP_ACTION);
-//                        Menuset.this.sendBroadcast(intent);
-//                        Menuset.this.finish();
-//                    }
-//                });
-//                view.findViewById(R.id.refuse).setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
                 Intent intent_exit = new Intent();
                 intent_exit.setAction(Menuset.EXIT_APP_ACTION);
                 Menuset.this.sendBroadcast(intent_exit);
@@ -326,35 +259,7 @@ public class Menuset extends Activity implements View.OnClickListener, CompoundB
         }
     }
 
-//    public void onCheckedChanged(RadioGroup group, int checkedId) {
-//        switch (checkedId) {
-//            case R.id.rb_kpa /*2131361870*/:
-//                TpmsServer.setPressure_UNIT(0);
-//                break;
-//            case R.id.rb_psi /*2131361871*/:
-//                TpmsServer.setPressure_UNIT(1);
-//                break;
-//            case R.id.rb_bar /*2131361872*/:
-//                TpmsServer.setPressure_UNIT(P_UNIT);
-//                break;
-//            case R.id.temp0 /*2131361874*/:
-//                TpmsServer.setTemperature_UNIT(T_UNIT);
-//                break;
-//            case R.id.temp1 /*2131361875*/:
-//                TpmsServer.setTemperature_UNIT(1);
-//                break;
-//        }
-//        this.mHandler.sendEmptyMessage(0);
-//    }
-
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//        if (R.id.backup_btn == buttonView.getId()) {
-//            if (isChecked) {
-//                TpmsServer.setBackUpTyreStatus(true);
-//            } else {
-//                TpmsServer.setBackUpTyreStatus(false);
-//            }
-//        } else
         if (R.id.voice_btn == buttonView.getId()) {
             if (isChecked) {
                 TpmsServer.setMuteStatus(false);

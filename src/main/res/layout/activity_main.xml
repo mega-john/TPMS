@@ -143,7 +143,7 @@
                                     android:id="@+id/left1_t_uint"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text=""
+                                    android:text="\u2103"
                                     android:textColor="#4479bd"
                                     android:textSize="40sp" />
                             </LinearLayout>
